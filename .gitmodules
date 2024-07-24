@@ -1,0 +1,3 @@
+[submodule "UFS"]
+	path = UFS
+	url = https://github.com/ufs-community/ufs-weather-model.git
