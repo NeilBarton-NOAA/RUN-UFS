@@ -1,18 +1,20 @@
 #!/bin/sh
+set -u
 # Defaults to Compile the SFS configuration, but could be changed
 # examine the UFS/tests/rt.conf for COMPILE options for specific configurations
-compiler=intel
 TOPDIR=${PWD}
+UPDATE_CODE=F
 
+source ${TOPDIR}/SCRIPTS/RUN-config.sh 
 ####################################
 # get submodules
 cd ${TOPDIR}/UFS
-git submodule update --init --recursive
+[[ ${UPDATE_CODE} == T ]] && git submodule update --init --recursive
 
 ####################################
 # build model
 source ${TOPDIR}/UFS/tests/detect_machine.sh
-module_file=ufs_${MACHINE_ID}.${compiler}
+module_file=ufs_${MACHINE_ID}.${RT_COMPILER}
 module purge
 [[ ${module_file} == *wcoss* ]] && module reset
 module use modulefiles
@@ -20,8 +22,7 @@ module load ${module_file}
 
 ####################################
 # get compile options for rt.conf
-name=${name:-"sfs"}
-line=$( grep ${name} ${TOPDIR}/UFS/tests/rt.conf | grep COMPILE )
+line=$( grep ${compile_search} ${TOPDIR}/UFS/tests/rt.conf | grep COMPILE )
 MAKE_OPT=$(cut -d '|' -f4  <<< "${line}")
 MAKE_OPT=$(sed -e 's/^ *//' -e 's/ *$//' <<< "${MAKE_OPT}")
 # APP
@@ -55,9 +56,9 @@ fi
 ####################################
 # compile
 export CMAKE_FLAGS="-DAPP=${APP} -D32BIT=${BIT32} -DCCPP_SUITES=${CCPP_SUITES} -DHYDRO=${HYDRO} -DPDLIB=${PDLIB}"
-echo "${name}: ${CMAKE_FLAGS}"
+echo "${RUN}: ${CMAKE_FLAGS}"
 bash -x ./build.sh
 mkdir -p ${TOPDIR}/bin
-cp build/ufs_model ${TOPDIR}/bin/ufs_${name}
+cp build/ufs_model ${TOPDIR}/bin/ufs_${RUN}
 ls -ltr ${TOPDIR}/bin/*
 
