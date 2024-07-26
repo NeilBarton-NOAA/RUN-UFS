@@ -1,6 +1,6 @@
 #!/bin/sh
 echo 'CICE-namelist.sh'
-mkdir -p history?
+mkdir -p history
 
 ####################################
 # Resolution based options

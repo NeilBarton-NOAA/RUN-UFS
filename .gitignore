@@ -1,0 +1,6 @@
+# files and directories created by scripts
+bin/
+SCRIPTS/FIXFILES-link.sh
+SCRIPTS/FV3-options.sh
+SCRIPTS/MACHINE-config.sh
+

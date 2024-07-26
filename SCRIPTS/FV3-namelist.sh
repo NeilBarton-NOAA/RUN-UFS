@@ -83,22 +83,22 @@ WRTTASK_PER_GROUP=$(( WPG * atm_omp_num_threads ))
 NPZ=${ATM_LEVELS:-127}
 NPZP=$(( NPZ + 1 ))
 
-res=$( echo ${ATMRES} | cut -c2- )
-IMO=$(( ${res} * 4 ))
-JMO=$(( ${res} * 2 ))
-NPX=$(( ${res} + 1 ))
-NPY=$(( ${res} + 1 ))
-FNALBC="'${ATMRES}.snowfree_albedo.tileX.nc'"
-FNALBC2="'${ATMRES}.facsf.tileX.nc'"
-FNVETC="'${ATMRES}.vegetation_type.tileX.nc'"
-FNSOTC="'${ATMRES}.soil_type.tileX.nc'"
-FNABSC="'${ATMRES}.maximum_snow_albedo.tileX.nc'"
-FNTG3C="'${ATMRES}.substrate_temperature.tileX.nc'"
-FNVEGC="'${ATMRES}.vegetation_greenness.tileX.nc'"
-FNSLPC="'${ATMRES}.slope_type.tileX.nc'"
-FNVMNC="'${ATMRES}.vegetation_greenness.tileX.nc'"
-FNVMXC="'${ATMRES}.vegetation_greenness.tileX.nc'"
-DT_INNER=${DT_ATMOS}
+#res=$( echo ${ATMRES} | cut -c2- )
+#IMO=$(( ${res} * 4 ))
+#JMO=$(( ${res} * 2 ))
+#NPX=$(( ${res} + 1 ))
+#NPY=$(( ${res} + 1 ))
+#FNALBC="'${ATMRES}.snowfree_albedo.tileX.nc'"
+#FNALBC2="'${ATMRES}.facsf.tileX.nc'"
+#FNVETC="'${ATMRES}.vegetation_type.tileX.nc'"
+#FNSOTC="'${ATMRES}.soil_type.tileX.nc'"
+#FNABSC="'${ATMRES}.maximum_snow_albedo.tileX.nc'"
+#FNTG3C="'${ATMRES}.substrate_temperature.tileX.nc'"
+#FNVEGC="'${ATMRES}.vegetation_greenness.tileX.nc'"
+#FNSLPC="'${ATMRES}.slope_type.tileX.nc'"
+#FNVMNC="'${ATMRES}.vegetation_greenness.tileX.nc'"
+#FNVMXC="'${ATMRES}.vegetation_greenness.tileX.nc'"
+#DT_INNER=${DT_ATMOS}
 
 ####################################
 #  input.nml edits based on components running
@@ -135,6 +135,7 @@ source ${target_f}
 
 atparse < ${PATHRT}/parm/${INPUT_NML} > input.nml
 atparse < ${PATHRT}/parm/${MODEL_CONFIGURE} > model_configure
+cp "${PATHRT}/parm/noahmptable.tbl" .
 cp ${PATHRT}/parm/field_table/${FIELD_TABLE} field_table 
 if [[ ${QUILTING} == '.true.' ]]; then
     atparse < ${PATHRT}/parm/diag_table/${DIAG_TABLE} > diag_table

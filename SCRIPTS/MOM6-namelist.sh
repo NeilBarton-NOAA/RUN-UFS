@@ -37,5 +37,6 @@ fi
 
 ###################################
 # parse namelist file
-atparse < ${PATHRT}/parm/${MOM6_INPUT} > INPUT/MOM_input
+MOM_INPUT=${MOM_INPUT:-${PATHRT}/parm/${MOM6_INPUT}}
+atparse < ${MOM_INPUT} > INPUT/MOM_input
 

@@ -5,6 +5,7 @@ set -u
 TOPDIR=${PWD}
 UPDATE_CODE=F
 
+export SCRIPT_DIR=${TOPDIR}/SCRIPTS
 source ${TOPDIR}/SCRIPTS/RUN-config.sh 
 ####################################
 # get submodules
@@ -57,8 +58,10 @@ fi
 # compile
 export CMAKE_FLAGS="-DAPP=${APP} -D32BIT=${BIT32} -DCCPP_SUITES=${CCPP_SUITES} -DHYDRO=${HYDRO} -DPDLIB=${PDLIB}"
 echo "${RUN}: ${CMAKE_FLAGS}"
+[[ -d build ]] && rm -r build/
 bash -x ./build.sh
 mkdir -p ${TOPDIR}/bin
 cp build/ufs_model ${TOPDIR}/bin/ufs_${RUN}
 ls -ltr ${TOPDIR}/bin/*
+echo "${RUN}: ${CMAKE_FLAGS}"
 

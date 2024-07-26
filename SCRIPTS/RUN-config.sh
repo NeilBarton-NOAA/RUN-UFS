@@ -9,6 +9,7 @@ case ${RUN} in
         export PDLIB="OFF"
         export WAV_RES=${WAV_RES:-glo_100}
         export RT_TEST=cpld_control_sfs
+        export MOM_INPUT=${SCRIPT_DIR}/MOM_input_coldstart_100.IN
         ;;
     "GEFS")
         export compile_search=s2swa_32bit_pdlib
