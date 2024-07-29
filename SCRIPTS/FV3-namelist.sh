@@ -11,6 +11,7 @@ mkdir -p INPUT RESTART
 
 ####################################
 # namelist defaults
+ATMRES=${ATM_RES:-$ATMRES}
 ENS_SETTINGS=${ENS_SETTINGS:-T}
         
 ############

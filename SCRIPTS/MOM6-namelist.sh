@@ -2,6 +2,10 @@
 echo 'MOM6-namelist.sh'
 mkdir -p INPUT MOM6_OUTPUT
 
+########################
+# optoins
+OCNRES=${OCN_RES:-$OCNRES}
+
 ####################################
 # options based on other active components
 [[ ${APP} != *"W"* ]] && MOM6_USE_WAVES=false

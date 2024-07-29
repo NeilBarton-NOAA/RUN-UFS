@@ -2,6 +2,7 @@
 echo 'CICE-namelist.sh'
 mkdir -p history
 
+OCNRES=${OCN_RES:-$OCNRES}
 ####################################
 # Resolution based options
 case "${OCNRES}" in

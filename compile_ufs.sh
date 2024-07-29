@@ -2,6 +2,7 @@
 set -u
 # Defaults to Compile the SFS configuration, but could be changed
 # examine the UFS/tests/rt.conf for COMPILE options for specific configurations
+export RUN=GEFS
 TOPDIR=${PWD}
 UPDATE_CODE=F
 
@@ -23,7 +24,7 @@ module load ${module_file}
 
 ####################################
 # get compile options for rt.conf
-line=$( grep ${compile_search} ${TOPDIR}/UFS/tests/rt.conf | grep COMPILE )
+line=$( grep ${compile_search} ${TOPDIR}/UFS/tests/rt.conf | grep COMPILE | head -n 1 )
 MAKE_OPT=$(cut -d '|' -f4  <<< "${line}")
 MAKE_OPT=$(sed -e 's/^ *//' -e 's/ *$//' <<< "${MAKE_OPT}")
 # APP
@@ -58,7 +59,7 @@ fi
 # compile
 export CMAKE_FLAGS="-DAPP=${APP} -D32BIT=${BIT32} -DCCPP_SUITES=${CCPP_SUITES} -DHYDRO=${HYDRO} -DPDLIB=${PDLIB}"
 echo "${RUN}: ${CMAKE_FLAGS}"
-[[ -d build ]] && rm -r build/
+#[[ -d build ]] && rm -r build/
 bash -x ./build.sh
 mkdir -p ${TOPDIR}/bin
 cp build/ufs_model ${TOPDIR}/bin/ufs_${RUN}

@@ -2,7 +2,7 @@
 set -u
 echo 'CMEPS-namelist.sh'
 lc_APP=$( echo ${APP} | tr '[:upper:]' '[:lower:]' )
-UFS_CONFIGURE=ufs.configure.${lc_APP}_fast_esmf.IN
+UFS_CONFIGURE=ufs.configure.${lc_APP}_esmf.IN
 PET_LOGS=${PETLOGS:-F}
 
 ########################

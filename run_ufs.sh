@@ -6,14 +6,14 @@
 # Default SFS configuration
 ####################################
 # Set Top options
-export DTG=2023012300
-export RUN=SFS
+export DTG=2017100400
+export RUN=GEFS
 export APP=S2SWA
 export FORECAST_LENGTH=1 # in days
-export WALLCLOCK=30 #$(( 2 * 60 )) # in minutes
+export WALLCLOCK=02 #$(( 2 * 60 )) # in minutes
 export JOB_QUEUE=debug # batch or debug on hera
-export ICDIR=${NPB_WORKDIR}/ICs/REPLAY_ICs/CI/${DTG}/mem000
-export REPLAY_ICS=T
+export ICDIR=${NPB_WORKDIR}/ICs/GW_TEST/${DTG}/mem000
+export REPLAY_ICS=F
 export ENS_SETTINGS=F
 export DEBUG=F
 

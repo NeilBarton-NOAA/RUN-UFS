@@ -38,11 +38,12 @@ EOF
     chmod 755 ${target_f}
 fi
 source ${target_f}
-export MACHINE_ID SCHEDULER
+export MACHINE_ID SCHEDULER STMP
 
 # variables
 source ${PATHRT}/default_vars.sh
 source ${PATHRT}/tests/${RT_TEST}
+
 ############
 # edits to defaults if needed
 # forecast length
@@ -56,25 +57,43 @@ export SMONTH=${DTG:4:2}
 export SDAY=${DTG:6:2}
 export SHOUR=${DTG:8:2}
 export SECS=$( printf "%05d" $(( $SHOUR * 3600 )) )
+REPLAY_ICS=${REPLAY_ICS:-F}
+if [[ ${REPLAY_ICS} == T ]]; then
+    export SHOUR=$( printf "%02d" $(( ${DTG:8:2} + 3 )) )
+    export SECS=$( printf "%05d" $(( $SHOUR * 3600 )) )
+fi
 
 ############
 # Run Directory
 RUNDIR=${STMP}/${USER}/UFS/run_$$
-RUNDIR=${STMP}/${USER}/UFS/run_${APP}
+RUNDIR=${STMP}/${USER}/UFS/run_${RUN}-${APP}
+[[ -d ${RUNDIR} ]] && rm -r ${RUNDIR}/*
 mkdir -p ${RUNDIR} && mkdir -p ${RUNDIR}/INPUT && cd ${RUNDIR}
 echo "RUNDIR is at ${RUNDIR}"
 
 ############
 # Get Fix Files
 ${SCRIPT_DIR}/FIXFILES-config.sh ${APP}
+if (( ${?} > 0 )); then
+    echo "FAILED @ ${SCRIPT_DIR}/FIXFILES-config.sh ${APP}"
+    exit 1
+fi
 
 ############
 # IC files
 ${SCRIPT_DIR}/IC-config.sh ${APP}
+if (( ${?} > 0 )); then
+    echo "FAILED @ ${SCRIPT_DIR}/IC-config.sh ${APP}"
+    exit 1
+fi
 
 ############
 # Write Namelist Files
 ${SCRIPT_DIR}/NAMELIST-config.sh ${APP}
+if (( ${?} > 0 )); then
+    echo "FAILED @ ${SCRIPT_DIR}/NAMELIST-config.sh ${APP}"
+    exit 1
+fi
 
 ############
 # execute model

@@ -3,9 +3,18 @@ set -u
 [[ ${DEBUG} == T ]] && set -x
 declare -rx PS4='+ $(basename ${BASH_SOURCE[0]:-${FUNCNAME[0]:-"Unknown"}})[${LINENO}]'
 echo "FIXFILES-config.sh"
-source ${PATHRT}/atparse.bash
-target_f=${SCRIPT_DIR}/FIXFILES-link.sh
 
+ATMRES=${ATM_RES:-$ATMRES}
+OCNRES=${OCN_RES:-$OCNRES}
+res=$( echo ${ATMRES} | cut -c2- )
+IMO=$(( ${res} * 4 ))
+JMO=$(( ${res} * 2 ))
+NPX=$(( ${res} + 1 ))
+NPY=$(( ${res} + 1 ))
+
+source ${PATHRT}/atparse.bash
+
+target_f=${SCRIPT_DIR}/FIXFILES-link.sh
 cat << EOF > ${target_f}
 #!/bin/bash -u
 # fixfiles for run. Link instead of copying because that takes forever

@@ -24,7 +24,7 @@ if [ ${m} = gaea ]; then export target=gaea.intel ; fi
 if [ ${m} = jet ]; then export target=jet.intel ; fi
 
 module use ${UFSMODELDIR}/modulefiles
-module load $( basename ${module_file} ) #module_file defined in MACHINE-config.sh
+module load ufs_${m}.${RT_COMPILER}
 
 ########################################
 #  Build ww3_grid, if needed           #

@@ -17,11 +17,11 @@ if (( ${n_files} == ${NTILES} )); then
     for t in $(seq ${NTILES}); do
         for v in ${PREFIXS}; do
             f=$( find -L ${ICDIR} -name "${v}.tile${t}.nc" )
-            ln -sf ${f} INPUT/${f}
+            ln -sf ${f} INPUT/
         done
     done
     f=$( find -L ${ICDIR} -name "gfs_ctrl.nc" )
-    ln -sf ${f} INPUT/${f}
+    ln -sf ${f} INPUT/
 else #ATM WARMSTART
     echo "  FV3 Warm Start"
     WARM_START=.false.
@@ -38,7 +38,7 @@ else #ATM WARMSTART
             if [[ ${f:11:4} == '0000' ]]; then
                 f=${f:16}
             fi
-            ln -sf ${atm_ic} INPUT/${f}
+            ln -sf ${atm_ic} INPUT/
         done
     done
     # make coupler.res file
