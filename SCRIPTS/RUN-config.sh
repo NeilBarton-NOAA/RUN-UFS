@@ -17,8 +17,8 @@ case ${RUN} in
         export PDLIB="OFF"
         export RT_TEST=cpld_control_gfsv17
         export APP=${APP:-S2SWA}
-        export ATM_RES=${WAV_RES:-C384}
-        export OCN_RES=${WAV_RES:-025}
+        export ATM_RES=${ATM_RES:-C384}
+        export OCN_RES=${OCN_RES:-025}
         export WAV_RES=${WAV_RES:-glo_025}
         ;;
     *)

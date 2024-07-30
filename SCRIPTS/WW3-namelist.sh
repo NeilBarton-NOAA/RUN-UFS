@@ -14,13 +14,22 @@ RST_2_END=${RUN_END}
 
 ####################################
 # new modef file?
-if [[ ${WAV_RES} == glo_100 ]]; then
+if [[ ${WAV_RES} == glo_100 ]] || [[ ${WAV_RES} == glo_025 ]]; then
     f_moddef=${STMP}/${USER}/UFS/FIXFILES/mod_def.${WAV_RES} 
     if [[ ! -f ${f_moddef} ]]; then
         ${SCRIPT_DIR}/WW3-inp2moddef.sh ${SCRIPT_DIR}/ww3_grid.inp.${WAV_RES} ${HOMEufs} $(dirname ${f_moddef}) ${MACHINE_ID}
     fi
     ln -sf ${f_moddef} mod_def.ww3
+    ln -sf ${SCRIPT_DIR}/${MESH_WAV} .
 fi
+
+####################################
+case "${WAV_RES}" in
+    "glo_025")
+    export WAV_tasks=${WAV_NMPI:-162}
+    ;;
+esac
+
 
 ####################################
 # IO options
@@ -34,7 +43,7 @@ DTPNT=${WW3_DTPNT:-${DT_2_RST}}
 export INPUT_CURFLD='C F     Currents'
 export INPUT_ICEFLD='C F     Ice concentrations'
 MULTIGRID=${MULTIGRID:-'false'}
-atparse < ${PATHRT}/parm/ww3_shel.inp.IN > ww3_shel.inp
-#atparse < ${PATHRT}/parm/ww3_shel.nml.IN > ww3_shel.nml
+#atparse < ${PATHRT}/parm/ww3_shel.inp.IN > ww3_shel.inp
+atparse < ${PATHRT}/parm/ww3_shel.nml.IN > ww3_shel.nml
 cp ${PATHRT}/parm/ww3_points.list .
 

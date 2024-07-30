@@ -3,15 +3,7 @@ set -u
 [[ ${DEBUG} == T ]] && set -x
 declare -rx PS4='+ $(basename ${BASH_SOURCE[0]:-${FUNCNAME[0]:-"Unknown"}})[${LINENO}]'
 echo "FIXFILES-config.sh"
-
-ATMRES=${ATM_RES:-$ATMRES}
-OCNRES=${OCN_RES:-$OCNRES}
-res=$( echo ${ATMRES} | cut -c2- )
-IMO=$(( ${res} * 4 ))
-JMO=$(( ${res} * 2 ))
-NPX=$(( ${res} + 1 ))
-NPY=$(( ${res} + 1 ))
-
+echo $FV3_RUN
 source ${PATHRT}/atparse.bash
 
 target_f=${SCRIPT_DIR}/FIXFILES-link.sh

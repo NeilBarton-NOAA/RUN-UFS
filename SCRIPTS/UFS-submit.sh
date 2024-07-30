@@ -69,7 +69,9 @@ export NPX=$(( ${res} + 1 ))
 export NPY=$(( ${res} + 1 ))
 export NPZ=${ATM_LEVELS:-127}
 export NPZP=$(( NPZ + 1 ))
-
+WW3_DOMAIN=${WAV_RES:-$WW3_DOMAIN}
+export MESH_WAV=mesh.${WW3_DOMAIN}.nc
+[[ ${APP} == *A* ]] && export CPLCHM=.true.
 ############
 # Run Directory
 RUNDIR=${STMP}/${USER}/UFS/run_$$
