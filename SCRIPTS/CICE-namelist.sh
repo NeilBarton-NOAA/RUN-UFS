@@ -27,7 +27,7 @@ esac
 # IC 
 CICE_RESTART=${CICE_RESTART:-'.true.'}
 CICERUNTYPE=${CICERUNTYPE:-'initial'}
-USE_RESTART_TIME=${CICE_USE_RESTART_TIME:-.false.}
+USE_RESTART_TIME=${CICE_USE_RESTART_TIME:-.true.}
 
 ####################################
 # IO options

@@ -8,7 +8,9 @@ case ${RUN} in
         export compile_search=s2swa_32bit_pdlib_sfs
         export PDLIB="OFF"
         export RT_TEST=cpld_control_sfs
-        export APP=${APP:-S2SWA}
+        export APP=${APP:-S2SA}
+        export ATM_RES=${ATM_RES:-C96}
+        export OCN_RES=${OCN_RES:-100}
         export WAV_RES=${WAV_RES:-glo_100}
         export MOM_INPUT=${SCRIPT_DIR}/MOM_input_coldstart_100.IN
         ;;

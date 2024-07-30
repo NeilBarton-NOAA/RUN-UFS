@@ -83,10 +83,14 @@ WRTTASK_PER_GROUP=$(( WPG * atm_omp_num_threads ))
 
 ####################################
 #  input.nml edits based on components running
-#[[ ${APP} == *A* ]] && CPLCHM=.false. && FIELD_TABLE=field_table_thompson_noaero_tke_progsigma
 [[ ${APP} != *W* ]] && CPLWAV=.false. && CPLWAV2ATM=.false.
 [[ ${APP} != "A" ]] && IAER=2011
 
+####################################
+REPLAY_ICS=${REPLAY_ICS:-F}
+if [[ ${REPLAY_ICS} == T ]]; then
+    FHROT=3
+fi
 ####################################
 # namelist options
 if [[ ${ENS_SETTINGS} == T ]]; then
