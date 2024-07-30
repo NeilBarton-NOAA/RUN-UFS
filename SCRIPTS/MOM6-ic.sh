@@ -1,5 +1,6 @@
 #!/bin/sh
 echo 'MOM6-ic.sh'
+rm -f INPUT/*MOM.res*nc 
 n_files=$( find -L ${ICDIR} -name "*MOM.res*nc" 2>/dev/null | wc -l )
 MOM6_RESTART_SETTING='r'
 if (( ${n_files} == 0 )); then

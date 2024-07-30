@@ -24,12 +24,13 @@ compute_petbounds_and_tasks
 
 ########################
 # options based on resolutions
-#MESHOCN_ICE=mesh.mx${OCNRES}.nc
-#case "${OCNRES}" in
-#    "500") eps_imesh="4.0e-1";;
-#    "100") eps_imesh="2.5e-1";;
-#    *) eps_imesh="1.0e-1";;
-#esac
+MESH_OCN=mesh.mx${OCNRES}.nc
+MESH_ICE=mesh.mx${OCNRES}.nc
+case "${OCNRES}" in
+    "500") eps_imesh="4.0e-1";;
+    "100") eps_imesh="2.5e-1";;
+    *) eps_imesh="1.0e-1";;
+esac
 #ATMTILESIZE=${ATMRES:1}
 
 ########################

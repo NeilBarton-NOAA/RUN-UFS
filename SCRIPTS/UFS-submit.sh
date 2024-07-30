@@ -57,11 +57,18 @@ export SMONTH=${DTG:4:2}
 export SDAY=${DTG:6:2}
 export SHOUR=${DTG:8:2}
 export SECS=$( printf "%05d" $(( $SHOUR * 3600 )) )
-REPLAY_ICS=${REPLAY_ICS:-F}
-if [[ ${REPLAY_ICS} == T ]]; then
-    export SHOUR=$( printf "%02d" $(( ${DTG:8:2} + 3 )) )
-    export SECS=$( printf "%05d" $(( $SHOUR * 3600 )) )
-fi
+
+############
+# change in resolution
+export ATMRES=${ATM_RES:-$ATMRES}
+export OCNRES=${OCN_RES:-$OCNRES}
+res=$( echo ${ATMRES} | cut -c2- )
+export IMO=$(( ${res} * 4 ))
+export JMO=$(( ${res} * 2 ))
+export NPX=$(( ${res} + 1 ))
+export NPY=$(( ${res} + 1 ))
+export NPZ=${ATM_LEVELS:-127}
+export NPZP=$(( NPZ + 1 ))
 
 ############
 # Run Directory

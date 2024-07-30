@@ -5,6 +5,8 @@ mkdir -p INPUT MOM6_OUTPUT
 ########################
 # optoins
 OCNRES=${OCN_RES:-$OCNRES}
+MOM6_INPUT=MOM_input_${OCNRES}.IN
+MOM_INPUT=${MOM_INPUT:-${PATHRT}/parm/${MOM6_INPUT}}
 
 ####################################
 # options based on other active components
@@ -12,12 +14,28 @@ OCNRES=${OCN_RES:-$OCNRES}
 
 case "${OCNRES}" in
     "100")
-    OCN_NMPI=${OCN_NMPI:-20}
-    TS_FILE="${INPUTDATA_ROOT}/MOM6_IC/100/2011100100/MOM6_IC_TS_2011100100.nc"
+    OCN_tasks=${OCN_NMPI:-20}
+    OCNTIM=3600
+    NX_GLB=360
+    NY_GLB=320
+    DT_DYNAM_MOM6='3600'
+    DT_THERM_MOM6='3600'
+    FRUNOFF=""
+    MOM6_CHLCLIM="seawifs_1998-2006_smoothed_2X.nc"
+    MOM6_RIVER_RUNOFF='False'
+    TOPOEDITS="ufs.topo_edits_011818.nc"
+    MOM6_ALLOW_LANDMASK_CHANGES="True" 
     ;;
     "025")
-    OCN_NMPI=${OCN_NMPI:-130}
-    TS_FILE="${INPUTDATA_ROOT}/MOM6_IC/MOM6_IC_TS_2021032206.nc"
+    OCN_tasks=${OCN_NMPI:-130}
+    OCNTIM=1800
+    NX_GLB=1440
+    NY_GLB=1080
+    DT_DYNAM_MOM6='900'
+    DT_THERM_MOM6='1800'
+    FRUNOFF="runoff.daitren.clim.${NX_GLB}x${NY_GLB}.v20180328.nc"
+    MOM6_CHLCLIM="seawifs-clim-1997-2010.${NX_GLB}x${NY_GLB}.v20180328.nc"
+    MOM6_RIVER_RUNOFF='True'
     ;;
     *)
     echo "  RES not defined: ${OCNRES}"
@@ -41,6 +59,5 @@ fi
 
 ###################################
 # parse namelist file
-MOM_INPUT=${MOM_INPUT:-${PATHRT}/parm/${MOM6_INPUT}}
 atparse < ${MOM_INPUT} > INPUT/MOM_input
 

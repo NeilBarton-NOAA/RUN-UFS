@@ -4,6 +4,7 @@ echo 'CICE-ic.sh'
 # look for restarts if provided
 ICDIR=${ICDIR:-${INPUTDATA_ROOT_BMIC}/${SYEAR}${SMONTH}${SDAY}${SHOUR}/cpc}
 ice_ic=${ice_ic:-$( find -L ${ICDIR} -name "*ice*.nc" )}
+rm -f ice.restart_file
 ############
 # if not using the default optoin
 if [[ ${ice_ic} != 'default' ]]; then

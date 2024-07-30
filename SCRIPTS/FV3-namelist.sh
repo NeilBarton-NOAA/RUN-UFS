@@ -18,10 +18,11 @@ ENS_SETTINGS=${ENS_SETTINGS:-T}
 # resolution based options
 case "${ATMRES}" in
     "C384") 
-        DT_ATMOS=${ATM_DT:-$DT_ATMOS}
+        DT_ATMOS=${ATM_DT:-300}
         ATM_INPES=${ATM_INPES:-12}
         ATM_JNPES=${ATM_INPES:-12}
         OUTPUT_FILE="'netcdf_parallel' 'netcdf_parallel'"
+        MOM6_RESTART_SETTING='r'
         case "${MACHINE_ID}" in
         "hera")
             ATM_THRD=${ATM_THRD:-2}
@@ -50,8 +51,8 @@ esac
 
 ####################################
 # WARM_START
-file=$( find -L ${ICDIR} -name "gfs_ctrl.nc" >/dev/null )
-if [[ ! -f ${file} ]]; then
+n_file=$( find -L -name "fv_core.res*.nc" | wc -l 2>/dev/null )
+if (( n_file > 0 )); then
     # WARM START
     # change namelist options
     WARM_START=.true.
@@ -79,27 +80,6 @@ WPG=${ATM_WPG:-0}
 WRTTASK_PER_GROUP=$(( WPG * atm_omp_num_threads ))
 [[ ${WPG} == 0 ]] && QUILTING='.false.' 
 
-####################################
-# vertical resolution options
-NPZ=${ATM_LEVELS:-127}
-NPZP=$(( NPZ + 1 ))
-
-#res=$( echo ${ATMRES} | cut -c2- )
-#IMO=$(( ${res} * 4 ))
-#JMO=$(( ${res} * 2 ))
-#NPX=$(( ${res} + 1 ))
-#NPY=$(( ${res} + 1 ))
-#FNALBC="'${ATMRES}.snowfree_albedo.tileX.nc'"
-#FNALBC2="'${ATMRES}.facsf.tileX.nc'"
-#FNVETC="'${ATMRES}.vegetation_type.tileX.nc'"
-#FNSOTC="'${ATMRES}.soil_type.tileX.nc'"
-#FNABSC="'${ATMRES}.maximum_snow_albedo.tileX.nc'"
-#FNTG3C="'${ATMRES}.substrate_temperature.tileX.nc'"
-#FNVEGC="'${ATMRES}.vegetation_greenness.tileX.nc'"
-#FNSLPC="'${ATMRES}.slope_type.tileX.nc'"
-#FNVMNC="'${ATMRES}.vegetation_greenness.tileX.nc'"
-#FNVMXC="'${ATMRES}.vegetation_greenness.tileX.nc'"
-#DT_INNER=${DT_ATMOS}
 
 ####################################
 #  input.nml edits based on components running
@@ -117,6 +97,20 @@ if [[ ${ENS_SETTINGS} == T ]]; then
     PERT_RADTEND=.false.
     PERT_CLDS=.true.
 fi
+
+################################################
+# files with resolution 
+FNALBC="'${ATMRES}.snowfree_albedo.tileX.nc'"
+FNALBC2="'${ATMRES}.facsf.tileX.nc'"
+FNVETC="'${ATMRES}.vegetation_type.tileX.nc'"
+FNSOTC="'${ATMRES}.soil_type.tileX.nc'"
+FNSOCC="'${ATMRES}.soil_color.tileX.nc'"
+FNABSC="'${ATMRES}.maximum_snow_albedo.tileX.nc'"
+FNTG3C="'${ATMRES}.substrate_temperature.tileX.nc'"
+FNVEGC="'${ATMRES}.vegetation_greenness.tileX.nc'"
+FNSLPC="'${ATMRES}.slope_type.tileX.nc'"
+FNVMNC="'${ATMRES}.vegetation_greenness.tileX.nc'"
+FNVMXC="'${ATMRES}.vegetation_greenness.tileX.nc'"
 
 ####################################
 # parse and edit namelist files

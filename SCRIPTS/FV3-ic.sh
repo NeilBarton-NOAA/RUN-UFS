@@ -3,6 +3,10 @@
 set -u
 echo 'FV3-ic.sh'
 ICDIR=${ICDIR}
+####################################
+# first remove possible restart data
+rm -f INPUT/*sfc_data*nc INPUT/*gfs_data*.nc INPUT/gfs_ctrl.nc
+rm -f INPUT/*ca_data*nc INPUT/*fv_core.res*nc INPUT/*fv_srf_wnd.res*nc INPUT/*fv_tracer*nc INPUT/*phy_data*nc 
 
 n_files=$( find -L ${ICDIR} -name "*sfc_data*nc" 2>/dev/null | wc -l )
 if (( ${n_files} == 0 )); then
@@ -38,7 +42,7 @@ else #ATM WARMSTART
             if [[ ${f:11:4} == '0000' ]]; then
                 f=${f:16}
             fi
-            ln -sf ${atm_ic} INPUT/
+            ln -sf ${atm_ic} INPUT/${f}
         done
     done
     # make coupler.res file
