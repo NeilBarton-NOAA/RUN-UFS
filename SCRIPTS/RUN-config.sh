@@ -12,6 +12,7 @@ case ${RUN} in
         export ATM_RES=${ATM_RES:-C96}
         export OCN_RES=${OCN_RES:-100}
         export WAV_RES=${WAV_RES:-glo_100}
+        #export ATM_WPG=6
         export MOM_INPUT=${SCRIPT_DIR}/MOM_input_coldstart_100.IN
         ;;
     "GEFS")

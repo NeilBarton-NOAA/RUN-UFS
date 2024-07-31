@@ -22,7 +22,9 @@ atparse < ${PATHRT}/fv3_conf/${FV3_RUN} >> ${target_f}
 # replace cp with ln -sf
 sed -i "s:cp :ln -sf :g" ${target_f}
 sed -i "s:mkdir INPUT RESTART:mkdir -p INPUT RESTART:g" ${target_f}
-#
+
 export RT_SUFFIX=DUMMY
 chmod 755 ${target_f}
 source ${target_f}
+# remove any broken links
+find . -xtype l -exec rm {} \;

@@ -38,8 +38,8 @@ case "${ATMRES}" in
         ;;
     "C96")
         DT_ATMOS=${ATM_DT:-720}
-        ATM_INPES=${ATM_INPES:-2}
-        ATM_JNPES=${ATM_INPES:-2}
+        ATM_INPES=${ATM_INPES:-4}
+        ATM_JNPES=${ATM_INPES:-4}
         ATM_THRD=${ATM_THRD:-1}
         OUTPUT_FILE="'netcdf'"
         ;;

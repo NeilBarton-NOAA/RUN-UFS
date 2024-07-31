@@ -23,6 +23,14 @@ case "${OCNRES}" in
     ;;
 esac
 
+###########
+# Replay ICs
+REPLAY_ICS=${REPLAY_ICS:-F}
+if [[ ${REPLAY_ICS} == T ]]; then
+    export SHOUR=$( printf "%02d" $(( ${DTG:8:2} + 3 )) )
+    export SECS=$( printf "%05d" $(( $SHOUR * 3600 )) )
+fi
+
 ############
 # IC 
 CICE_RESTART=${CICE_RESTART:-'.true.'}
