@@ -2,16 +2,15 @@
 set -u
 # Defaults to Compile the SFS configuration, but could be changed
 # examine the UFS/tests/rt.conf for COMPILE options for specific configurations
-export RUN=GEFS
+export RUN=SFS
 TOPDIR=${PWD}
-UPDATE_CODE=F
 
 export SCRIPT_DIR=${TOPDIR}/SCRIPTS
 source ${TOPDIR}/SCRIPTS/RUN-config.sh 
 ####################################
 # get submodules
 cd ${TOPDIR}/UFS
-[[ ${UPDATE_CODE} == T ]] && git submodule update --init --recursive
+[[ ! -d ${TOPDIR}/UFS/CICE-interface/CICE/ ]] && git submodule update --init --recursive
 
 ####################################
 # build model

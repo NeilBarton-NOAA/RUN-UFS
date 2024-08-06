@@ -8,7 +8,6 @@
 # Set Top options
 export DTG=2021050100
 export RUN=SFS
-export ICDIR=${NPB_WORKDIR}/ICs/REPLAY_ICs/C96mx100/${DTG}/mem000
 export FORECAST_LENGTH=5 # in days
 export WALLCLOCK=9 #$(( 2 * 60 )) # in minutes
 export JOB_QUEUE=debug # batch or debug on hera

@@ -11,9 +11,7 @@ declare -rx PS4='+ $(basename ${BASH_SOURCE[0]:-${FUNCNAME[0]:-"Unknown"}})[${LI
 #       - link needed data instead of running ./fv3_run
 #       - not sure if field table in FV3-config.sh is needed
 ################################################
-# defaults
-source ${SCRIPT_DIR}/RUN-config.sh
-# tools
+# machine specific items
 export PATHRT=${HOMEufs}/tests
 # machine specific directories
 source ${PATHRT}/detect_machine.sh
@@ -38,7 +36,11 @@ EOF
     chmod 755 ${target_f}
 fi
 source ${target_f}
-export MACHINE_ID SCHEDULER STMP
+STMP=${STMP%%${USER}*}
+export MACHINE_ID SCHEDULER STMP PARTITION
+
+# defaults
+source ${SCRIPT_DIR}/RUN-config.sh
 
 # variables
 source ${PATHRT}/default_vars.sh
@@ -75,7 +77,8 @@ export MESH_WAV=mesh.${WW3_DOMAIN}.nc
 ############
 # Run Directory
 RUNDIR=${STMP}/${USER}/UFS/run_$$
-RUNDIR=${STMP}/${USER}/UFS/run_${RUN}-${APP}
+export TEST_NAME=${RUN}-${APP}
+RUNDIR=${STMP}/${USER}/UFS/run_${TEST_NAME}
 [[ -d ${RUNDIR} ]] && rm -r ${RUNDIR}/*
 mkdir -p ${RUNDIR} && mkdir -p ${RUNDIR}/INPUT && cd ${RUNDIR}
 echo "RUNDIR is at ${RUNDIR}"
@@ -90,6 +93,7 @@ fi
 
 ############
 # IC files
+export ICDIR=${ICDIR:-${STMP}/${USER}/ICs/REPLAY_ICs/${ATM_RES}mx${OCN_RES}/${DTG}/mem000}
 ${SCRIPT_DIR}/IC-config.sh ${APP}
 if (( ${?} > 0 )); then
     echo "FAILED @ ${SCRIPT_DIR}/IC-config.sh ${APP}"
