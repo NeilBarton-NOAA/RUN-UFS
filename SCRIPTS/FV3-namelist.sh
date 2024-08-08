@@ -16,6 +16,8 @@ ENS_SETTINGS=${ENS_SETTINGS:-T}
         
 ############
 # resolution based options
+K_SPLIT=2
+N_SPLIT=5
 case "${ATMRES}" in
     "C384") 
         DT_ATMOS=${ATM_DT:-300}
@@ -37,10 +39,12 @@ case "${ATMRES}" in
         OUTPUT_FILE="'netcdf'"
         ;;
     "C96")
-        DT_ATMOS=${ATM_DT:-720}
+        DT_ATMOS=${ATM_DT:-900}
         ATM_INPES=${ATM_INPES:-4}
-        ATM_JNPES=${ATM_INPES:-4}
+        ATM_JNPES=${ATM_JNPES:-4}
         ATM_THRD=${ATM_THRD:-1}
+        K_SPLIT=1
+        N_SPLIT=8
         OUTPUT_FILE="'netcdf'"
         ;;
     *)
@@ -48,6 +52,7 @@ case "${ATMRES}" in
         exit 1
         ;;
 esac
+DT_INNER=${DT_ATMOS}
 
 ####################################
 # WARM_START
@@ -140,6 +145,12 @@ cat <<EOF > diag_table
 ${SYEAR}${SMONTH}${SDAY}.${SHOUR}Z.${ATMRES}.64bit.non-mono
 ${SYEAR} ${SMONTH} ${SDAY} ${SHOUR} 0 0
 EOF
+fi
+if (( ${K_SPLIT} != 2 )); then
+    sed -i "s:k_split = 2:k_split = ${K_SPLIT}:g" input.nml
+fi
+if (( ${N_SPLIT} != 5 )); then
+    sed -i "s:n_split = 5:n_split = ${N_SPLIT}:g" input.nml
 fi
 
 # add stochastic options to input.nml
