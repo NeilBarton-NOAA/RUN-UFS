@@ -54,3 +54,8 @@ else #ATM WARMSTART
 EOF
 fi #cold start/warm start
 
+if [[ ${REPLAY_ICS} == T ]] && [[ ${ENS_SETTINGS} == T ]];  then
+    file=$( find -L ${ICDIR} -name "*fv3_perturbation*.nc" )
+    ln -s ${file} INPUT/atminc.nc
+fi
+

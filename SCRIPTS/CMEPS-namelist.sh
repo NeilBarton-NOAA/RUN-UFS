@@ -35,6 +35,7 @@ esac
 
 ########################
 # write namelists files
+echo "  "${UFS_CONFIGURE}
 atparse < ${PATHRT}/parm/${UFS_CONFIGURE} > ufs.configure
 cp ${PATHRT}/parm/fd_ufs.yaml fd_ufs.yaml
 

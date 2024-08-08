@@ -18,3 +18,10 @@ else
         ln -sf ${ocn_ic} INPUT/${f}
     done
 fi
+
+
+if [[ ${REPLAY_ICS} == T ]] && [[ ${ENS_SETTINGS} == T ]];  then
+    file=$( find -L ${ICDIR} -name "*mom6_perturbation*.nc" )
+    ln -s ${file} INPUT/mom6_increment.nc
+fi
+

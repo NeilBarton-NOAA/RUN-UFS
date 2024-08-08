@@ -12,7 +12,7 @@ export FORECAST_LENGTH=5 # in days
 export WALLCLOCK=9 #$(( 2 * 60 )) # in minutes
 export JOB_QUEUE=debug # batch or debug on hera
 export REPLAY_ICS=T
-export ENS_SETTINGS=F
+export ENS_SETTINGS=T
 export DEBUG=F
 
 ############

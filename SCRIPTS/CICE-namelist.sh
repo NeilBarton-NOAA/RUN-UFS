@@ -71,8 +71,8 @@ fi
 
 ####################################
 # parse namelist file
-[[ -f ${PATHRT}/parm/ice_in.IN ]] && parse_file=ice_in.IN
-atparse < ${PATHRT}/parm/${parse_file} > ice_in
+echo "  ice_in.IN"
+atparse < ${PATHRT}/parm/ice_in.IN > ice_in
 if [[ ${CICE_OUTPUT} == F ]]; then
     sed -i "s:histfreq       = 'm','d','h','x','x':histfreq       = 'x','x','x','x','x':g"  ice_in
     sed -i "s:histfreq_n     =  0 , 0 , 6 , 1 , 1:histfreq_n     =  0 , 0 , 0 , 0 , 0:g" ice_in

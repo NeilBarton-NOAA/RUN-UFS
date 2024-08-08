@@ -76,9 +76,9 @@ export MESH_WAV=mesh.${WW3_DOMAIN}.nc
 [[ ${APP} == *A* ]] && export CPLCHM=.true.
 ############
 # Run Directory
-RUNDIR=${STMP}/${USER}/UFS/run_$$
 export TEST_NAME=${RUN}-${APP}
 RUNDIR=${STMP}/${USER}/UFS/run_${TEST_NAME}
+RUNDIR=${STMP}/${USER}/UFS/run_${TEST_NAME}_$$
 [[ -d ${RUNDIR} ]] && rm -r ${RUNDIR}/*
 mkdir -p ${RUNDIR} && mkdir -p ${RUNDIR}/INPUT && cd ${RUNDIR}
 echo "RUNDIR is at ${RUNDIR}"
@@ -93,7 +93,7 @@ fi
 
 ############
 # IC files
-export ICDIR=${ICDIR:-${STMP}/${USER}/ICs/REPLAY_ICs/${ATM_RES}mx${OCN_RES}/${DTG}/mem000}
+export ICDIR=${ICDIR:-${STMP}/${USER}/ICs/REPLAY_ICs/${ATM_RES}mx${OCN_RES}/${DTG}/mem001}
 ${SCRIPT_DIR}/IC-config.sh ${APP}
 if (( ${?} > 0 )); then
     echo "FAILED @ ${SCRIPT_DIR}/IC-config.sh ${APP}"

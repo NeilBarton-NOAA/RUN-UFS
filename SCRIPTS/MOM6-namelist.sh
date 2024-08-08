@@ -51,13 +51,7 @@ if (( ${n_files} == 0 )); then
 fi
 
 ###################################
-# namelist settings
-if [[ ${ENS_SETTINGS} == T ]]; then
-    DO_OCN_SPPT=true
-    PERT_EPBL=true
-fi
-
-###################################
 # parse namelist file
+echo "  "${MOM_INPUT}
 atparse < ${MOM_INPUT} > INPUT/MOM_input
 

@@ -80,7 +80,6 @@ WPG=${ATM_WPG:-0}
 WRTTASK_PER_GROUP=$(( WPG * atm_omp_num_threads ))
 [[ ${WPG} == 0 ]] && QUILTING='.false.' 
 
-
 ####################################
 #  input.nml edits based on components running
 [[ ${APP} != *W* ]] && CPLWAV=.false. && CPLWAV2ATM=.false.
@@ -93,14 +92,7 @@ if [[ ${REPLAY_ICS} == T ]]; then
 fi
 ####################################
 # namelist options
-if [[ ${ENS_SETTINGS} == T ]]; then
-    DO_SPPT=.true.
-    DO_SHUM=.false.
-    DO_SKEB=.true.
-    PERT_MP=.false.
-    PERT_RADTEND=.false.
-    PERT_CLDS=.true.
-fi
+[[ ${ENS_SETTINGS} == T ]] && source ${SCRIPT_DIR}/ENSEMBLE-config.sh
 
 ################################################
 # files with resolution 
@@ -132,6 +124,9 @@ sed -n "${ln_start},${ln_end}p;${ln_extra}q" ${rt_f} >> ${target_f}
 chmod 755 ${target_f}
 source ${target_f}
 
+echo "  "${INPUT_NML}
+echo "  "${MODEL_CONFIGURE}
+echo "  "${FIELD_TABLE}
 atparse < ${PATHRT}/parm/${INPUT_NML} > input.nml
 atparse < ${PATHRT}/parm/${MODEL_CONFIGURE} > model_configure
 cp "${PATHRT}/parm/noahmptable.tbl" .
@@ -149,31 +144,5 @@ fi
 
 # add stochastic options to input.nml
 if [[ ${ENS_SETTINGS} == T ]]; then
-echo "IN ENS_SETTINGS find a better way to do this!"
-ens_options="\\
-  skeb = 0.8,-999,-999,-999,-999\n\
-  iseed_skeb = 0\n\
-  skeb_tau = 2.16E4,1.728E5,2.592E6,7.776E6,3.1536E7\n\
-  skeb_lscale = 500.E3,1000.E3,2000.E3,2000.E3,2000.E3\n\
-  skebnorm = 1\n\
-  skeb_npass = 30\n\
-  skeb_vdof = 5\n\
-  sppt = 0.56,0.28,0.14,0.056,0.028\n\
-  iseed_sppt = 20210929000103,20210929000104,20210929000105,20210929000106,20210929000107\n\
-  sppt_tau = 2.16E4,2.592E5,2.592E6,7.776E6,3.1536E7\n\
-  sppt_lscale = 500.E3,1000.E3,2000.E3,2000.E3,2000.E3\n\
-  sppt_logit = .true.\n\
-  sppt_sfclimit = .true.\n\
-  use_zmtnblck = .true.\n\
-  OCNSPPT=0.8,0.4,0.2,0.08,0.04\n\
-  OCNSPPT_LSCALE=500.E3,1000.E3,2000.E3,2000.E3,2000.E3\n\
-  OCNSPPT_TAU=2.16E4,2.592E5,2.592E6,7.776E6,3.1536E7\n\
-  ISEED_OCNSPPT=20210929000108,20210929000109,20210929000110,20210929000111,20210929000112\n\
-  EPBL=0.8,0.4,0.2,0.08,0.04\n\
-  EPBL_LSCALE=500.E3,1000.E3,2000.E3,2000.E3,2000.E3\n\
-  EPBL_TAU=2.16E4,2.592E5,2.592E6,7.776E6,3.1536E7\n\
-  ISEED_EPBL=20210929000113,20210929000114,20210929000115,20210929000116,20210929000117
-"
-sed -i "/nam_stochy/a ${ens_options}" input.nml
+    WRITE_STOCHY_NAMELIST
 fi
-

@@ -34,6 +34,7 @@ cp ${UFS_EXEC} fv3.exe
 [[ -f out ]] && rm out
 
 # Create job_card
+echo "  "fv3_${SCHEDULER}.IN_${MACHINE_ID} 
 atparse < ${PATHRT}/fv3_conf/fv3_${SCHEDULER}.IN_${MACHINE_ID} > job_card
 # add module purge options
 ln=$(grep -wn "set +x" job_card | cut -d: -f1) && ln=$(( ln + 1))
