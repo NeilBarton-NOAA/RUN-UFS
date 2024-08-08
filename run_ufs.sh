@@ -9,7 +9,7 @@
 export DTG=2021050100
 export RUN=SFS
 export FORECAST_LENGTH=5 # in days
-export WALLCLOCK=9 #$(( 2 * 60 )) # in minutes
+export WALLCLOCK=20 #$(( 2 * 60 )) # in minutes
 export JOB_QUEUE=debug # batch or debug on hera
 export REPLAY_ICS=T
 export ENS_SETTINGS=T

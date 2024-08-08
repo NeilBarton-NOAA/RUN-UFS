@@ -12,7 +12,7 @@ export PERT_RADTEND=.false.
 export PERT_CLDS=.true.
 # OCN Options
 export DO_OCN_SPPT="True"
-export DO_OCN_PERT_EPBL="True"
+export PERT_EPBL="True"
 
 ############
 # Resolution Based Options
@@ -129,7 +129,7 @@ cat >> input.nml <<EOF
 EOF
 fi
 
-if [[ "${DO_OCN_PERT_EPBL}" == "True" ]]; then
+if [[ "${PERT_EPBL}" == "True" ]]; then
 cat >> input.nml <<EOF
   EPBL=${EPBL}
   EPBL_LSCALE=${LSCALE}
