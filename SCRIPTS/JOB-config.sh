@@ -37,10 +37,10 @@ cp ${UFS_EXEC} fv3.exe
 echo "  "fv3_${SCHEDULER}.IN_${MACHINE_ID} 
 atparse < ${PATHRT}/fv3_conf/fv3_${SCHEDULER}.IN_${MACHINE_ID} > job_card
 # add module purge options
-ln=$(grep -wn "set +x" job_card | cut -d: -f1) && ln=$(( ln + 1))
-sed -i "${ln} i module purge" job_card
+ln=$(grep -wn "set +x" job_card | cut -d: -f1) && ln=$(( ln + 1 ))
+sed -i "${ln} i export I_MPI_SHM_HEAP_VSIZE=16384" job_card && ln=$(( ln + 1 ))
+sed -i "${ln} i module purge" job_card && ln=$(( ln + 1 ))
 if [[ ${MACHINE_ID} == wcoss2* ]]; then #WCOSS2
-    ln=$(( ln + 1))
     sed -i "${ln} i module reset" job_card
 fi
 

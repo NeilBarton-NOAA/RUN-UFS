@@ -13,6 +13,8 @@ export PERT_CLDS=.true.
 # OCN Options
 export DO_OCN_SPPT="True"
 export PERT_EPBL="True"
+#export DO_OCN_SPPT="False"
+#export PERT_EPBL="False"
 
 ############
 # Resolution Based Options
@@ -23,7 +25,7 @@ case "${ATMRES}" in
     ;;
 "C96")
     export SKEB="0.03,-999,-999,-999,-999"
-    export SPPT="0.56,0.28,0.14,0.056,0.028"
+    export SPPT="0.28,0.14,0.056,0.028,0.014"
     ;;
 *)
     echo "  FATAL: ${ATMRES} not found yet supported"
@@ -31,15 +33,10 @@ case "${ATMRES}" in
     ;;
 esac
 
-export OCNSPPT_TAU="2.16E4,2.592E5,2.592E6,7.776E6,3.1536E7"
-export OCNSPPT_LSCALE="500.E3,1000.E3,2000.E3,2000.E3,2000.E3"
-export EPBL_TAU="2.16E4,2.592E5,2.592E6,7.776E6,3.1536E7"
-export EPBL_LSCALE="500.E3,1000.E3,2000.E3,2000.E3,2000.E3"
-
 case "${OCNRES}" in
 "100")
-    export OCNSPPT="0.8,0.4,0.2,0.08,0.04"
-    export EPBL="0.8,0.4,0.2,0.08,0.04"
+    export OCNSPPT="0.4,0.2,0.1,0.04,0.02"
+    export EPBL="0.4,0.2,0.1,0.04,0.02"
     ;;
 "025")
     export OCNSPPT="0.8,0.4,0.2,0.08,0.04"
