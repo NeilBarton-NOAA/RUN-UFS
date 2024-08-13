@@ -12,8 +12,11 @@ case ${RUN} in
         export ATM_RES=${ATM_RES:-C96}
         export OCN_RES=${OCN_RES:-100}
         export WAV_RES=${WAV_RES:-glo_100}
+        export ATM_INPES=${ATM_INPES:-6}
+        export ATM_JNPES=${ATM_JNPES:-8}
         #export ATM_WPG=6
         export MOM_INPUT=${SCRIPT_DIR}/MOM_input_coldstart_100.IN
+        export REPLAY_ICS=${REPLAY_ICS:-T}
         ;;
     "GEFS")
         export compile_search=s2swa_32bit_pdlib
@@ -23,6 +26,7 @@ case ${RUN} in
         export ATM_RES=${ATM_RES:-C384}
         export OCN_RES=${OCN_RES:-025}
         export WAV_RES=${WAV_RES:-glo_025}
+        export REPLAY_ICS=${REPLAY_ICS:-T}
         ;;
     *)
         echo "  FATAL: ${ATMRES} not found yet supported"

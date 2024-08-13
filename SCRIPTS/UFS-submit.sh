@@ -49,9 +49,8 @@ source ${PATHRT}/tests/${RT_TEST}
 ############
 # edits to defaults if needed
 # forecast length
-FL=${FORECAST_LENGTH:-1}
-FHMAX=$( echo "${FL} * 24" | bc )
-FHMAX=${FHMAX%.*}
+FORECAST_LENGTH=${FORECAST_LENGTH:-6}
+FHMAX=${FORECAST_LENGTH}
 # start date
 DTG=${DTG:-${SYEAR}${SMONTH}${SDAY}${SHOUR}00}
 export SYEAR=${DTG:0:4}
@@ -78,7 +77,7 @@ export MESH_WAV=mesh.${WW3_DOMAIN}.nc
 # Run Directory
 export TEST_NAME=${RUN}-${APP}
 RUNDIR=${STMP}/${USER}/UFS/run_${TEST_NAME}
-RUNDIR=${STMP}/${USER}/UFS/run_${TEST_NAME}_$$
+#RUNDIR=${STMP}/${USER}/UFS/run_${TEST_NAME}_$$
 [[ -d ${RUNDIR} ]] && rm -r ${RUNDIR}/*
 mkdir -p ${RUNDIR} && mkdir -p ${RUNDIR}/INPUT && cd ${RUNDIR}
 echo "RUNDIR is at ${RUNDIR}"

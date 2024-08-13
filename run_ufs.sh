@@ -6,15 +6,15 @@
 # Default SFS configuration
 ####################################
 # Set Top options
-export DTG=2021050100
-export RUN=SFS
-export FORECAST_LENGTH=5 # in days
-export WALLCLOCK=20 #$(( 2 * 60 )) # in minutes
+#export DTG=2021050100
+export DTG=2018082000
+export RUN=GEFS
+export FORECAST_LENGTH=6 #$(( 31 * 4 * 24 )) # in hours
+export WALLCLOCK=30 # in minutes
 export JOB_QUEUE=debug # batch or debug on hera
-export REPLAY_ICS=T
-export ENS_SETTINGS=T
+export ENS_SETTINGS=F
 export DEBUG=F
-
+        
 ############
 # Submit Forecast
 TOPDIR=${PWD}
