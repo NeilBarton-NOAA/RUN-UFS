@@ -1,0 +1,142 @@
+#!jinja2
+########################
+# Items that may need changed
+{% set MAIL_ADDRESS = "neil.barton@noaa.gov" %}
+
+####################################
+# define suite
+#   hopefully user does not have to edit anything below here
+{% set ICP = '19940101' %}
+{% set FCP = '20231231' %}
+{% set FORECAST_LENGTH = 48 %} # in hours
+{% set RUN = "SFS" %}
+{% set APP = "S2S" %}
+{% set NENS = 0 %}
+{% set ATMRES = "C96" %}
+{% set OCNRES = "mx100" %}
+{% set DATES = "R1/20210501T0000Z" %}
+
+####################################
+# DATES option
+# 19940501T0000Z/P1Y,19941101T0000Z/P1Y : Run 1st of May and November (SFS baseline start dates)
+# P1W                                   : Run once a week Start on {{ ICP }}
+# P1W                                   : Run once a week Start on {{ ICP }}
+# W-4T00                                : Run on Thursdays
+# W-1T00,W-4T00                         : Run on Mondays and Thursdays
+# 01T00                                 : Run on the First of each month
+# R1/20151101T00,R1/...                 : Run these Specifc Dates
+
+####################################
+# Options based on the above
+{% if APP == "S2S" %}
+{% set MODELS = "ATM, OCN, ICE" %}
+{% endif %}
+
+[meta]
+    title = "Run UFS Model"
+    description = {{ RUN }} {{ APP }}
+
+[scheduler]
+    UTC mode = True
+    [[events]]
+        mail events = failed, stall, abort, submission failed
+    [[mail]]
+        to = Neil.Barton@noaa.gov
+
+[task parameters]
+    models = {{ MODELS }}
+    member  = 0..{{ NENS }}
+
+[scheduling]
+    initial cycle point = {{ ICP }}
+    final cycle point = {{ FCP }}
+    runahead limit = P11
+    [[queues]]
+        [[[default]]]
+            limit = 22
+    [[graph]]
+        R1 = """
+        machine_ID
+        """
+    {{ DATES }} = """
+        machine_ID[{{ICP}}]    => fixfiles<member>
+        fixfiles<member>       => ics<member> & namelists<member>
+        ics<member> & namelists<member> => forecast<member>
+        forecast<member>       => cleanup<member>
+        """
+
+################################################
+# tasks
+[runtime]
+    [[root]] 
+        execution retry delays = 3*PT10M
+        init-script = """
+        umask 022
+        set -xu
+        export SCRIPT_DIR=${CYLC_RUN_DIR}/${CYLC_WORKFLOW_NAME}/_cylc-install/source/SCRIPTS
+        export HOMEufs=${CYLC_RUN_DIR}/${CYLC_WORKFLOW_NAME}/_cylc-install/source/UFS
+        source ${SCRIPT_DIR}/modules.sh
+        """
+        
+
+        [[[environment]]]
+            DTG                 = $(cylc cycle-point --template=%Y%m%d%H)
+            FORECAST_LENGTH     = {{ FORECAST_LENGTH }}
+            ATMRES              = {{ ATMRES }}
+            OCNRES              = {{ OCNRES }}
+            RUN                 = {{ RUN }}
+            CYLC_RUN            = T
+        
+
+####################################
+# grab experiments and obs
+    [[machine_ID]]
+        script = """
+        ${SCRIPT_DIR}/MACHINE-ID.sh ${SCRIPT_DIR}/MACHINE-config.sh ${HOMEufs}
+        """
+    [[UFS_SUBMIT]]
+        pre-script = """
+        export MEM=${CYLC_TASK_PARAM_member}
+        source ${SCRIPT_DIR}/UFS-submit.sh  
+        """
+    [[fixfiles<member>]]
+        inherit = UFS_SUBMIT
+        script = """
+        ${SCRIPT_DIR}/FIXFILES-config.sh ${APP}
+        """
+    
+    [[ics<member>]]
+        inherit = UFS_SUBMIT
+        script = """
+        ${SCRIPT_DIR}/IC-config.sh ${APP}
+        """
+    
+    [[namelists<member>]]
+        inherit = UFS_SUBMIT
+        script = """
+        ${SCRIPT_DIR}/NAMELIST-config.sh ${APP}
+        """
+
+    [[FORECAST]]
+        inherit = UFS_SUBMIT
+        platform = slurm_local
+        execution time limit = PT20M
+        [[[directives]]]
+           --account = marine-cpu
+           --qos = debug
+           --partition = hercules
+           --nodes = 5
+           --ntasks-per-node = 80
+           --exclusive = 
+    [[forecast<member>]]
+        inherit = FORECAST, UFS_SUBMIT
+        script = """
+        source ${SCRIPT_DIR}/CYLC-submit.sh
+        """
+    
+    [[cleanup<member>]]
+        inherit = UFS_SUBMIT
+        script = """
+        ${SCRIPT_DIR}/RUN-cleanup.sh 
+        """
+
