@@ -15,7 +15,8 @@ case ${RUN} in
         export ATM_INPES=${ATM_INPES:-6}
         export ATM_JNPES=${ATM_JNPES:-8}
         export ATM_WPG=6
-        export MOM_INPUT=${SCRIPT_DIR}/MOM_input_coldstart_100.IN
+        export POSTXCONFIG=${SCRIPT_DIR}/postxconfig-NT-SFS.txt
+        export MOM6_INTERP_ICS=T
         export OFFSET_START_HOUR=${OFFSET_START_HOUR:-3}
         ;;
     "GEFS")

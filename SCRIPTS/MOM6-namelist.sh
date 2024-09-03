@@ -43,6 +43,9 @@ case "${OCNRES}" in
     ;;
 esac
 
+if [[ ${MOM6_INTERP_ICS:-F} == T ]]; then
+    export MOM6_WARMSTART_FILE="MOM.res.nc"
+fi
 ####################################
 # look for restarts if provided
 n_files=$( find -L ${ICDIR} -name "*MOM.res*nc" 2>/dev/null | wc -l )

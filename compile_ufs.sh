@@ -10,7 +10,7 @@ source ${TOPDIR}/SCRIPTS/RUN-config.sh
 ####################################
 # get submodules
 cd ${TOPDIR}/UFS
-[[ ! -d ${TOPDIR}/UFS/CICE-interface/CICE/ ]] && git submodule update --init --recursive
+[[ ! -d ${TOPDIR}/UFS/CICE-interface/CICE/cicecore ]] && git submodule update --init --recursive
 
 ####################################
 # build model
