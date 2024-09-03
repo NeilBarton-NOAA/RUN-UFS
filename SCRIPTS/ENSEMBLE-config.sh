@@ -1,20 +1,19 @@
 #!/bin/sh
 # Stochastic physics parameters for perturbed forecasts
+echo "Ensemble Perturbation Methods Turned On"
 # ATMOS Options
+export USE_ATM_PERTURB_FILES=${USE_ATM_PERTURB_FILES:-T}
 export DO_SPPT=.true.
-#export DO_SKEB=.true.
-export DO_SKEB=.false.
-echo "SKEB will be false in PR/Bug fix!!!!"
+export DO_SKEB=.true.
 export DO_SHUM=.false.
 export DO_CA=.true.
 export PERT_MP=.false.
 export PERT_RADTEND=.false.
 export PERT_CLDS=.true.
 # OCN Options
+export USE_OCN_PERTURB_FILES=${USE_OCN_PERTURB_FILES:-T}
 export DO_OCN_SPPT="True"
 export PERT_EPBL="True"
-#export DO_OCN_SPPT="False"
-#export PERT_EPBL="False"
 
 ############
 # Resolution Based Options
@@ -50,7 +49,7 @@ esac
 
 ############
 # If replay ICs are used
-if [[ "${REPLAY_ICS}" == "T" ]]; then
+if [[ ${USE_OCN_PERTURB_FILES} == T ]]; then
     export READ_INCREMENT=".true."
     export RES_LATLON_DYNAMICS="atminc.nc"
     export ODA_INCUPD="True"

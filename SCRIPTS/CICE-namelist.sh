@@ -24,10 +24,10 @@ case "${OCNRES}" in
 esac
 
 ###########
-# Replay ICs
-REPLAY_ICS=${REPLAY_ICS:-F}
-if [[ ${REPLAY_ICS} == T ]]; then
-    export SHOUR=$( printf "%02d" $(( ${DTG:8:2} + 3 )) )
+# Replay ICs with +3 start
+OFFSET_START_HOUR=${OFFSET_START_HOUR:-0}
+if (( ${OFFSET_START_HOUR} != 0 )); then
+    export SHOUR=$( printf "%02d" $(( ${DTG:8:2} + ${OFFSET_START_HOUR} )) )
     export SECS=$( printf "%05d" $(( $SHOUR * 3600 )) )
 fi
 
@@ -74,11 +74,11 @@ fi
 echo "  ice_in.IN"
 atparse < ${PATHRT}/parm/ice_in.IN > ice_in
 if [[ ${CICE_OUTPUT} == F ]]; then
-    sed -i "s:histfreq       = 'm','d','h','x','x':histfreq       = 'x','x','x','x','x':g"  ice_in
-    sed -i "s:histfreq_n     =  0 , 0 , 6 , 1 , 1:histfreq_n     =  0 , 0 , 0 , 0 , 0:g" ice_in
+    sed -i "s:histfreq       = 'm','d','h','x','x':histfreq      = 'x','x','x','x','x':g" ice_in
+    sed -i "s:histfreq_n     =  0 , 0 , 6 , 1 , 1 :histfreq_n    =  0 , 0 , 0 , 0 , 0:g" ice_in
 else
-    sed -i "s:histfreq       = 'm','d','h','x','x':histfreq       = 'm','d','h','1','x':g"  ice_in
-    sed -i "s:histfreq_n     =  0 , 0 , 6 , 1 , 1:histfreq_n     =  0 , 0 , 3 , 1 , 0:g" ice_in
+    sed -i "s:histfreq       = 'm','d','h','x','x':histfreq      = 'm','d','h','x','x':g" ice_in
+    sed -i "s:histfreq_n     =  0 , 0 , 6 , 1 , 1 :histfreq_n    =  0 , 1 , 0 , 0 , 0:g" ice_in
 
 fi
 if [[ ${CICE_RESTART} == '.false.' ]]; then

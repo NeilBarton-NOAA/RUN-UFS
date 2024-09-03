@@ -1,7 +1,7 @@
 #!/bin/bash
 set -ux
 ################################################
-# create MACHINE-config.sh script
+# create MACHINE-id.sh script
 ################################################
 # machine specific items
 target_f=${1}

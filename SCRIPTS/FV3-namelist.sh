@@ -88,16 +88,11 @@ WRTTASK_PER_GROUP=$(( WPG * atm_omp_num_threads ))
 ####################################
 #  input.nml edits based on components running
 [[ ${APP} != *W* ]] && CPLWAV=.false. && CPLWAV2ATM=.false.
-[[ ${APP} != "A" ]] && IAER=2011
+[[ ${APP} == "A" ]] && IAER=2011
 
 ####################################
-REPLAY_ICS=${REPLAY_ICS:-F}
-if [[ ${REPLAY_ICS} == T ]]; then
-    FHROT=3
-fi
+FHROT=${OFFSET_START_HOUR:-0}
 ####################################
-# namelist options
-[[ ${ENS_SETTINGS} == T ]] && source ${SCRIPT_DIR}/ENSEMBLE-config.sh
 
 ################################################
 # files with resolution 
@@ -138,8 +133,8 @@ cp "${PATHRT}/parm/noahmptable.tbl" .
 cp ${PATHRT}/parm/field_table/${FIELD_TABLE} field_table 
 if [[ ${QUILTING} == '.true.' ]]; then
     atparse < ${PATHRT}/parm/diag_table/${DIAG_TABLE} > diag_table
-    sed -i "s:6,  "hours", 1,:${OUTPUT_FH},  "hours", 1,:g" diag_table
-    sed -i "s:1,  "days", 1,:${OUTPUT_FH},  "hours", 1,:g" diag_table
+#    sed -i "s:6,  "hours", 1,:${OUTPUT_FH},  "hours", 1,:g" diag_table
+#    sed -i "s:1,  "days", 1,:${OUTPUT_FH},  "hours", 1,:g" diag_table
 else
 cat <<EOF > diag_table
 ${SYEAR}${SMONTH}${SDAY}.${SHOUR}Z.${ATMRES}.64bit.non-mono

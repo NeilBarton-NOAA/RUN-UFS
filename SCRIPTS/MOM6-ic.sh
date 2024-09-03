@@ -19,9 +19,12 @@ else
     done
 fi
 
-
-if [[ ${REPLAY_ICS} == T ]] && [[ ${ENS_SETTINGS} == T ]];  then
+if [[ ${USE_OCN_PERTURB_FILES:-F} == T ]]; then
     file=$( find -L ${ICDIR} -name "*mom6_perturbation*.nc" )
+    if (( ${#file} == 0 )); then
+        echo "FATAL: *mom6_perturbation*.nc not found"
+        exit 1
+    fi
     ln -s ${file} INPUT/mom6_increment.nc
 fi
 

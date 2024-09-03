@@ -6,6 +6,8 @@ declare -rx PS4='+ $(basename ${BASH_SOURCE[0]:-${FUNCNAME[0]:-"Unknown"}})[${LI
 source ${PATHRT}/atparse.bash
 source ${PATHRT}/rt_utils.sh
 
+[[ ${ENS_SETTINGS} == T ]] && source ${SCRIPT_DIR}/ENSEMBLE-config.sh
+
 source ${SCRIPT_DIR}/FV3-namelist.sh
 source ${SCRIPT_DIR}/MOM6-namelist.sh
 source ${SCRIPT_DIR}/CICE-namelist.sh

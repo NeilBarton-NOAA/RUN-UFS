@@ -1,6 +1,8 @@
 #!/bin/bash
 set -u
-DEBUG=${DEBUG:-F}
+export DEBUG=${DEBUG:-F}
+CYLC_RUN=${CYLC_RUN:-F}
+MEM=${MEM:-0} && MEM=$( printf "%03d" ${MEM} )
 [[ ${DEBUG} == T ]] && set -x
 declare -rx PS4='+ $(basename ${BASH_SOURCE[0]:-${FUNCNAME[0]:-"Unknown"}})[${LINENO}]'
 
@@ -14,30 +16,11 @@ declare -rx PS4='+ $(basename ${BASH_SOURCE[0]:-${FUNCNAME[0]:-"Unknown"}})[${LI
 # machine specific items
 export PATHRT=${HOMEufs}/tests
 # machine specific directories
-source ${PATHRT}/detect_machine.sh
-rm ${SCRIPT_DIR}/MACHINE-config.sh
-if [[ ! -f ${SCRIPT_DIR}/MACHINE-config.sh ]]; then
-    rt_f=${PATHRT}/rt.sh
-    target_f=${SCRIPT_DIR}/MACHINE-config.sh
-cat << EOF > ${target_f}
-#!/bin/bash -u
-# machine specific items grab from the rt.sh file
-if [[ ${MACHINE_ID} == wcoss2 ]]; then
-    export ACCNR=${ACCNR:-GFS-DEV}
-else
-    export ACCNR=${ACCNR:-marine-cpu}
-fi
-EOF
-    ln_start=$(grep -n 'case ${MACHINE_ID}' ${rt_f} | head -n 1 | cut -d: -f1)
-    ln_end=$(grep -n 'esac' ${rt_f} | head -n 2 | tail -n 1 | cut -d: -f1)
-    ln_extra=$(( ln_end + 1 ))
-    sed -n "${ln_start},${ln_end}p;${ln_extra}q" ${rt_f} >> ${target_f}
-    grep INPUTDATA ${rt_f} | grep -v ENTITY >> ${target_f}
-    chmod 755 ${target_f}
-fi
+target_f=${SCRIPT_DIR}/MACHINE-id.sh
+[[ ! -f ${target_f} ]] && ${SCRIPT_DIR}/MACHINE-config.sh ${target_f} ${HOMEufs}
 source ${target_f}
 STMP=${STMP%%${USER}*}
-export MACHINE_ID SCHEDULER STMP PARTITION
+export MACHINE_ID SCHEDULER STMP PARTITION QUEUE
 
 # defaults
 source ${SCRIPT_DIR}/RUN-config.sh
@@ -75,12 +58,26 @@ export MESH_WAV=mesh.${WW3_DOMAIN}.nc
 [[ ${APP} == *A* ]] && export CPLCHM=.true.
 ############
 # Run Directory
-export TEST_NAME=${RUN}-${APP}
-RUNDIR=${STMP}/${USER}/UFS/run_${TEST_NAME}
-#RUNDIR=${STMP}/${USER}/UFS/run_${TEST_NAME}_$$
-[[ -d ${RUNDIR} ]] && rm -r ${RUNDIR}/*
+export TEST_NAME=${TEST_NAME:-${RUN}-${APP}}
+if [[ ${CYLC_RUN} == T ]]; then
+    if (( MEM > 0 )); then
+        export ENS_SETTINGS=T
+    else
+        export ENS_SETTINGS=F
+    fi
+    RUNDIR=${STMP}/${USER}/UFS/${TEST_NAME}/${DTG}/mem${MEM}
+else
+    RUNDIR=${STMP}/${USER}/UFS/run_${TEST_NAME}
+    RUNDIR=${RUNDIR}_$$
+    [[ -d ${RUNDIR} ]] && rm -r ${RUNDIR}/*
+    [[ ${ENS_SETTINGS:-F} == T ]] && MEM=001
+fi
 mkdir -p ${RUNDIR} && mkdir -p ${RUNDIR}/INPUT && cd ${RUNDIR}
 echo "RUNDIR is at ${RUNDIR}"
+
+# Top variables for CONFIG scripts
+export ICDIR=${ICDIR:-${STMP}/${USER}/ICs/REPLAY_ICs/${ATM_RES}mx${OCN_RES}/${DTG}/mem${MEM}}
+[[ ${CYLC_RUN} == T ]] && echo 'RUNNING IN CYCL ' && return
 
 ############
 # Get Fix Files
@@ -92,7 +89,6 @@ fi
 
 ############
 # IC files
-export ICDIR=${ICDIR:-${STMP}/${USER}/ICs/REPLAY_ICs/${ATM_RES}mx${OCN_RES}/${DTG}/mem001}
 ${SCRIPT_DIR}/IC-config.sh ${APP}
 if (( ${?} > 0 )); then
     echo "FAILED @ ${SCRIPT_DIR}/IC-config.sh ${APP}"

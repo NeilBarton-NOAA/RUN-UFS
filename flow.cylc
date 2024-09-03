@@ -63,6 +63,7 @@
         fixfiles<member>       => ics<member> & namelists<member>
         ics<member> & namelists<member> => forecast<member>
         forecast<member>       => cleanup<member>
+        # maybe add option for htar for computers that can htar
         """
 
 ################################################
@@ -92,7 +93,7 @@
 # grab experiments and obs
     [[machine_ID]]
         script = """
-        ${SCRIPT_DIR}/MACHINE-ID.sh ${SCRIPT_DIR}/MACHINE-config.sh ${HOMEufs}
+        ${SCRIPT_DIR}/MACHINE-config.sh ${SCRIPT_DIR}/MACHINE-id.sh ${HOMEufs}
         """
     [[UFS_SUBMIT]]
         pre-script = """
