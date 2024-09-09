@@ -132,21 +132,22 @@ atparse < ${PATHRT}/parm/${MODEL_CONFIGURE} > model_configure
 cp "${PATHRT}/parm/noahmptable.tbl" .
 cp ${PATHRT}/parm/field_table/${FIELD_TABLE} field_table 
 if [[ ${QUILTING} == '.true.' ]]; then
-    atparse < ${PATHRT}/parm/diag_table/${DIAG_TABLE} > diag_table
-#    sed -i "s:6,  "hours", 1,:${OUTPUT_FH},  "hours", 1,:g" diag_table
-#    sed -i "s:1,  "days", 1,:${OUTPUT_FH},  "hours", 1,:g" diag_table
+    EXP_DIAG_TABLE=${EXP_DIAG_TABLE:-${PATHRT}/parm/diag_table/${DIAG_TABLE}}
+    atparse < ${EXP_DIAG_TABLE} > diag_table
 else
 cat <<EOF > diag_table
 ${SYEAR}${SMONTH}${SDAY}.${SHOUR}Z.${ATMRES}.64bit.non-mono
 ${SYEAR} ${SMONTH} ${SDAY} ${SHOUR} 0 0
 EOF
 fi
-if (( ${K_SPLIT} != 2 )); then
-    sed -i "s:k_split = 2:k_split = ${K_SPLIT}:g" input.nml
-fi
-if (( ${N_SPLIT} != 5 )); then
-    sed -i "s:n_split = 5:n_split = ${N_SPLIT}:g" input.nml
-fi
+
+# Hopefull these options are added to RT soon
+sed -i "s:k_split = 2:k_split = ${K_SPLIT}:g" input.nml
+sed -i "s:n_split = 5:n_split = ${N_SPLIT}:g" input.nml
+sed -i "s:nudge_qv = .true.:nudge_qv = ${NUDGE_QV}:g" input.nml
+sed -i "s:rf_cutoff = 10.:rf_cutoff = ${RF_CUTOFF}:g" input.nml
+sed -i "s:fv_sg_adj = 450:fv_sg_adj = ${FV_SG_ADJ}:g" input.nml
+sed -i "s:vtdm4 = 0.02:vtdm4 = ${VTDM4}:g" input.nml 
 
 # add stochastic options to input.nml
 if [[ ${ENS_SETTINGS} == T ]]; then

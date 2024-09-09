@@ -15,7 +15,16 @@ case ${RUN} in
         export ATM_INPES=${ATM_INPES:-6}
         export ATM_JNPES=${ATM_JNPES:-8}
         export ATM_WPG=6
-        export POSTXCONFIG=${SCRIPT_DIR}/postxconfig-NT-SFS.txt
+        export K_SPLIT=1
+        export N_SPLIT=4
+        export TAU=8.0
+        export NUDGE_QV=.false.
+        export RF_CUTOFF=100
+        export FV_SG_ADJ=1800
+        export VTDM4=0.05
+        export EXP_POSTXCONFIG=${SCRIPT_DIR}/postxconfig-NT-SFS.txt
+        export FHZERO=24
+        export EXP_DIAG_TABLE=${SCRIPT_DIR}/diag_table.IN
         export MOM6_INTERP_ICS=T
         export OFFSET_START_HOUR=${OFFSET_START_HOUR:-3}
         ;;

@@ -40,10 +40,9 @@ USE_RESTART_TIME=${CICE_USE_RESTART_TIME:-.true.}
 
 ####################################
 # IO options
-CICE_OUTPUT=${CICE_OUTPUT:-F}
+CICE_OUTPUT=${CICE_OUTPUT:-T}
 RESTART_FREQ=${RESTART_FREQ:-$FHMAX}
 DUMPFREQ_N=$(( RESTART_FREQ / 24 ))
-CICE_HIST_AVG='.false.'
 
 ####################################
 # grid files
@@ -75,11 +74,11 @@ fi
 echo "  ice_in.IN"
 atparse < ${PATHRT}/parm/ice_in.IN > ice_in
 if [[ ${CICE_OUTPUT} == F ]]; then
-    sed -i "s:histfreq       = 'm','d','h','x','x':histfreq      = 'x','x','x','x','x':g" ice_in
-    sed -i "s:histfreq_n     =  0 , 0 , 6 , 1 , 1 :histfreq_n    =  0 , 0 , 0 , 0 , 0:g" ice_in
+    sed -i "s:histfreq       = 'm','d','h','x','x':histfreq      = 'x,'x','x','x','x':g" ice_in
+    sed -i "s:histfreq_n          = 0, 0, 6, 1, 1:histfreq_n          = 0, 0, 0, 0, 0:g" ice_in
 else
     sed -i "s:histfreq       = 'm','d','h','x','x':histfreq      = 'm','d','h','x','x':g" ice_in
-    sed -i "s:histfreq_n     =  0 , 0 , 6 , 1 , 1 :histfreq_n    =  0 , 1 , 0 , 0 , 0:g" ice_in
+    sed -i "s:histfreq_n          = 0, 0, 6, 1, 1:histfreq_n          = 1, 1, 0, 0, 0:g" ice_in
 
 fi
 if [[ ${CICE_RESTART} == '.false.' ]]; then

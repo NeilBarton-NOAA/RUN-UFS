@@ -25,9 +25,9 @@ sed -i "s:mkdir INPUT RESTART:mkdir -p INPUT RESTART:g" ${target_f}
 export RT_SUFFIX=DUMMY
 chmod 755 ${target_f}
 source ${target_f}
-if [[ ${POSTXCONFIG:-F} != F ]]; then
-    ln -sf ${POSTXCONFIG} postxconfig-NT.txt
-    ln -sf ${POSTXCONFIG} postxconfig-NT_FH00.txt
+if [[ ${EXP_POSTXCONFIG:-F} != F ]]; then
+    ln -sf ${EXP_POSTXCONFIG} postxconfig-NT.txt
+    ln -sf ${EXP_POSTXCONFIG} postxconfig-NT_FH00.txt
 fi
 if (( ${DTG:0:4} < 2009 )); then
     for Y in $(seq ${DTG:0:4} 2008); do

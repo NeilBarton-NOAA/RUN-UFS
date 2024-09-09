@@ -15,7 +15,7 @@ RST_2_END=${RUN_END}
 ####################################
 # new modef file?
 if [[ ${WAV_RES} == glo_100 ]] || [[ ${WAV_RES} == glo_025 ]]; then
-    f_moddef=${STMP}/${USER}/UFS/FIXFILES/mod_def.${WAV_RES} 
+    f_moddef=${STMP}/UFS/FIXFILES/mod_def.${WAV_RES} 
     if [[ ! -f ${f_moddef} ]]; then
         ${SCRIPT_DIR}/WW3-inp2moddef.sh ${SCRIPT_DIR}/ww3_grid.inp.${WAV_RES} ${HOMEufs} $(dirname ${f_moddef}) ${MACHINE_ID}
     fi

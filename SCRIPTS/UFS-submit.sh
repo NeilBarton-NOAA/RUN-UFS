@@ -16,11 +16,7 @@ declare -rx PS4='+ $(basename ${BASH_SOURCE[0]:-${FUNCNAME[0]:-"Unknown"}})[${LI
 # machine specific items
 export PATHRT=${HOMEufs}/tests
 # machine specific directories
-target_f=${SCRIPT_DIR}/MACHINE-id.sh
-[[ ! -f ${target_f} ]] && ${SCRIPT_DIR}/MACHINE-config.sh ${target_f} ${HOMEufs}
-source ${target_f}
-STMP=${STMP%%${USER}*}
-export MACHINE_ID SCHEDULER STMP PARTITION QUEUE
+source ${SCRIPT_DIR}/MACHINE-config.sh ${HOMEufs}
 
 # defaults
 source ${SCRIPT_DIR}/RUN-config.sh
@@ -58,16 +54,17 @@ export MESH_WAV=mesh.${WW3_DOMAIN}.nc
 [[ ${APP} == *A* ]] && export CPLCHM=.true.
 ############
 # Run Directory
-export TEST_NAME=${TEST_NAME:-${RUN}-${APP}}
 if [[ ${CYLC_RUN} == T ]]; then
     if (( MEM > 0 )); then
         export ENS_SETTINGS=T
     else
         export ENS_SETTINGS=F
     fi
-    RUNDIR=${STMP}/${USER}/UFS/${TEST_NAME}/${DTG}/mem${MEM}
+    export TEST_NAME=${TEST_NAME:-CYLC_${RUN}-${APP}}
+    RUNDIR=${STMP}/${TEST_NAME}/${DTG}/mem${MEM}
 else
-    RUNDIR=${STMP}/${USER}/UFS/run_${TEST_NAME}
+    export TEST_NAME=${TEST_NAME:-${RUN}-${APP}}
+    RUNDIR=${STMP}/UFS/run_${TEST_NAME}
     RUNDIR=${RUNDIR}_$$
     [[ -d ${RUNDIR} ]] && rm -r ${RUNDIR}/*
     [[ ${ENS_SETTINGS:-F} == T ]] && MEM=001
@@ -76,7 +73,8 @@ mkdir -p ${RUNDIR} && mkdir -p ${RUNDIR}/INPUT && cd ${RUNDIR}
 echo "RUNDIR is at ${RUNDIR}"
 
 # Top variables for CONFIG scripts
-export ICDIR=${ICDIR:-${STMP}/${USER}/ICs/REPLAY_ICs/${ATM_RES}mx${OCN_RES}/${DTG}/mem${MEM}}
+
+export ICDIR=${ICDIR:-${TOP_ICDIR}/${ATM_RES}mx${OCN_RES}/${DTG}/mem${MEM}}
 [[ ${CYLC_RUN} == T ]] && echo 'RUNNING IN CYCL ' && return
 
 ############

@@ -6,14 +6,19 @@
 # Default SFS configuration
 ####################################
 # Set Top options
+#export DTG=2018082000
+#export RUN=GEFS
+export DTG=1994050100
 #export DTG=2021050100
-export DTG=2018082000
-export RUN=GEFS
-export FORECAST_LENGTH=6 #$(( 31 * 4 * 24 )) # in hours
-export WALLCLOCK=30 # in minutes
-export JOB_QUEUE=debug # batch or debug on hera
+export RUN=SFS
 export ENS_SETTINGS=F
+export FORECAST_LENGTH=240 #$(( 31 * 24 * 4 )) # in hours
+export WALLCLOCK=30 #$(( 3 * 60 )) # in minutes
+export JOB_QUEUE=debug # batch or debug on hera
 export DEBUG=F
+
+#export ATM_INPES=8 
+#export ATM_JNPES=8 
         
 ############
 # Submit Forecast
