@@ -50,7 +50,8 @@ cp ${SCRIPT_DIR}/SU2G_instance_SU.rc .
 # chanages to use g-w data
 sed -i "s:dust:Dust:g" AERO_ExtData.rc
 sed -i "s:QFED:nexus/QFED:g" AERO_ExtData.rc
-sed -i "s:ExtData/CEDS/v2019/%y4/CEDS.2019.emis.%y4%m2%d2.nc:ExtData/nexus/CEDS/v2019/monthly/%y4/CEDS_2019_monthly.%y4%m2.nc:g" AERO_ExtData.rc
+#sed -i "s:ExtData/CEDS/v2019/%y4/CEDS.2019.emis.%y4%m2%d2.nc:ExtData/nexus/CEDS/v2019/monthly/%y4/CEDS_2019_monthly.%y4%m2.nc:g" AERO_ExtData.rc
+sed -i "s:ExtData/CEDS/v2019/%y4/CEDS.2019.emis.%y4%m2%d2.nc:ExtData/nexus/CEDS/v2019/%y4/CEDS.2019.emis.%y4%m2%d2.nc:g" AERO_ExtData.rc
 sed -i "s:ExtData/MEGAN_OFFLINE_BVOC:ExtData/nexus/MEGAN_OFFLINE_BVOC:g" AERO_ExtData.rc
 
 ####################################

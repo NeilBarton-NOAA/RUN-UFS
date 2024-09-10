@@ -65,7 +65,7 @@ if [[ ${CYLC_RUN} == T ]]; then
 else
     export TEST_NAME=${TEST_NAME:-${RUN}-${APP}}
     RUNDIR=${STMP}/UFS/run_${TEST_NAME}
-    RUNDIR=${RUNDIR}_$$
+    [[ ${RUNDIR_UNIQUE:-T} == T ]] &&  RUNDIR=${RUNDIR}_$$
     [[ -d ${RUNDIR} ]] && rm -r ${RUNDIR}/*
     [[ ${ENS_SETTINGS:-F} == T ]] && MEM=001
 fi

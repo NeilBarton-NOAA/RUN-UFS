@@ -93,6 +93,11 @@ WRTTASK_PER_GROUP=$(( WPG * atm_omp_num_threads ))
 ####################################
 FHROT=${OFFSET_START_HOUR:-0}
 ####################################
+if [[ ${MOM6_INTERP_ICS:-F} == T ]]; then
+    export MOM6_RESTART_SETTING='n'
+else
+    export MOM6_RESTART_SETTING='r'
+fi
 
 ################################################
 # files with resolution 
@@ -141,6 +146,8 @@ ${SYEAR} ${SMONTH} ${SDAY} ${SHOUR} 0 0
 EOF
 fi
 
+if [[ ${RUN} == SFS ]]; then
+echo "DAMPING UPDATES SHOULD BE REMOVED WHEN UPDATED IN MODEL"
 # Hopefull these options are added to RT soon
 sed -i "s:k_split = 2:k_split = ${K_SPLIT}:g" input.nml
 sed -i "s:n_split = 5:n_split = ${N_SPLIT}:g" input.nml
@@ -148,6 +155,7 @@ sed -i "s:nudge_qv = .true.:nudge_qv = ${NUDGE_QV}:g" input.nml
 sed -i "s:rf_cutoff = 10.:rf_cutoff = ${RF_CUTOFF}:g" input.nml
 sed -i "s:fv_sg_adj = 450:fv_sg_adj = ${FV_SG_ADJ}:g" input.nml
 sed -i "s:vtdm4 = 0.02:vtdm4 = ${VTDM4}:g" input.nml 
+fi
 
 # add stochastic options to input.nml
 if [[ ${ENS_SETTINGS} == T ]]; then

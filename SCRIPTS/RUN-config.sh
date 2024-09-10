@@ -22,10 +22,12 @@ case ${RUN} in
         export RF_CUTOFF=100
         export FV_SG_ADJ=1800
         export VTDM4=0.05
-        export EXP_POSTXCONFIG=${SCRIPT_DIR}/postxconfig-NT-SFS.txt
-        export FHZERO=24
+        #export EXP_POSTXCONFIG=${SCRIPT_DIR}/postxconfig-NT-SFS.txt
+        export FHZERO=6
+        export RESTART_FREQ=3
+        export OUTPUT_FREQ=6
         export EXP_DIAG_TABLE=${SCRIPT_DIR}/diag_table.IN
-        export MOM6_INTERP_ICS=T
+        export MOM6_INTERP_ICS=${MOM6_INTERP_ICS:-T}
         export OFFSET_START_HOUR=${OFFSET_START_HOUR:-3}
         ;;
     "GEFS")
@@ -37,6 +39,7 @@ case ${RUN} in
         export OCN_RES=${OCN_RES:-025}
         export WAV_RES=${WAV_RES:-glo_025}
         export OFFSET_START_HOUR=${OFFSET_START_HOUR:-3}
+        export ATM_WPG=12
         ;;
     *)
         echo "  FATAL: ${ATMRES} not found yet supported"
