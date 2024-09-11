@@ -6,11 +6,10 @@
 # Default SFS configuration
 ####################################
 # Set Top options
-export DTG=1994050100 && export RUN=SFS
-#export DTG=2018041900 && export RUN=GEFS
-#export DTG=1994050112 && export RUN=SFS && export ICDIR=/work/noaa/marine/nbarton/ICs/1994050112 && export TEST_NAME=CICE_24h_OUTPUT && export MOM6_INTERP_ICS=F
+#export DTG=1994050100 && export RUN=SFS
+export DTG=2018041900 && export RUN=GEFS && export APP=S2SW
 export ENS_SETTINGS=F
-export FORECAST_LENGTH=48 #$(( 31 * 24 * 4 )) # in hours
+export FORECAST_LENGTH=6 #$(( 31 * 24 * 4 )) # in hours
 export WALLCLOCK=15 #$(( 3 * 60 )) # in minutes
 export JOB_QUEUE=debug #batch # batch or debug on hera
 export DEBUG=F

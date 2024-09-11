@@ -3,7 +3,9 @@ echo 'WW3-namelist.sh'
 
 ####################################
 # times
-RUN_BEG="${SYEAR}${SMONTH}${SDAY} $(printf "%02d" $(( SHOUR  )))0000"
+#RUN_BEG="${SYEAR}${SMONTH}${SDAY} $(printf "%02d" $(( SHOUR  )))0000"
+#RUN_END="2100${SMONTH}${SDAY} $(printf "%02d" $(( SHOUR  )))0000"
+RUN_BEG="${SYEAR}${SMONTH}${SDAY} 000000"
 RUN_END="2100${SMONTH}${SDAY} $(printf "%02d" $(( SHOUR  )))0000"
 OUT_BEG=${RUN_BEG}
 OUT_END=${RUN_END}
@@ -44,7 +46,7 @@ export INPUT_CURFLD='C F     Currents'
 export INPUT_ICEFLD='C F     Ice concentrations'
 MULTIGRID=${MULTIGRID:-'false'}
 echo "  ww3_shel.nml.IN"
-#atparse < ${PATHRT}/parm/ww3_shel.inp.IN > ww3_shel.inp
-atparse < ${PATHRT}/parm/ww3_shel.nml.IN > ww3_shel.nml
+atparse < ${PATHRT}/parm/ww3_shel.inp.IN > ww3_shel.inp
+#atparse < ${PATHRT}/parm/ww3_shel.nml.IN > ww3_shel.nml
 cp ${PATHRT}/parm/ww3_points.list .
 
