@@ -45,3 +45,5 @@ case ${RUN} in
         ;;
 esac
 
+[[ ${OCN_RES} == 025 ]] && export MOM6_INTERP_ICS=F
+

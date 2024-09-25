@@ -28,7 +28,7 @@ export RUN=SFS && export DTG=1994050100 && export ATM_RES=C192 && export OCN_RES
 export FORECAST_LENGTH=12 #$(( 31 * 24 * 4 )) # in hours
 export ENS_SETTINGS=F
 export WALLCLOCK=5 #$(( 3 * 60 )) # in minutes
-export JOB_QUEUE=batch #batch # batch or debug on hera
+export JOB_QUEUE=debug #batch # batch or debug on hera
 export DEBUG=F
 export RUNDIR_UNIQUE=F
 
