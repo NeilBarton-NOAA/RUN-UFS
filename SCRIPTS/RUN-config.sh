@@ -14,18 +14,9 @@ case ${RUN} in
         export WAV_RES=${WAV_RES:-glo_100}
         export ATM_INPES=${ATM_INPES:-6}
         export ATM_JNPES=${ATM_JNPES:-8}
-        export ATM_WPG=1
-        export K_SPLIT=1
-        export N_SPLIT=4
-        export TAU=8.0
-        export NUDGE_QV=.false.
-        export RF_CUTOFF=100
-        export FV_SG_ADJ=1800
-        export VTDM4=0.05
         export RESTART_FREQ=3
         export OUTPUT_FREQ=6
         export MOM6_INTERP_ICS=${MOM6_INTERP_ICS:-T}
-        export OFFSET_START_HOUR=${OFFSET_START_HOUR:-3}
         ;;
     "GEFS")
         export compile_search=s2swa_32bit_pdlib
