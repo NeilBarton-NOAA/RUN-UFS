@@ -74,7 +74,7 @@ echo "RUNDIR is at ${RUNDIR}"
 
 # Top variables for CONFIG scripts
 
-export ICDIR=${ICDIR:-${TOP_ICDIR}/${ATM_RES}mx${OCN_RES}/${DTG}/mem${MEM}}
+export ICDIR=${ICDIR:-${TOP_ICDIR}/${ATM_RES}mx${OCN_RES}/*/*/mem${MEM}}
 [[ ${CYLC_RUN} == T ]] && echo 'RUNNING IN CYCL ' && return
 
 ############

@@ -9,12 +9,13 @@
 #export DTG=1994050100 && export RUN=SFS
 
 export APP=S2S #WA
+export RUN=SFS && export DTG=1994050100 && export ATM_RES=C192 && export OCN_RES=025 && export OFFSET_START_HOUR=0
 
 #export RUN=SFS && export DTG=2021050100
 #export RUN=GEFS && export DTG=2018041900 
-export RUN=GEFS && export DTG=2021032506 && export ICDIR=/work/noaa/marine/nbarton/ICs/${DTG} && export OFFSET_START_HOUR=0
+#export RUN=GEFS && export DTG=2021032506 && export ICDIR=/work/noaa/marine/nbarton/ICs/${DTG} && export OFFSET_START_HOUR=0
 
-export TEST_NAME=${RUN}_${APP}_12HOUR
+#export TEST_NAME=${RUN}_${APP}_12HOUR
 #export OFFSET_START_HOUR=0 
 
 #export TEST_NAME=${RUN}_${APP}_LAST6HOUR  
@@ -26,8 +27,8 @@ export TEST_NAME=${RUN}_${APP}_12HOUR
 
 export FORECAST_LENGTH=12 #$(( 31 * 24 * 4 )) # in hours
 export ENS_SETTINGS=F
-export WALLCLOCK=15 #$(( 3 * 60 )) # in minutes
-export JOB_QUEUE=debug #batch # batch or debug on hera
+export WALLCLOCK=5 #$(( 3 * 60 )) # in minutes
+export JOB_QUEUE=batch #batch # batch or debug on hera
 export DEBUG=F
 export RUNDIR_UNIQUE=F
 

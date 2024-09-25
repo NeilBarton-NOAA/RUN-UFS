@@ -30,12 +30,20 @@ chmod 755 ${target_f}
 sed -i "s/cp fv3_conf/#cp fv3_conf/g" ${target_f}
 source ${target_f}
 
-if [[ ${MACHINE_ID} == hercules ]]; then
-    STMP=/work/noaa/marine/${USER}/RUNS
-    TOP_ICDIR=/work/noaa/marine/nbarton/ICs/REPLAY_ICs
-else
-    STMP=${STMP%%${USER}*}/${USER}/RUNS
-    TOP_ICDIR=${STMP}/ICs/REPLAY_ICs
-fi
-export MACHINE_ID SCHEDULER STMP PARTITION QUEUE
+case "${MACHINE_ID}" in
+    "hera")
+        STMP=/scratch2/NCEPDEV/stmp3/${USER}/RUNS
+        TOP_ICDIR=/scratch2/NCEPDEV/stmp1/Neil.Barton/ICs/HR4
+        GW_FIXDIR=/scratch1/NCEPDEV/global/glopara/fix
+    ;;
+    "hercules")
+        STMP=/work/noaa/marine/${USER}/RUNS
+        TOP_ICDIR=/work/noaa/marine/nbarton/ICs/HR4
+        GW_FIXDIR=/work/noaa/global/glopara/fix/
+    ;;
+    "*")
+    echo "WARNING: MACHINE not set up"
+    ;;
+esac
+export MACHINE_ID SCHEDULER STMP PARTITION QUEUE GW_FIXDIR
 

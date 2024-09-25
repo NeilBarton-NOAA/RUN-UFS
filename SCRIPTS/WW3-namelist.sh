@@ -15,13 +15,14 @@ RST_2_END=${RUN_END}
 
 ####################################
 # new modef file?
-if [[ ${WAV_RES} == glo_100 ]] || [[ ${WAV_RES} == glo_025 ]]; then
+if [[ ! -f mod_def.ww3 ]]; then
+    echo "WARNING: grabbing wave grid from gw"
     f_moddef=${STMP}/UFS/FIXFILES/mod_def.${WAV_RES} 
     if [[ ! -f ${f_moddef} ]]; then
-        ${SCRIPT_DIR}/WW3-inp2moddef.sh ${SCRIPT_DIR}/ww3_grid.inp.${WAV_RES} ${HOMEufs} $(dirname ${f_moddef}) ${MACHINE_ID}
+        ${SCRIPT_DIR}/WW3-inp2moddef.sh ${GW_FIXDIR}/wave/20240105/ww3_grid.inp.${WAV_RES} ${HOMEufs} $(dirname ${f_moddef}) ${MACHINE_ID}
     fi
     ln -sf ${f_moddef} mod_def.ww3
-    ln -sf ${SCRIPT_DIR}/${MESH_WAV} .
+    ln -sf ${GW_FIXDIR}/wave/20240105/${MESH_WAV} .
 fi
 
 ####################################
