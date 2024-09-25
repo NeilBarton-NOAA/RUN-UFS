@@ -28,7 +28,7 @@ if (( ${n_files} == ${NTILES} )); then
     ln -sf ${f} INPUT/
 else #ATM WARMSTART
     echo "  FV3 Warm Start"
-    WARM_START=.false.
+    WARM_START=.true.
     warm_files='*ca_data*nc \
                 *fv_core.res*nc \
                 *fv_srf_wnd.res*nc \
@@ -36,7 +36,7 @@ else #ATM WARMSTART
                 *phy_data*nc \
                 *sfc_data*nc'
     for warm_file in ${warm_files}; do
-        files=$( find -L ${ICDIR} -name "${warm_file}" )
+        files=$( find -L ${ICDIR} -name "*${RESTART_DTG}*${warm_file}" )
         for atm_ic in ${files}; do
             f=$( basename ${atm_ic} )
             if [[ ${f:11:4} == '0000' ]]; then
@@ -47,9 +47,8 @@ else #ATM WARMSTART
     done
     # make coupler.res file
     cat >> INPUT/coupler.res << EOF
-    cat >> INPUT/coupler.res << EOF
  3        (Calendar: no_calendar=0, thirty_day_months=1, julian=2, gregorian=3, noleap=4)
- ${SYEAR}  ${SMONTH}  ${SDAY}  ${SHOUR}     0     0        Model start time:   year, month, day, hour, minute, second
+ ${DTG:0:4}  ${DTG:4:2}  ${DTG:6:2}  ${DTG:8:2}     0     0        Model start time:   year, month, day, hour, minute, second
  ${SYEAR}  ${SMONTH}  ${SDAY}  ${SHOUR}     0     0        Current model time: year, month, day, hour, minute, second
 EOF
 fi #cold start/warm start

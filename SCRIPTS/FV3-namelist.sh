@@ -13,16 +13,17 @@ mkdir -p INPUT RESTART
 # namelist defaults
 ATMRES=${ATM_RES:-$ATMRES}
 ENS_SETTINGS=${ENS_SETTINGS:-T}
-        
+QUILTING_RESTART='.true.'
+WRITE_DOPOST='.false.'
+IDEFLATE=1
+
 ############
 # resolution based options
-K_SPLIT=2
-N_SPLIT=5
 case "${ATMRES}" in
     "C384") 
         DT_ATMOS=${ATM_DT:-300}
-        ATM_INPES=${ATM_INPES:-12}
-        ATM_JNPES=${ATM_INPES:-12}
+        ATM_INPES=${ATM_INPES:-16}
+        ATM_JNPES=${ATM_INPES:-16}
         OUTPUT_FILE="'netcdf_parallel' 'netcdf_parallel'"
         MOM6_RESTART_SETTING='r'
         case "${MACHINE_ID}" in
@@ -67,6 +68,8 @@ if (( n_file > 0 )); then
     NGGPS_IC=.false.
     MOUNTAIN=.true.
     TILEDFIX=.true.
+    #CMEPS ufs.config
+    RUNTYPE='continue' 
 fi
 
 ####################################
@@ -132,6 +135,7 @@ source ${target_f}
 echo "  "${INPUT_NML}
 echo "  "${MODEL_CONFIGURE}
 echo "  "${FIELD_TABLE}
+FHZERO=3
 atparse < ${PATHRT}/parm/${INPUT_NML} > input.nml
 atparse < ${PATHRT}/parm/${MODEL_CONFIGURE} > model_configure
 cp "${PATHRT}/parm/noahmptable.tbl" .
@@ -145,7 +149,6 @@ ${SYEAR}${SMONTH}${SDAY}.${SHOUR}Z.${ATMRES}.64bit.non-mono
 ${SYEAR} ${SMONTH} ${SDAY} ${SHOUR} 0 0
 EOF
 fi
-
 if [[ ${RUN} == SFS ]]; then
 echo "DAMPING UPDATES SHOULD BE REMOVED WHEN UPDATED IN MODEL"
 # Hopefull these options are added to RT soon

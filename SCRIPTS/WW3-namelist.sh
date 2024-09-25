@@ -3,14 +3,13 @@ echo 'WW3-namelist.sh'
 
 ####################################
 # times
-#RUN_BEG="${SYEAR}${SMONTH}${SDAY} $(printf "%02d" $(( SHOUR  )))0000"
-#RUN_END="2100${SMONTH}${SDAY} $(printf "%02d" $(( SHOUR  )))0000"
-RUN_BEG="${SYEAR}${SMONTH}${SDAY} 000000"
-RUN_END="2100${SMONTH}${SDAY} $(printf "%02d" $(( SHOUR  )))0000"
+RUN_BEG="${SYEAR}${SMONTH}${SDAY} $(printf "%02d" $(( ${DTG:8:2} )))0000"
 OUT_BEG=${RUN_BEG}
-OUT_END=${RUN_END}
 RST_BEG=${RUN_BEG}
 RST_2_BEG=${RUN_BEG}
+DTG_END=$(date -u -d"${SYEAR}-${SMONTH}-${SDAY} ${DTG:8:2}:00:00 ${FORECAST_LENGTH} hours" +%Y%m%d%H)
+RUN_END="${DTG_END:0:4}${DTG_END:4:2}${DTG_END:6:2} $(printf "%02d" $(( ${DTG_END:8:2}  )))0000"
+OUT_END=${RUN_END}
 RST_END=${RUN_END}
 RST_2_END=${RUN_END}
 
@@ -28,10 +27,10 @@ fi
 ####################################
 case "${WAV_RES}" in
     "glo_025")
-    export WAV_tasks=${WAV_NMPI:-162}
+    export WAV_tasks=${WAV_NMPI:-120}
+    export WAV_THRD=${WAV_THRD:-2}
     ;;
 esac
-
 
 ####################################
 # IO options

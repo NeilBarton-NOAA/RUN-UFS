@@ -16,6 +16,12 @@ export DO_OCN_SPPT="True"
 export PERT_EPBL="True"
 
 ############
+# copy ensemble restart files
+if [[ ${ENS_RESTART:-F} == T ]]; then
+    STOCHINI=".true."
+fi
+
+############
 # Resolution Based Options
 case "${ATMRES}" in
 "C384") 
@@ -84,6 +90,7 @@ cat >> input.nml << EOF
 EOF
 if [[ ${DO_SKEB} = ".true." ]]; then
 cat >> input.nml << EOF
+  stochini = ${STOCHINI:-".false."}
   skeb = ${SKEB}
   iseed_skeb = $(( base_seed + 1 ))
   skeb_tau = ${TAU}
