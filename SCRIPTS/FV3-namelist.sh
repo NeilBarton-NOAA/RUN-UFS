@@ -74,6 +74,15 @@ if (( n_file > 0 )); then
     RUNTYPE='continue' 
 fi
 
+# DA increment file
+if [[ "${DA_INCREMENTS:-F}" == "T" ]]; then
+    IAUFHRS=6
+    IAU_DELTHRS=6
+    READ_INCREMENT=".true."
+    RES_LATLON_DYNAMICS="fv3_increment.nc"
+    IAU_INC_FILES="fv3_increment.nc"
+fi
+
 ####################################
 # IO options
 RESTART_N=${RESTART_FREQ:-${FHMAX}}

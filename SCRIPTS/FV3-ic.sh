@@ -53,6 +53,16 @@ else #ATM WARMSTART
 EOF
 fi #cold start/warm start
 
+# DA increment file
+if [[ "${DA_INCREMENTS:-F}" == "T" ]]; then
+    file=$( find -L ${ICDIR} -name "*fv3_increment.nc" )
+    if (( ${#file} == 0 )); then
+        echo "FATAL: *fv3_increment.nc not found"
+        exit 1
+    fi
+    ln -s ${file} INPUT/fv3_increment.nc
+fi
+
 # Ensemble Files
 if [[ "${USE_ATM_PERTURB_FILES:-F}" == "T" ]]; then
     file=$( find -L ${ICDIR} -name "*fv3_perturbation*.nc" )

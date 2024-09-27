@@ -36,6 +36,7 @@ case "${OCNRES}" in
     FRUNOFF="runoff.daitren.clim.${NX_GLB}x${NY_GLB}.v20180328.nc"
     MOM6_CHLCLIM="seawifs-clim-1997-2010.${NX_GLB}x${NY_GLB}.v20180328.nc"
     MOM6_RIVER_RUNOFF='True'
+    MOM6_ALLOW_LANDMASK_CHANGES="False" 
     ;;
     *)
     echo "  RES not defined: ${OCNRES}"
@@ -46,6 +47,19 @@ esac
 if [[ ${MOM6_INTERP_ICS:-F} == T ]]; then
     export MOM6_WARMSTART_FILE="MOM.res.nc"
 fi
+
+# DA increment file
+if [[ "${DA_INCREMENTS:-F}" == "T" ]]; then
+    ODA_INCUPD="True"
+    ODA_TEMPINC_VAR='t_pert'
+    ODA_SALTINC_VAR='s_pert'
+    ODA_THK_VAR='h_anl'
+    ODA_INCUPD_UV="True"
+    ODA_UINC_VAR='u_pert'
+    ODA_VINC_VAR='v_pert'
+    ODA_INCUPD_NHOURS=0.0
+fi
+
 ####################################
 # look for restarts if provided
 n_files=$( find -L ${ICDIR} -name "*MOM.res*nc" 2>/dev/null | wc -l )

@@ -55,9 +55,11 @@ esac
 
 ############
 # If replay ICs are used
-if [[ ${USE_OCN_PERTURB_FILES} == T ]]; then
+if [[ ${USE_ATM_PERTURB_FILES} == T ]]; then
     export READ_INCREMENT=".true."
     export RES_LATLON_DYNAMICS="atminc.nc"
+fi
+if [[ ${USE_OCN_PERTURB_FILES} == T ]]; then
     export ODA_INCUPD="True"
     export ODA_TEMPINC_VAR='t_pert'
     export ODA_SALTINC_VAR='s_pert'
