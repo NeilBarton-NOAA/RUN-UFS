@@ -57,7 +57,7 @@ fi #cold start/warm start
 if [[ "${USE_ATM_PERTURB_FILES:-F}" == "T" ]]; then
     file=$( find -L ${ICDIR} -name "*fv3_perturbation*.nc" )
     if (( ${#file} == 0 )); then
-        echo "FATAL: *fv_perturbation*.nc not found"
+        echo "FATAL: *fv3_perturbation*.nc not found"
         exit 1
     fi
     ln -s ${file} INPUT/atminc.nc
