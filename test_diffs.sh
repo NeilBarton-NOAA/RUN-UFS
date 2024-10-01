@@ -2,7 +2,7 @@
 RUN=GEFS
 APP=S2S
 dir1=${NPB_WORKDIR}/RUNS/UFS/run_${RUN}-${APP}_12HOUR
-dir2=${NPB_WORKDIR}/RUNS/UFS/run_${RUN}-${APP}_LAST6HOUR
+dir2=${NPB_WORKDIR}/RUNS/UFS/run_${RUN}-${APP}_LAST9HOUR
 files='sfcf012.nc atmf012.nc'
 for f in ${files}; do
     echo ${f}

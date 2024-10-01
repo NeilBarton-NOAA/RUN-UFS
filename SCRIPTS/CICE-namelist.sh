@@ -25,17 +25,17 @@ esac
 
 ###########
 # Replay ICs with +3 start
-OFFSET_START_HOUR=${OFFSET_START_HOUR:-0}
-if (( ${OFFSET_START_HOUR} != 0 )); then
-    export SHOUR=$( printf "%02d" $(( ${DTG:8:2} + ${OFFSET_START_HOUR} )) )
-    export SECS=$( printf "%05d" $(( $SHOUR * 3600 )) )
-fi
+#OFFSET_START_HOUR=${OFFSET_START_HOUR:-0}
+#if (( ${OFFSET_START_HOUR} != 0 )); then
+#    export SHOUR=$( printf "%02d" $(( ${DTG:8:2} + ${OFFSET_START_HOUR} )) )
+#    export SECS=$( printf "%05d" $(( $SHOUR * 3600 )) )
+#fi
 
 ############
 # IC 
 CICE_ICE_IC="cice_model.res.nc"
 CICE_RESTART=${CICE_RESTART:-'.true.'}
-CICERUNTYPE='continue'
+CICE_RUNTYPE='continue'
 CICE_USE_RESTART_TIME=.true.
 
 ####################################
