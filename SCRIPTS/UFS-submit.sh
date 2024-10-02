@@ -36,7 +36,7 @@ export SYEAR=${DTG:0:4}
 export SMONTH=${DTG:4:2}
 export SDAY=${DTG:6:2}
 export SHOUR=${DTG:8:2}
-export SECS=$( printf "%05d" $(( $SHOUR * 3600 )) )
+export SECS=$( printf "%05d" $(( 10#${SHOUR} * 3600 )) )
 
 ############
 # change in resolution

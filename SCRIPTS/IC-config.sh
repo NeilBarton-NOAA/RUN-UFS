@@ -8,11 +8,11 @@ source ${SCRIPT_DIR}/RUN-config.sh
 # Replay ICs with +3 start
 OFFSET_START_HOUR=${OFFSET_START_HOUR:-0}
 if (( ${OFFSET_START_HOUR} != 0 )); then
-    export SHOUR=$( printf "%02d" $(( ${DTG:8:2} + ${OFFSET_START_HOUR} )) )
-    export SECS=$( printf "%05d" $(( $SHOUR * 3600 )) )
+    STG=$(date -u -d"${SYEAR}-${SMONTH}-${SDAY} ${DTG:8:2}:00:00 ${OFFSET_START_HOUR} hours" +%Y%m%d%H)
+    START_SECS=$( printf "%05d" $(( 10#${STG:8:2} * 3600 )) )
 fi
-RESTART_DTG=${DTG:0:8}.${SHOUR}0000
-RESTART_DTG_ALT=${SYEAR}-${SMONTH}-${SDAY}-$(( ${SHOUR} * 3600 ))
+RESTART_DTG=${STG:0:8}.${STG:8:2}0000
+RESTART_DTG_ALT=${SYEAR}-${SMONTH}-${SDAY}-${START_SECS}
 # Call IC file 
 source ${SCRIPT_DIR}/FV3-ic.sh
 source ${SCRIPT_DIR}/MOM6-ic.sh

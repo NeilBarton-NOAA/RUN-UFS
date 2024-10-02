@@ -27,7 +27,7 @@ case ${RUN} in
         export OCN_RES=${OCN_RES:-025}
         export WAV_RES=${WAV_RES:-glo_025}
         export OFFSET_START_HOUR=${OFFSET_START_HOUR:-3}
-        export ATM_WPG=12
+        export ATM_WPG=24
         export RESTART_FREQ=3
         ;;
     *)

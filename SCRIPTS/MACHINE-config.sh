@@ -36,6 +36,11 @@ case "${MACHINE_ID}" in
         TOP_ICDIR=/scratch2/NCEPDEV/stmp1/Neil.Barton/ICs/HR4
         GW_FIXDIR=/scratch1/NCEPDEV/global/glopara/fix
     ;;
+    "orion")
+        STMP=/work/noaa/marine/${USER}/RUNS
+        TOP_ICDIR=/work/noaa/marine/nbarton/ICs/HR4
+        GW_FIXDIR=/work/noaa/global/glopara/fix/
+    ;;
     "hercules")
         STMP=/work/noaa/marine/${USER}/RUNS
         TOP_ICDIR=/work/noaa/marine/nbarton/ICs/HR4

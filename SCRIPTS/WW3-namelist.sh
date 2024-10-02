@@ -15,7 +15,7 @@ RST_2_END=${RUN_END}
 
 ####################################
 # new modef file?
-if [[ ! -f mod_def.ww3 ]]; then
+if [[ ! -f ${MESH_WAV} ]]; then
     echo "WARNING: grabbing wave grid from gw"
     f_moddef=${STMP}/UFS/FIXFILES/mod_def.${WAV_RES} 
     if [[ ! -f ${f_moddef} ]]; then

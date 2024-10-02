@@ -46,10 +46,15 @@ else #ATM WARMSTART
         done
     done
     # make coupler.res file
+    # Replay ICs with +3 start
+    OFFSET_START_HOUR=${OFFSET_START_HOUR:-0}
+    if (( ${OFFSET_START_HOUR} != 0 )); then
+        CTG=$(date -u -d"${SYEAR}-${SMONTH}-${SDAY} ${DTG:8:2}:00:00 ${OFFSET_START_HOUR} hours" +%Y%m%d%H)
+    fi
     cat >> INPUT/coupler.res << EOF
  3        (Calendar: no_calendar=0, thirty_day_months=1, julian=2, gregorian=3, noleap=4)
  ${DTG:0:4}  ${DTG:4:2}  ${DTG:6:2}  ${DTG:8:2}     0     0        Model start time:   year, month, day, hour, minute, second
- ${SYEAR}  ${SMONTH}  ${SDAY}  ${SHOUR}     0     0        Current model time: year, month, day, hour, minute, second
+ ${CTG:0:4}  ${CTG:4:2}  ${CTG:6:2}  ${CTG:8:2}     0     0        Current model time: year, month, day, hour, minute, second
 EOF
 fi #cold start/warm start
 

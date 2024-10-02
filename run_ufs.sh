@@ -9,29 +9,34 @@ set -u
 # Set Top options
 #export DTG=1994050100 && export RUN=SFS
 
-export APP=S2S #WA
+export APP=S2SWA
 export RUN=GEFS
-export DTG=2021032506
+#export DTG=2021032506
+export DTG=2018041900
 export ENS_SETTINGS=T
-export ENS_RESTART=T
-export USE_ATM_PERTURB_FILES=F 
-export USE_OCN_PERTURB_FILES=F 
 
-FIRST_RUN=F
+FIRST_RUN=T
 if [[ ${FIRST_RUN} == T ]]; then
     export TEST_NAME=${RUN}-${APP}_12HOUR
-    export ICDIR=${NPB_WORKDIR}/ICs/${DTG} 
-    export OFFSET_START_HOUR=0
-    export DA_INCREMENTS=T
+    #export ICDIR=${NPB_WORKDIR}/ICs/${DTG} 
+    export ICDIR=${NPB_WORKDIR}/ICs/REPLAY_ICs/C384mx025/${DTG}/mem001
+    export OFFSET_START_HOUR=3
+    export DA_INCREMENTS=F
+    export ENS_RESTART=F
+    export USE_ATM_PERTURB_FILES=T 
+    export USE_OCN_PERTURB_FILES=T 
 else
-    export TEST_NAME=${RUN}-${APP}_LAST6HOUR  
-    export ICDIR=${NPB_WORKDIR}/RUNS/UFS/run_${RUN}-${APP}_12HOUR/RESTART 
-    export OFFSET_START_HOUR=6 
-
+    export OFFSET_START_HOUR=6
+    export TEST_NAME=${RUN}-${APP}_LAST${OFFSET_START_HOUR}HOUR  
+    export ICDIR=${NPB_WORKDIR}/RUNS/UFS/run_${RUN}-${APP}_12HOUR #/RESTART 
+    export ENS_RESTART=T
+    export DA_INCREMENTS=F
+    export USE_ATM_PERTURB_FILES=F 
+    export USE_OCN_PERTURB_FILES=F
 fi
 
 export FORECAST_LENGTH=12 #$(( 31 * 24 * 4 )) # in hours
-export WALLCLOCK=15 #$(( 3 * 60 )) # in minutes
+export WALLCLOCK=20 #$(( 3 * 60 )) # in minutes
 export JOB_QUEUE=debug #batch # batch or debug on hera
 export DEBUG=F
 export RUNDIR_UNIQUE=F
