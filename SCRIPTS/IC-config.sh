@@ -23,6 +23,8 @@ fi
 source ${SCRIPT_DIR}/CMEPS-ic.sh
 
 if [[ ${ENS_RESTART:-F} == T ]]; then
-    ln -sf ${ICDIR}/${RESTART_DTG}.ocn_stoch.res.nc INPUT/ocn_stoch.res.nc
-    ln -sf ${ICDIR}/${RESTART_DTG}.atm_stoch.res.nc INPUT/atm_stoch.res.nc
+    atm_ens_res=$( find -L ${ICDIR} -name "${RESTART_DTG}.atm_stoch.res.nc" )
+    ocn_ens_res=$( find -L ${ICDIR} -name "${RESTART_DTG}.ocn_stoch.res.nc" )
+    ln -sf ${atm_ens_res} INPUT/atm_stoch.res.nc
+    ln -sf ${ocn_ens_res} INPUT/ocn_stoch.res.nc
 fi
