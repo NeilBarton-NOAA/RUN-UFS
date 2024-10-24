@@ -26,12 +26,10 @@ case "${ATMRES}" in
         ATM_JNPES=${ATM_INPES:-16}
         OUTPUT_FILE="'netcdf_parallel' 'netcdf_parallel'"
         MOM6_RESTART_SETTING='r'
+        ATM_THRD=${ATM_THRD:-1}
         case "${MACHINE_ID}" in
         "hera")
             ATM_THRD=${ATM_THRD:-2}
-            ;;
-        "wcoss2")
-            ATM_THRD=${ATM_THRD:-1}
             ;;
         esac
         ;;
@@ -162,6 +160,6 @@ EOF
 fi
 
 # add stochastic options to input.nml
-if [[ ${ENS_SETTINGS} == T ]]; then
-    WRITE_STOCHY_NAMELIST
-fi
+#if [[ ${ENS_SETTINGS} == T ]]; then
+#    WRITE_STOCHY_NAMELIST
+#fi

@@ -19,9 +19,9 @@ case ${RUN} in
         export MOM6_INTERP_ICS=${MOM6_INTERP_ICS:-T}
         ;;
     "GEFS")
-        export compile_search=s2swa_32bit_pdlib
+        export compile_search=s2swa
         export PDLIB="OFF"
-        export RT_TEST=cpld_control_gfsv17
+        export RT_TEST=cpld_control_gefs
         export APP=${APP:-S2SWA}
         export ATM_RES=${ATM_RES:-C384}
         export OCN_RES=${OCN_RES:-025}
