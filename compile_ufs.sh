@@ -2,7 +2,7 @@
 set -u
 # Defaults to Compile the SFS configuration, but could be changed
 # examine the UFS/tests/rt.conf for COMPILE options for specific configurations
-export RUN=SFS
+export RUN=GEFS # GEFS, SFS, GFS supported
 TOPDIR=${PWD}
 
 export SCRIPT_DIR=${TOPDIR}/SCRIPTS
@@ -58,7 +58,10 @@ fi
 # compile
 export CMAKE_FLAGS="-DAPP=${APP} -D32BIT=${BIT32} -DCCPP_SUITES=${CCPP_SUITES} -DHYDRO=${HYDRO} -DPDLIB=${PDLIB}"
 echo "${RUN}: ${CMAKE_FLAGS}"
+export BUILD_DIR=${NPB_WORKDIR}/CODE/ufs_build
 #[[ -d build ]] && rm -r build/
+ln -s ${BUILD_DIR}/ build
+
 bash -x ./build.sh
 mkdir -p ${TOPDIR}/bin
 cp build/ufs_model ${TOPDIR}/bin/ufs_${RUN}
