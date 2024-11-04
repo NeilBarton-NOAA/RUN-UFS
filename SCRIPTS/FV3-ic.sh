@@ -50,6 +50,8 @@ else #ATM WARMSTART
     OFFSET_START_HOUR=${OFFSET_START_HOUR:-0}
     if (( ${OFFSET_START_HOUR} != 0 )); then
         CTG=$(date -u -d"${SYEAR}-${SMONTH}-${SDAY} ${DTG:8:2}:00:00 ${OFFSET_START_HOUR} hours" +%Y%m%d%H)
+    else
+        CTG=${DTG}
     fi
     cat >> INPUT/coupler.res << EOF
  3        (Calendar: no_calendar=0, thirty_day_months=1, julian=2, gregorian=3, noleap=4)

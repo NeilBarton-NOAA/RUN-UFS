@@ -29,7 +29,7 @@ case "${ATMRES}" in
         ATM_THRD=${ATM_THRD:-1}
         case "${MACHINE_ID}" in
         "hera")
-            ATM_THRD=${ATM_THRD:-2}
+            ATM_THRD=2
             ;;
         esac
         ;;

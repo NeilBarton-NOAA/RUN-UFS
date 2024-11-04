@@ -25,10 +25,6 @@ sed -i "s:mkdir INPUT RESTART:mkdir -p INPUT RESTART:g" ${target_f}
 export RT_SUFFIX=DUMMY
 chmod 755 ${target_f}
 source ${target_f}
-if [[ ${EXP_POSTXCONFIG:-F} != F ]]; then
-    ln -sf ${EXP_POSTXCONFIG} postxconfig-NT.txt
-    ln -sf ${EXP_POSTXCONFIG} postxconfig-NT_FH00.txt
-fi
 if (( ${DTG:0:4} < 2009 )); then
     for Y in $(seq ${DTG:0:4} 2008); do
         src=${GW_FIXDIR}/am/20220805/co2dat_4a/global_co2historicaldata_${DTG:0:4}.txt 
