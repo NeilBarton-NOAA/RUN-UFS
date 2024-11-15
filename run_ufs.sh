@@ -9,7 +9,7 @@ set -u
 # Set Top options
 #export DTG=1994050100 && export RUN=SFS
 
-export APP=S2SW
+export APP=S2S
 export RUN=GEFS
 export DTG=2021032506
 export ICDIR=${NPB_WORKDIR}/ICs/${DTG} 
