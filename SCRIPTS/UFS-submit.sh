@@ -1,9 +1,9 @@
 #!/bin/bash
 set -u
-export DEBUG=${DEBUG:-F}
+export DEBUG_SCRIPTS=${DEBUG_SCRIPTS:-F}
 CYLC_RUN=${CYLC_RUN:-F}
 MEM=${MEM:-0} && MEM=$( printf "%03d" ${MEM} )
-[[ ${DEBUG} == T ]] && set -x
+[[ ${DEBUG_SCRIPTS} == T ]] && set -x
 declare -rx PS4='+ $(basename ${BASH_SOURCE[0]:-${FUNCNAME[0]:-"Unknown"}})[${LINENO}]'
 
 ################################################
@@ -111,4 +111,6 @@ case ${SCHEDULER} in
         SUBMIT=sbatch;;
 esac
 
-[[ ${DEBUG} == F ]] && ${SUBMIT} job_card
+if [[ ${DEBUG_SCRIPTS} == F ]]; then
+    ${SUBMIT} job_card
+fi

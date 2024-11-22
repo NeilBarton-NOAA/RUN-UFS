@@ -1,5 +1,5 @@
 #!/bin/sh
-[[ ${DEBUG} == T ]] && set -x
+[[ ${DEBUG_SCRIPTS} == T ]] && set -x
 declare -rx PS4='+ $(basename ${BASH_SOURCE[0]:-${FUNCNAME[0]:-"Unknown"}})[${LINENO}]'
 # Organizes data and cleans run after cylc run
 

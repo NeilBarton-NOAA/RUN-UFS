@@ -14,7 +14,7 @@ export RUN=GEFS
 export DTG=2021032506
 export ICDIR=${NPB_WORKDIR}/ICs/${DTG} 
 export JOB_QUEUE=debug #batch # batch or debug on hera
-export DEBUG=F
+export DEBUG_SCRIPTS=F
 export RUNDIR_UNIQUE=F
 
 ############
@@ -22,8 +22,8 @@ export RUNDIR_UNIQUE=F
 export FORECAST_LENGTH=6 #$(( 31 * 24 * 4 )) # in hours
 export WALLCLOCK=5 #$(( 3 * 60 )) # in minutes
 export OFFSET_START_HOUR=0
-export ENS_SETTINGS=T
-export DA_INCREMENTS=F
+export ENS_SETTINGS=F
+export DA_INCREMENTS=T
 export ENS_RESTART=F
 export USE_ATM_PERTURB_FILES=F 
 export USE_OCN_PERTURB_FILES=F 
