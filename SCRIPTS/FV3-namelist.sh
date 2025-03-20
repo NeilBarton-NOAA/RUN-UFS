@@ -22,14 +22,14 @@ IDEFLATE=1
 case "${ATMRES}" in
     "C384") 
         DT_ATMOS=${ATM_DT:-300}
-        ATM_INPES=${ATM_INPES:-16}
-        ATM_JNPES=${ATM_INPES:-16}
+        ATM_INPES=${ATM_INPES:-8}
+        ATM_JNPES=${ATM_INPES:-8}
         OUTPUT_FILE="'netcdf_parallel' 'netcdf_parallel'"
         MOM6_RESTART_SETTING='r'
         ATM_THRD=${ATM_THRD:-1}
         case "${MACHINE_ID}" in
         "hera")
-            ATM_THRD=2
+            ATM_THRD=4
             ;;
         esac
         ;;
