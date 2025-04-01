@@ -17,6 +17,8 @@ cat << EOF > ${target_f}
 export MACHINE_ID=${MACHINE_ID}
 if [[ ${MACHINE_ID} == wcoss2 ]]; then
     export ACCNR=${ACCNR:-GFS-DEV}
+elif [[ ${MACHINE_ID} == gaeac6 ]]; then
+    export ACCNR=${ACCNR:-sfs-cpu}
 else
     export ACCNR=${ACCNR:-marine-cpu}
 fi
@@ -33,21 +35,27 @@ source ${target_f}
 case "${MACHINE_ID}" in
     "hera")
         STMP=/scratch2/NCEPDEV/stmp3/${USER}/RUNS
-        TOP_ICDIR=/scratch2/NCEPDEV/stmp1/Neil.Barton/ICs/HR4
+        TOP_ICDIR=/scratch2/NCEPDEV/stmp1/Neil.Barton/ICs/RUN_UFS
         GW_FIXDIR=/scratch1/NCEPDEV/global/glopara/fix
     ;;
     "orion")
         STMP=/work/noaa/marine/${USER}/RUNS
-        TOP_ICDIR=/work/noaa/marine/nbarton/ICs/HR4
+        TOP_ICDIR=/work/noaa/marine/nbarton/ICs/RUN_UFS
         GW_FIXDIR=/work/noaa/global/glopara/fix/
     ;;
     "hercules")
         STMP=/work/noaa/marine/${USER}/RUNS
-        TOP_ICDIR=/work/noaa/marine/nbarton/ICs/HR4
+        TOP_ICDIR=/work/noaa/marine/nbarton/ICs/RUN_UFS
         GW_FIXDIR=/work/noaa/global/glopara/fix/
+    ;;
+    "gaeac6")
+        STMP=/gpfs/f6/sfs-emc/scratch/${USER}/RUNS
+        TOP_ICDIR=/gpfs/f6/sfs-emc/scratch/${USER}/ICs/RUN_UFS
+        GW_FIXDIR=/gpfs/f6/drsa-precip3/world-shared/role.glopara/fix/
     ;;
     "*")
     echo "WARNING: MACHINE not set up"
+    exit 1
     ;;
 esac
 export MACHINE_ID SCHEDULER STMP PARTITION QUEUE GW_FIXDIR

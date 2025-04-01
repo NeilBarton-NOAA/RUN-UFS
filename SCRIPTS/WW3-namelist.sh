@@ -46,7 +46,7 @@ export INPUT_CURFLD='C F     Currents'
 export INPUT_ICEFLD='C F     Ice concentrations'
 MULTIGRID=${MULTIGRID:-'false'}
 echo "  ww3_shel.nml.IN"
-atparse < ${PATHRT}/parm/ww3_shel.inp.IN > ww3_shel.inp
-#atparse < ${PATHRT}/parm/ww3_shel.nml.IN > ww3_shel.nml
+#atparse < ${PATHRT}/parm/ww3_shel.inp.IN > ww3_shel.inp
+atparse < ${PATHRT}/parm/ww3_shel.nml.IN > ww3_shel.nml
 cp ${PATHRT}/parm/ww3_points.list .
 

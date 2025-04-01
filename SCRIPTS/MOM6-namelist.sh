@@ -37,6 +37,7 @@ case "${OCNRES}" in
     MOM6_CHLCLIM="seawifs-clim-1997-2010.${NX_GLB}x${NY_GLB}.v20180328.nc"
     MOM6_RIVER_RUNOFF='True'
     MOM6_ALLOW_LANDMASK_CHANGES="False" 
+    MOM6_DIAG_COORD_DEF_Z_FILE=interpolate_zgrid_40L.nc
     ;;
     *)
     echo "  RES not defined: ${OCNRES}"
@@ -58,6 +59,34 @@ if [[ "${DA_INCREMENTS:-F}" == "T" ]]; then
     ODA_UINC_VAR='u_pert'
     ODA_VINC_VAR='v_pert'
     ODA_INCUPD_NHOURS=0.0
+else
+    ODA_INCUPD="False"
+    ODA_TEMPINC_VAR='Temp'
+    ODA_SALTINC_VAR='Salt'
+    ODA_THK_VAR='h'
+    ODA_INCUPD_UV="False"
+    ODA_UINC_VAR='u'
+    ODA_VINC_VAR='v'
+    ODA_INCUPD_NHOURS=3.0
+fi
+
+if [[ ${ENS_SETTINGS} == T ]]; then
+    export DO_OCN_SPPT="True"
+    export PERT_EPBL="True"
+else
+    export DO_OCN_SPPT="False"
+    export PERT_EPBL="False"
+fi
+
+if [[ ${USE_OCN_PERTURB_FILES} == T ]]; then
+    export ODA_INCUPD="True"
+    export ODA_TEMPINC_VAR='t_pert'
+    export ODA_SALTINC_VAR='s_pert'
+    export ODA_THK_VAR='h_anl'
+    export ODA_INCUPD_UV="True"
+    export ODA_UINC_VAR='u_pert'
+    export ODA_VINC_VAR='v_pert'
+    export ODA_INCUPD_NHOURS=0.0
 fi
 
 ####################################

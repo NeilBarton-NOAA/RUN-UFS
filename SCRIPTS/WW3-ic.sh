@@ -20,6 +20,6 @@ fi
 if [[ ! -f ${wav_ic} ]]; then
     echo "  WAV IC not found, waves will cold start"
 else
-    #ln -sf ${wav_ic} ufs.cpld.ww3.r.${SYEAR}-${SMONTH}-${SDAY}-${SECS}
-    ln -sf ${wav_ic} restart.ww3
+    ln -sf ${wav_ic} ufs.cpld.ww3.r.${SYEAR}-${SMONTH}-${SDAY}-${SECS}
+    #ln -sf ${wav_ic} restart.ww3
 fi

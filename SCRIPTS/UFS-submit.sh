@@ -23,6 +23,7 @@ source ${SCRIPT_DIR}/RUN-config.sh
 
 # variables
 source ${PATHRT}/default_vars.sh
+#[[ ${MACHINE_ID} == gaeac6 ]] && TPN=144
 source ${PATHRT}/tests/${RT_TEST}
 
 ############
@@ -51,7 +52,14 @@ export NPZ=${ATM_LEVELS:-127}
 export NPZP=$(( NPZ + 1 ))
 WW3_DOMAIN=${WAV_RES:-$WW3_DOMAIN}
 export MESH_WAV=mesh.${WW3_DOMAIN}.nc
-[[ ${APP} == *A* ]] && export CPLCHM=.true.
+if [[ ${APP} == *A* ]]; then
+    export CPLCHM=.true.
+else
+    export CPLCHM=.false.
+fi
+if [[ ${APP} != *W* ]]; then
+    WAV_tasks=0
+fi
 ############
 # Run Directory
 if [[ ${CYLC_RUN} == T ]]; then
@@ -73,7 +81,6 @@ mkdir -p ${RUNDIR} && mkdir -p ${RUNDIR}/INPUT && cd ${RUNDIR}
 echo "RUNDIR is at ${RUNDIR}"
 
 # Top variables for CONFIG scripts
-
 export ICDIR=${ICDIR:-${TOP_ICDIR}/${ATM_RES}mx${OCN_RES}/*/*/mem${MEM}}
 [[ ${CYLC_RUN} == T ]] && echo 'RUNNING IN CYCL ' && return
 

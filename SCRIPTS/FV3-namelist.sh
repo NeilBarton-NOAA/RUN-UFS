@@ -13,18 +13,34 @@ mkdir -p INPUT RESTART
 # namelist defaults
 ATMRES=${ATM_RES:-$ATMRES}
 ENS_SETTINGS=${ENS_SETTINGS:-T}
-QUILTING_RESTART='.true.'
-WRITE_DOPOST='.false.'
+
+# optoins
+OUTPUT_HISTORY='.false.'
+DOGP_SGS_CNV=.false.
 IDEFLATE=1
+MAX_OUTPUT_FIELDS=300
+DOMAINS_STACK_SIZE=16000000
+TAU=4.0
+RF_CUTOFF=100.
+FV_SG_ADJ=900
+FHZERO=6
+DO_GSL_DRAG_SS=.false.
+DO_GWD_OPT_PSL=.true.
+IOPT_DIAG=2
+QUANTIZE_NSD=5
+DNATS=0
 
 ############
 # resolution based options
+ICHUNK2D=1536
+JCHUNK2D=768
 case "${ATMRES}" in
     "C384") 
         DT_ATMOS=${ATM_DT:-300}
-        ATM_INPES=${ATM_INPES:-8}
-        ATM_JNPES=${ATM_INPES:-8}
-        OUTPUT_FILE="'netcdf_parallel' 'netcdf_parallel'"
+        ATM_INPES=${ATM_INPES:-16}
+        ATM_JNPES=${ATM_JNPES:-12}
+        N_SPLIT=4
+        OUTPUT_FILE="'netcdf_parallel' 'netcdf'"
         MOM6_RESTART_SETTING='r'
         ATM_THRD=${ATM_THRD:-1}
         case "${MACHINE_ID}" in
@@ -79,6 +95,67 @@ if [[ "${DA_INCREMENTS:-F}" == "T" ]]; then
     READ_INCREMENT=".true."
     RES_LATLON_DYNAMICS="fv3_increment.nc"
     IAU_INC_FILES="fv3_increment.nc"
+else
+    IAUFHRS=0
+    IAU_DELTHRS=0
+    READ_INCREMENT=".false."
+    RES_LATLON_DYNAMICS='""'
+    IAU_INC_FILES='""'
+fi
+
+# Ensemble Run Settings
+if [[ ${ENS_SETTINGS} == T ]]; then
+    imem=${MEM:-1}
+    base_seed=$(( DTG*10000 + imem*100))
+    DO_SPPT=.true.
+    DO_SKEB=.true.
+    PERT_CLDS=.true.
+    ISEED_SKEB=$(( base_seed + 1 ))
+    ISEED_SPPT="$((base_seed + 3)),$((base_seed + 4)),$((base_seed + 5)),$((base_seed + 6)),$((base_seed + 7))"
+    ISEED_OCNSPPT="$((base_seed + 8)),$((base_seed + 9)),$((base_seed + 10)),$((base_seed + 11)),$((base_seed + 12))"
+    ISEED_EPBL="$((base_seed + 13)),$((base_seed + 14)),$((base_seed + 15)),$((base_seed + 16)),$((base_seed + 17))"
+    case "${ATMRES}" in
+    "C384") 
+        SKEB="0.8,-999,-999,-999,-999"
+        SPPT="0.56,0.28,0.14,0.056,0.028"
+        ;;
+    "C96")
+        SKEB="0.03,-999,-999,-999,-999"
+        SPPT="0.28,0.14,0.056,0.028,0.014"
+        ;;
+    *)
+        echo "  FATAL: ${ATMRES} not found yet supported"
+        exit 1
+        ;;
+    esac
+    case "${OCNRES}" in
+    "100")
+        export OCNSPPT="0.4,0.2,0.1,0.04,0.02"
+        export EPBL="0.4,0.2,0.1,0.04,0.02"
+        ;;
+    "025")
+        export OCNSPPT="0.8,0.4,0.2,0.08,0.04"
+        export EPBL="0.8,0.4,0.2,0.08,0.04"
+        ;;
+    *)
+    esac
+else
+    DO_SPPT=.false.
+    DO_SKEB=.false.
+    PERT_CLDS=.false.
+fi
+
+############
+if [[ ${USE_ATM_PERTURB_FILES} == T ]]; then
+    export READ_INCREMENT=".true."
+    export RES_LATLON_DYNAMICS="atminc.nc"
+fi
+
+############
+if [[ ${ENS_RESTART:-F} == T ]]; then
+    STOCHINI=".true."
+else
+    STOCHINI=".false."
 fi
 
 ####################################
@@ -95,7 +172,11 @@ JNPES=${ATM_JNPES:-$JNPES}
 atm_omp_num_threads=${ATM_THRD:-${atm_omp_num_threads}}
 WPG=${ATM_WPG:-0}
 WRTTASK_PER_GROUP=$(( WPG * atm_omp_num_threads ))
-[[ ${WPG} == 0 ]] && QUILTING='.false.' 
+if [[ ${WPG} == 0 ]]; then
+    QUILTING='.false.' 
+    QUILTING_RESTART='.false.'
+    WRITE_DOPOST='.false.'
+fi
 
 ####################################
 #  input.nml edits based on components running
@@ -144,7 +225,6 @@ source ${target_f}
 echo "  "${INPUT_NML}
 echo "  "${MODEL_CONFIGURE}
 echo "  "${FIELD_TABLE}
-FHZERO=3
 atparse < ${PATHRT}/parm/${INPUT_NML} > input.nml
 atparse < ${PATHRT}/parm/${MODEL_CONFIGURE} > model_configure
 cp "${PATHRT}/parm/noahmptable.tbl" .
@@ -159,7 +239,3 @@ ${SYEAR} ${SMONTH} ${SDAY} ${SHOUR} 0 0
 EOF
 fi
 
-# add stochastic options to input.nml
-#if [[ ${ENS_SETTINGS} == T ]]; then
-#    WRITE_STOCHY_NAMELIST
-#fi

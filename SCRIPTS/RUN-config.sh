@@ -16,19 +16,24 @@ case ${RUN} in
         export ATM_JNPES=${ATM_JNPES:-8}
         export RESTART_FREQ=3
         export OUTPUT_FREQ=6
-        export MOM6_INTERP_ICS=${MOM6_INTERP_ICS:-T}
+        export MOM6_INTERP_ICS=${MOM6_INTERP_ICS:-T} 
         ;;
     "GEFS")
         export compile_search=s2swa
         export PDLIB="OFF"
         export RT_TEST=cpld_control_gefs
-        export APP=${APP:-S2SWA}
+        export APP=${APP:-S2SW}
         export ATM_RES=${ATM_RES:-C384}
         export OCN_RES=${OCN_RES:-025}
         export WAV_RES=${WAV_RES:-glo_025}
         export OFFSET_START_HOUR=${OFFSET_START_HOUR:-3}
-        export ATM_WPG=6
-        export RESTART_FREQ=3
+        export ATM_WPG=48
+        export RESTART_FREQ=${FORECAST_LENGTH}
+        export OUTPUT_FREQ=6
+        export WW3_user_histname='false'
+        export WW3_historync='false'
+        export WW3_restartnc='false'
+        export WW3_restart_from_binary='false'
         ;;
     *)
         echo "  FATAL: ${ATMRES} not found yet supported"
@@ -36,5 +41,6 @@ case ${RUN} in
         ;;
 esac
 
-[[ ${OCN_RES} == 025 ]] && export MOM6_INTERP_ICS=F
-
+if [[ ${OCN_RES} == 025 ]]; then
+    export MOM6_INTERP_ICS=F
+fi

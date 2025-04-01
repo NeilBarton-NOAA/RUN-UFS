@@ -35,8 +35,13 @@ esac
 # IC 
 CICE_ICE_IC="cice_model.res.nc"
 CICE_RESTART=${CICE_RESTART:-'.true.'}
-CICE_RUNTYPE='continue'
-CICE_USE_RESTART_TIME=.true.
+if [[ ${WARM_START} == .true. ]]; then
+    export CICE_RUNTYPE='continue'
+    export CICE_USE_RESTART_TIME=.true.
+else
+    export CICE_RUNTYPE='initial'
+    export CICE_USE_RESTART_TIME=.false.
+fi
 
 ####################################
 # IO options

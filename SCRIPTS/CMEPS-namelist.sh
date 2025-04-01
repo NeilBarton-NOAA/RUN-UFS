@@ -2,9 +2,8 @@
 set -u
 echo 'CMEPS-namelist.sh'
 lc_APP=$( echo ${APP} | tr '[:upper:]' '[:lower:]' )
-UFS_CONFIGURE=ufs.configure.${lc_APP}_esmf.IN
+UFS_CONFIGURE=ufs.configure.${lc_APP}.IN
 PET_LOGS=${PETLOGS:-F}
-WW3_user_sets_restname="false"
 
 ########################
 # coupling time steps
@@ -23,7 +22,7 @@ chm_omp_num_threads=${atm_omp_num_threads}
 wav_omp_num_threads=${WAV_THRD:-${wav_omp_num_threads}}
 
 TEST_ID=UFS && RTVERBOSE=F
-compute_petbounds_and_tasks
+compute_petbounds_and_tasks_esmf_threading
 
 ########################
 # options based on resolutions
