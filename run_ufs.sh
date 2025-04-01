@@ -7,23 +7,21 @@ set -u
 # Default SFS configuration
 ####################################
 # Set Top options
-#export DTG=1994050100 && export RUN=SFS
+# Default SFS is using replay ICs with interpolated MOM6 ICs at C96mx100 
+export RUN=SFS && export DTG=1994050100 && export APP=S2S
+# Default GEFS is using replay ICs at an +3 OFFSET at C384mx025
+#export RUN=GEFS && export DTG=2018010800 && export APP=S2SW
 
-export APP=S2S
-export RUN=GEFS
-export DTG=2021032506
-export ICDIR=${NPB_WORKDIR}/ICs/${DTG} 
-export JOB_QUEUE=debug #batch # batch or debug on hera
-export DEBUG_SCRIPTS=F
+export JOB_QUEUE=windfall # batch or debug on hera, windfall on gaea
+export DEBUG_SCRIPTS=${1:-F}
 export RUNDIR_UNIQUE=F
 
 ############
 # model updates
 export FORECAST_LENGTH=6 #$(( 31 * 24 * 4 )) # in hours
 export WALLCLOCK=5 #$(( 3 * 60 )) # in minutes
-export OFFSET_START_HOUR=0
 export ENS_SETTINGS=F
-export DA_INCREMENTS=T
+export DA_INCREMENTS=F
 export ENS_RESTART=F
 export USE_ATM_PERTURB_FILES=F 
 export USE_OCN_PERTURB_FILES=F 
