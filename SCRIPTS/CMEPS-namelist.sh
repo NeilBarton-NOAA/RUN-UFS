@@ -4,6 +4,7 @@ echo 'CMEPS-namelist.sh'
 lc_APP=$( echo ${APP} | tr '[:upper:]' '[:lower:]' )
 UFS_CONFIGURE=ufs.configure.${lc_APP}.IN
 PET_LOGS=${PETLOGS:-F}
+#DumpFields=true
 
 ########################
 # coupling time steps
@@ -13,11 +14,13 @@ coupling_interval_slow_sec=${DT_THERM_MOM6}
 ########################
 # mpi tasks
 ATM_compute_tasks=$(( INPES * JNPES * NTILES ))
+MED_NMPI=${MED_NMPI:-300}
 MED_tasks=${MED_NMPI:-${ATM_compute_tasks}}
 if (( ${MED_tasks} > ${ATM_compute_tasks} )); then
     MED_tasks=${ATM_compute_tasks}
 fi
-med_omp_num_threads=${atm_omp_num_threads}
+#med_omp_num_threads=${atm_omp_num_threads}
+med_omp_num_threads=1 #${atm_omp_num_threads}
 chm_omp_num_threads=${atm_omp_num_threads}
 wav_omp_num_threads=${WAV_THRD:-${wav_omp_num_threads}}
 

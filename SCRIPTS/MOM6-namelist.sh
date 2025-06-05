@@ -46,7 +46,13 @@ case "${OCNRES}" in
 esac
 
 if [[ ${MOM6_INTERP_ICS:-F} == T ]]; then
-    export MOM6_WARMSTART_FILE="MOM.res.nc"
+   MOM6_WARMSTART_FILE="MOM.res.nc"
+   MOM6_INIT_FROM_Z='False'
+   MOM6_INIT_UV='file'
+else
+   MOM6_INIT_FROM_Z='.True.'
+   MOM6_WARMSTART_FILE="none"
+   MOM6_INIT_UV="zero"
 fi
 
 # DA increment file

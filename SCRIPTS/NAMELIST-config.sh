@@ -9,10 +9,12 @@ source ${SCRIPT_DIR}/RUN-config.sh
 OFFSET_START_HOUR=${OFFSET_START_HOUR:-0} # Replay ICs with +3 start
 # source namelists
 source ${SCRIPT_DIR}/FV3-namelist.sh
-source ${SCRIPT_DIR}/MOM6-namelist.sh
-source ${SCRIPT_DIR}/CICE-namelist.sh
-[[ ${APP} == *A* ]] && source ${SCRIPT_DIR}/GOCART-namelist.sh 
-[[ ${APP} == *W* ]] && source ${SCRIPT_DIR}/WW3-namelist.sh 
+if [[ ${APP} != ATM ]]; then
+    source ${SCRIPT_DIR}/MOM6-namelist.sh
+    source ${SCRIPT_DIR}/CICE-namelist.sh
+    [[ ${APP} == *A* ]] && source ${SCRIPT_DIR}/GOCART-namelist.sh 
+    [[ ${APP} == *W* ]] && source ${SCRIPT_DIR}/WW3-namelist.sh 
+fi
 source ${SCRIPT_DIR}/CMEPS-namelist.sh
 
 ############

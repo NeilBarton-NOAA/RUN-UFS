@@ -28,7 +28,7 @@ MAKE_OPT=$(cut -d '|' -f4  <<< "${line}")
 MAKE_OPT=$(sed -e 's/^ *//' -e 's/ *$//' <<< "${MAKE_OPT}")
 # APP
 OPT="APP="
-APP=${APP:-$( echo ${MAKE_OPT#*${OPT}} | cut -d ' ' -f1 )}
+APP=${COMPILE_APP:-$( echo ${MAKE_OPT#*${OPT}} | cut -d ' ' -f1 )}
 # RUN FV3 with 32 BIT or 64 BIT
 OPT="32BIT=" 
 if [[ ${MAKE_OPT} == *${OPT}* ]]; then
@@ -61,7 +61,6 @@ echo "${RUN}: ${CMAKE_FLAGS}"
 export BUILD_DIR=${NPB_WORKDIR}/CODE/ufs_build
 #[[ -d build ]] && rm -r build/
 ln -s ${BUILD_DIR}/ build
-
 bash -x ./build.sh
 mkdir -p ${TOPDIR}/bin
 cp build/ufs_model ${TOPDIR}/bin/ufs_${RUN}

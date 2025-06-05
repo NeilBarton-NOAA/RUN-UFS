@@ -31,7 +31,7 @@ fi
 
 # OCN Perturbation Files
 if [[ ${USE_OCN_PERTURB_FILES:-F} == T ]]; then
-    file=$( find -L ${ICDIR} -name "*mom6_perturbation*.nc" )
+    file=$( find -L ${ICDIR} -name "*mom6_perturbation*.nc" | grep ${DTG:0:8} )
     if (( ${#file} == 0 )); then
         echo "FATAL: *mom6_perturbation*.nc not found"
         exit 1

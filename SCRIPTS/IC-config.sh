@@ -2,7 +2,6 @@
 set -u
 [[ ${DEBUG_SCRIPTS} == T ]] && set -x
 declare -rx PS4='+ $(basename ${BASH_SOURCE[0]:-${FUNCNAME[0]:-"Unknown"}})[${LINENO}]'
-
 source ${SCRIPT_DIR}/RUN-config.sh
         
 # Replay ICs with +3 start
@@ -16,12 +15,14 @@ RESTART_DTG=${STG:0:8}.${STG:8:2}0000
 RESTART_DTG_ALT=${SYEAR}-${SMONTH}-${SDAY}-${START_SECS}
 # Call IC file 
 source ${SCRIPT_DIR}/FV3-ic.sh
-source ${SCRIPT_DIR}/MOM6-ic.sh
-source ${SCRIPT_DIR}/CICE-ic.sh
-if [[ ${APP} == *W* ]]; then
-    source ${SCRIPT_DIR}/WW3-ic.sh 
+if [[ ${APP} != ATM ]]; then
+    source ${SCRIPT_DIR}/MOM6-ic.sh
+    source ${SCRIPT_DIR}/CICE-ic.sh
+    if [[ ${APP} == *W* ]]; then
+        source ${SCRIPT_DIR}/WW3-ic.sh 
+    fi
+    source ${SCRIPT_DIR}/CMEPS-ic.sh
 fi
-source ${SCRIPT_DIR}/CMEPS-ic.sh
 
 if [[ ${ENS_RESTART:-F} == T ]]; then
     atm_ens_res=$( find -L ${ICDIR} -name "${RESTART_DTG}.atm_stoch.res.nc" )

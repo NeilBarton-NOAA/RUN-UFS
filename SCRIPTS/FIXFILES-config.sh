@@ -50,6 +50,12 @@ if [[ ! -s INPUT/oro_data.tile1.nc ]]; then
     done
 fi
 
+if [[ ! -s ${ATMRES}.facsf.tile1.nc ]]; then
+    echo "WARNING: ${ATMRES}.facsf.tile?.nc files not found in fix files, grabbing from gw"
+    src=${GW_FIXDIR}/orog/20230615/${ATM_RES}/sfc/
+    ln -s ${src}/* .  
+fi
+
 # remove any broken links
 find . -xtype l -exec rm {} \;
 

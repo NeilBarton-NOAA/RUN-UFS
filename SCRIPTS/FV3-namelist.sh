@@ -13,10 +13,13 @@ mkdir -p INPUT RESTART
 # namelist defaults
 ATMRES=${ATM_RES:-$ATMRES}
 ENS_SETTINGS=${ENS_SETTINGS:-T}
-
+export HIDE_AIAU=' '
+export HIDE_LIAU=' '
 # optoins
-OUTPUT_HISTORY='.false.'
-DOGP_SGS_CNV=.false.
+OUTPUT_HISTORY='.true.'
+DOGP_CLDOPTICS_LUT=.false.
+DOGP_LWSCAT=.false.
+DOGP_SGS_CNV=.true.
 IDEFLATE=1
 MAX_OUTPUT_FIELDS=300
 DOMAINS_STACK_SIZE=16000000
@@ -32,13 +35,22 @@ DNATS=0
 
 ############
 # resolution based options
-ICHUNK2D=1536
-JCHUNK2D=768
+IDEFLATE=0
+ICHUNK2D=$(( ${ATMRES:1} * 4 ))
+JCHUNK2D=$(( ${ATMRES:1} * 2 ))
+ICHUNK3D=$(( ${ATMRES:1} * 4 ))
+JCHUNK3D=$(( ${ATMRES:1} * 2 ))
+KCHUNK3D=1
+QUANTIZE_NSD=0
+XR_CNVCLD=.true.
+LRADAR=.true.
 case "${ATMRES}" in
     "C384") 
         DT_ATMOS=${ATM_DT:-300}
         ATM_INPES=${ATM_INPES:-16}
         ATM_JNPES=${ATM_JNPES:-12}
+        CDMBWD="20.0,2.5,1.0,1.0"  # settings for GSL drag suite
+        KNOB_UGWP_TAUAMP=0.8e-3      # setting for UGWPv1 non-stationary GWD
         N_SPLIT=4
         OUTPUT_FILE="'netcdf_parallel' 'netcdf'"
         MOM6_RESTART_SETTING='r'
@@ -50,16 +62,24 @@ case "${ATMRES}" in
         esac
         ;;
     "C192")
-        DT_ATMOS=${ATM_DT:-450}
+        DT_ATMOS=${ATM_DT:-600}
+        DT_INNER=300
         ATM_INPES=${ATM_INPES:-4}
         ATM_JNPES=${ATM_JNPES:-4}
-        OUTPUT_FILE="'netcdf'"
+        CDMBWD="10.0,3.5,1.0,1.0"  # settings for GSL drag suite
+        OUTPUT_FILE="'netcdf' 'netcdf'"
+        N_SPLIT=4
+        KNOB_UGWP_TAUAMP=1.5e-3
+        TAU=6
+        FV_SG_ADJ=1800
         ;;
     "C96")
         DT_ATMOS=${ATM_DT:-900}
         ATM_INPES=${ATM_INPES:-4}
         ATM_JNPES=${ATM_JNPES:-4}
         ATM_THRD=${ATM_THRD:-1}
+        CDMBWD="20.0,2.5,1.0,1.0"  # settings for GSL drag suite
+        KNOB_UGWP_TAUAMP=3.0e-3
         K_SPLIT=1
         N_SPLIT=8
         OUTPUT_FILE="'netcdf'"
@@ -69,7 +89,10 @@ case "${ATMRES}" in
         exit 1
         ;;
 esac
-DT_INNER=${DT_ATMOS}
+DT_INNER=${DT_INNER:-$DT_ATMOS}
+if  [[ ${HYDROSTATIC} == .true. ]]; then
+    UPDATE_FULL_OMEGA=.false.
+fi
 
 ####################################
 # WARM_START
@@ -119,6 +142,10 @@ if [[ ${ENS_SETTINGS} == T ]]; then
         SKEB="0.8,-999,-999,-999,-999"
         SPPT="0.56,0.28,0.14,0.056,0.028"
         ;;
+    "C192")
+        SKEB="0.8,-999,-999,-999,-999"
+        SPPT="0.56,0.28,0.14,0.056,0.028"
+        ;;
     "C96")
         SKEB="0.03,-999,-999,-999,-999"
         SPPT="0.28,0.14,0.056,0.028,0.014"
@@ -128,6 +155,10 @@ if [[ ${ENS_SETTINGS} == T ]]; then
         exit 1
         ;;
     esac
+    if  [[ ${HYDROSTATIC} == .true. ]]; then
+        DO_SKEB=.false.
+        SKEB="-999."
+    fi
     case "${OCNRES}" in
     "100")
         export OCNSPPT="0.4,0.2,0.1,0.04,0.02"
@@ -176,6 +207,10 @@ if [[ ${WPG} == 0 ]]; then
     QUILTING='.false.' 
     QUILTING_RESTART='.false.'
     WRITE_DOPOST='.false.'
+else
+    QUILTING='.true.' 
+    QUILTING_RESTART='.true.'
+    WRITE_DOPOST='.true.'
 fi
 
 ####################################

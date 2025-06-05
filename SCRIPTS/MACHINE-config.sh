@@ -18,7 +18,7 @@ export MACHINE_ID=${MACHINE_ID}
 if [[ ${MACHINE_ID} == wcoss2 ]]; then
     export ACCNR=${ACCNR:-GFS-DEV}
 elif [[ ${MACHINE_ID} == gaeac6 ]]; then
-    export ACCNR=${ACCNR:-sfs-cpu}
+    export ACCNR=${ACCNR:-ira-sti}
 else
     export ACCNR=${ACCNR:-marine-cpu}
 fi
@@ -35,7 +35,7 @@ source ${target_f}
 case "${MACHINE_ID}" in
     "hera")
         STMP=/scratch2/NCEPDEV/stmp3/${USER}/RUNS
-        TOP_ICDIR=/scratch2/NCEPDEV/stmp1/Neil.Barton/ICs/RUN_UFS
+        TOP_ICDIR=${TOP_ICDIR:-/scratch2/NCEPDEV/stmp1/Neil.Barton/ICs/RUN_UFS}
         GW_FIXDIR=/scratch1/NCEPDEV/global/glopara/fix
     ;;
     "orion")
@@ -50,7 +50,7 @@ case "${MACHINE_ID}" in
     ;;
     "gaeac6")
         STMP=/gpfs/f6/sfs-emc/scratch/${USER}/RUNS
-        TOP_ICDIR=/gpfs/f6/sfs-emc/scratch/${USER}/ICs/RUN_UFS
+        TOP_ICDIR=${TOP_ICDIR:-/gpfs/f6/sfs-emc/scratch/${USER}/ICs/RUN_UFS}
         GW_FIXDIR=/gpfs/f6/drsa-precip3/world-shared/role.glopara/fix/
     ;;
     "*")

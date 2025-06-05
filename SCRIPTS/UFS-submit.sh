@@ -23,8 +23,10 @@ source ${SCRIPT_DIR}/RUN-config.sh
 
 # variables
 source ${PATHRT}/default_vars.sh
-#[[ ${MACHINE_ID} == gaeac6 ]] && TPN=144
 source ${PATHRT}/tests/${RT_TEST}
+
+[[ ${MACHINE_ID} == gaeac6 ]] && PPN=${PPN:-144}
+TPN=${PPN:-$TPN}
 
 ############
 # edits to defaults if needed
@@ -57,6 +59,10 @@ if [[ ${APP} == *A* ]]; then
 else
     export CPLCHM=.false.
 fi
+if [[ ${APP} == ATM ]]; then
+    OCN_tasks=0
+    ICE_tasks=0
+fi
 if [[ ${APP} != *W* ]]; then
     WAV_tasks=0
 fi
@@ -71,7 +77,7 @@ if [[ ${CYLC_RUN} == T ]]; then
     export TEST_NAME=${TEST_NAME:-CYLC_${RUN}-${APP}}
     RUNDIR=${STMP}/${TEST_NAME}/${DTG}/mem${MEM}
 else
-    export TEST_NAME=${TEST_NAME:-${RUN}-${APP}}
+    export TEST_NAME=${TEST_NAME:-${RUN}-${APP}-${ATMRES}mx${OCNRES}}
     RUNDIR=${STMP}/UFS/run_${TEST_NAME}
     [[ ${RUNDIR_UNIQUE:-T} == T ]] &&  RUNDIR=${RUNDIR}_$$
     [[ -d ${RUNDIR} ]] && rm -r ${RUNDIR}/*

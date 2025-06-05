@@ -16,7 +16,7 @@ RST_2_END=${RUN_END}
 ####################################
 # new modef file?
 if [[ ! -f ${MESH_WAV} ]]; then
-    echo "WARNING: grabbing wave grid from gw"
+    echo "WARNING: grabbing wave grid from gw ${WAV_RES}"
     f_moddef=${STMP}/UFS/FIXFILES/mod_def.${WAV_RES} 
     if [[ ! -f ${f_moddef} ]]; then
         ${SCRIPT_DIR}/WW3-inp2moddef.sh ${GW_FIXDIR}/wave/20240105/ww3_grid.inp.${WAV_RES} ${HOMEufs} $(dirname ${f_moddef}) ${MACHINE_ID}
@@ -25,10 +25,11 @@ if [[ ! -f ${MESH_WAV} ]]; then
     ln -sf ${GW_FIXDIR}/wave/20240105/${MESH_WAV} .
 fi
 
+export WW3_restart_from_binary=true
 ####################################
 case "${WAV_RES}" in
     "glo_025")
-    export WAV_tasks=${WAV_NMPI:-120}
+    export WAV_tasks=${WAV_NMPI:-524}
     export WAV_THRD=${WAV_THRD:-2}
     ;;
 esac
@@ -36,9 +37,12 @@ esac
 ####################################
 # IO options
 RESTART_FREQ=${RESTART_FREQ:-$FHMAX}
-DT_2_RST=$(( RESTART_FREQ * 3600 )) 
-DTFLD=${WW3_DTFLD:-${DT_2_RST}}
-DTPNT=${WW3_DTPNT:-${DT_2_RST}}
+#WW3_DT_2_RST=$(( RESTART_FREQ * 3600 )) 
+WW3_DT_2_RST=$(( 12 * 3600 )) 
+WW3_DTFLD=${DTFLD:-${WW3_DT_2_RST}}
+WW3_DTPNT=${DTPNT:-${WW3_DT_2_RST}}
+#@[RUN_BEG]   @[WW3_DT_2_RST]  @[RUN_END]
+WW3_OUTPARS="WND CUR ICE HS T01 T02 DIR FP DP PHS PTP PDIR CHA"
 
 ####################################
 #parse namelist file
@@ -46,7 +50,7 @@ export INPUT_CURFLD='C F     Currents'
 export INPUT_ICEFLD='C F     Ice concentrations'
 MULTIGRID=${MULTIGRID:-'false'}
 echo "  ww3_shel.nml.IN"
-#atparse < ${PATHRT}/parm/ww3_shel.inp.IN > ww3_shel.inp
-atparse < ${PATHRT}/parm/ww3_shel.nml.IN > ww3_shel.nml
+atparse < ${PATHRT}/parm/ww3_shel.inp.IN > ww3_shel.inp
+#atparse < ${PATHRT}/parm/ww3_shel.nml.IN > ww3_shel.nml
 cp ${PATHRT}/parm/ww3_points.list .
 

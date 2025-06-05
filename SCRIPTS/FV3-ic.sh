@@ -13,7 +13,7 @@ if (( ${n_files} == 0 )); then
     echo '  FATAL: no atm ICs found in:' ${ICDIR}
     exit 1
 fi
-n_files=$( find -L ${ICDIR} -name "*gfs_data*.nc" 2>/dev/null | wc -l)
+n_files=$( find -L ${ICDIR} -name "*gfs_data*.nc" 2>/dev/null | grep ${DTG:0:8} | wc -l)
 if (( ${n_files} == ${NTILES} )); then
     echo "  FV3 Cold Start"
     WARM_START=.false.
@@ -62,7 +62,8 @@ fi #cold start/warm start
 
 # DA increment file
 if [[ "${DA_INCREMENTS:-F}" == "T" ]]; then
-    file=$( find -L ${ICDIR} -name "*fv3_increment.nc" )
+    # grep might not be needed
+    file=$( find -L ${ICDIR} -name "*fv3_increment.nc" | grep ${DTG:0:8} )
     if (( ${#file} == 0 )); then
         echo "FATAL: *fv3_increment.nc not found"
         exit 1
@@ -72,11 +73,10 @@ fi
 
 # Ensemble Files
 if [[ "${USE_ATM_PERTURB_FILES:-F}" == "T" ]]; then
-    file=$( find -L ${ICDIR} -name "*fv3_perturbation*.nc" )
+    file=$( find -L ${ICDIR} -name "*fv3_perturbation*.nc" | grep ${DTG:0:8} )
     if (( ${#file} == 0 )); then
         echo "FATAL: *fv3_perturbation*.nc not found"
         exit 1
     fi
     ln -s ${file} INPUT/atminc.nc
 fi
-

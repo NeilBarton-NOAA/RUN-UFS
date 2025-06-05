@@ -12,7 +12,7 @@ case "${OCNRES}" in
     CICE_DECOMP="slenderX1"
     ;;
     "025")
-    ICE_tasks=${ICE_NMPI:-76}
+    ICE_tasks=${ICE_NMPI:-72}
     NX_GLB=1440
     NY_GLB=1080
     CICE_DECOMP="slenderX2"
@@ -22,14 +22,6 @@ case "${OCNRES}" in
     exit 1
     ;;
 esac
-
-###########
-# Replay ICs with +3 start
-#OFFSET_START_HOUR=${OFFSET_START_HOUR:-0}
-#if (( ${OFFSET_START_HOUR} != 0 )); then
-#    export SHOUR=$( printf "%02d" $(( ${DTG:8:2} + ${OFFSET_START_HOUR} )) )
-#    export SECS=$( printf "%05d" $(( $SHOUR * 3600 )) )
-#fi
 
 ############
 # IC 
@@ -46,6 +38,7 @@ fi
 ####################################
 # IO options
 CICE_OUTPUT=${CICE_OUTPUT:-T}
+CICE_HIST_AVG=.false.
 RESTART_FREQ=${RESTART_FREQ:-$FHMAX}
 DUMPFREQ_N=$(( RESTART_FREQ / 24 ))
 
