@@ -20,11 +20,11 @@ if (( ${n_files} == ${NTILES} )); then
     PREFIXS="gfs_data sfc_data"
     for t in $(seq ${NTILES}); do
         for v in ${PREFIXS}; do
-            f=$( find -L ${ICDIR} -name "${v}.tile${t}.nc" )
+            f=$( find -L ${ICDIR} -name "${v}.tile${t}.nc" | grep ${DTG:0:8} )
             ln -sf ${f} INPUT/
         done
     done
-    f=$( find -L ${ICDIR} -name "gfs_ctrl.nc" )
+    f=$( find -L ${ICDIR} -name "gfs_ctrl.nc" | grep ${DTG:0:8} )
     ln -sf ${f} INPUT/
 else #ATM WARMSTART
     echo "  FV3 Warm Start"

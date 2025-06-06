@@ -9,7 +9,7 @@ case "${OCNRES}" in
     "100")
     ICE_tasks=${ICE_NMPI:-10}
     NY_GLB=320
-    CICE_DECOMP="slenderX1"
+    CICE_DECOMP="slenderX2"
     ;;
     "025")
     ICE_tasks=${ICE_NMPI:-72}

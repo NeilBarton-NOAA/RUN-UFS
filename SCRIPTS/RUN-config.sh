@@ -15,15 +15,16 @@ case ${RUN} in
         if [[ ${ATM_RES} == "C192" ]]; then
             export ATM_INPES=${ATM_INPES:-8}
             export ATM_JNPES=${ATM_JNPES:-8}
+            export ATM_WPG=${ATM_WPG:-60}
         else
             export ATM_INPES=${ATM_INPES:-6}
             export ATM_JNPES=${ATM_JNPES:-8}
+            export ATM_WPG=${ATM_WPG:-6}
         fi
         if [[ ${OCN_RES} == "025" ]]; then
             export OCN_NMPI=${OCN_NMPI:-220}
             export ICE_NMPI=${ICE_NMPI:-90}
         fi
-        export ATM_WPG=${ATM_WPG:-60}
         export RESTART_FREQ=${FORECAST_LENGTH:-120} #720
         export OUTPUT_FREQ=6
         export MOM6_INTERP_ICS=${MOM6_INTERP_ICS:-T} 
@@ -38,7 +39,7 @@ case ${RUN} in
         export WAV_RES=${WAV_RES:-glo_025}
         export OFFSET_START_HOUR=${OFFSET_START_HOUR:-3}
         export ATM_WPG=${ATM_WPG:-48}
-        export RESTART_FREQ=${FORECAST_LENGTH}
+        export RESTART_FREQ=${FORECAST_LENGTH:-120}
         export OUTPUT_FREQ=3
         export WW3_user_histname='false'
         export WW3_historync='false'
@@ -50,7 +51,3 @@ case ${RUN} in
         exit 1
         ;;
 esac
-
-if [[ ${OCN_RES} == 025 ]]; then
-    export MOM6_INTERP_ICS=F
-fi

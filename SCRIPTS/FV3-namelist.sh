@@ -16,6 +16,7 @@ ENS_SETTINGS=${ENS_SETTINGS:-T}
 export HIDE_AIAU=' '
 export HIDE_LIAU=' '
 # optoins
+NSTF_NAME=${NSST:-'2,0,0,0,0'}
 OUTPUT_HISTORY='.true.'
 DOGP_CLDOPTICS_LUT=.false.
 DOGP_LWSCAT=.false.
@@ -23,9 +24,7 @@ DOGP_SGS_CNV=.true.
 IDEFLATE=1
 MAX_OUTPUT_FIELDS=300
 DOMAINS_STACK_SIZE=16000000
-TAU=4.0
-RF_CUTOFF=100.
-FV_SG_ADJ=900
+RF_CUTOFF=100.0
 FHZERO=6
 DO_GSL_DRAG_SS=.false.
 DO_GWD_OPT_PSL=.true.
@@ -49,10 +48,16 @@ case "${ATMRES}" in
         DT_ATMOS=${ATM_DT:-300}
         ATM_INPES=${ATM_INPES:-16}
         ATM_JNPES=${ATM_JNPES:-12}
-        CDMBWD="20.0,2.5,1.0,1.0"  # settings for GSL drag suite
+        #CDMBWD="20.0,2.5,1.0,1.0"  # settings for GSL drag suite
+        CDMBWD="5.0,5.0,1.0,1.0"  # settings for GSL drag suite
         KNOB_UGWP_TAUAMP=0.8e-3      # setting for UGWPv1 non-stationary GWD
         N_SPLIT=4
+        TAU=4.0
+        FV_SG_ADJ=900
         OUTPUT_FILE="'netcdf_parallel' 'netcdf'"
+        OUTPUT_HISTORY='.false.'
+        IDEFLATE=1
+        QUANTIZE_NSD=5
         MOM6_RESTART_SETTING='r'
         ATM_THRD=${ATM_THRD:-1}
         case "${MACHINE_ID}" in
@@ -69,20 +74,24 @@ case "${ATMRES}" in
         CDMBWD="10.0,3.5,1.0,1.0"  # settings for GSL drag suite
         OUTPUT_FILE="'netcdf' 'netcdf'"
         N_SPLIT=4
+        FV_SG_ADJ=900
         KNOB_UGWP_TAUAMP=1.5e-3
         TAU=6
         FV_SG_ADJ=1800
         ;;
     "C96")
-        DT_ATMOS=${ATM_DT:-900}
+        DT_ATMOS=${ATM_DT:-600}
         ATM_INPES=${ATM_INPES:-4}
         ATM_JNPES=${ATM_JNPES:-4}
         ATM_THRD=${ATM_THRD:-1}
         CDMBWD="20.0,2.5,1.0,1.0"  # settings for GSL drag suite
         KNOB_UGWP_TAUAMP=3.0e-3
+        DT_INNER=300
+        TAU=8.0
         K_SPLIT=1
-        N_SPLIT=8
-        OUTPUT_FILE="'netcdf'"
+        N_SPLIT=4
+        FV_SG_ADJ=1800
+        OUTPUT_FILE="'netcdf' 'netcdf'"
         ;;
     *)
         echo "  FATAL: ${ATMRES} not found yet supported"
@@ -141,6 +150,7 @@ if [[ ${ENS_SETTINGS} == T ]]; then
     "C384") 
         SKEB="0.8,-999,-999,-999,-999"
         SPPT="0.56,0.28,0.14,0.056,0.028"
+        SKEB_TAU="2.16E4,2.592E5,2.592E6,7.776E6,3.1536E7"
         ;;
     "C192")
         SKEB="0.8,-999,-999,-999,-999"
@@ -148,7 +158,7 @@ if [[ ${ENS_SETTINGS} == T ]]; then
         ;;
     "C96")
         SKEB="0.03,-999,-999,-999,-999"
-        SPPT="0.28,0.14,0.056,0.028,0.014"
+        SPPT="0.56,0.28,0.14,0.056,0.028"
         ;;
     *)
         echo "  FATAL: ${ATMRES} not found yet supported"
@@ -161,8 +171,8 @@ if [[ ${ENS_SETTINGS} == T ]]; then
     fi
     case "${OCNRES}" in
     "100")
-        export OCNSPPT="0.4,0.2,0.1,0.04,0.02"
-        export EPBL="0.4,0.2,0.1,0.04,0.02"
+        export OCNSPPT="0.8,0.4,0.2,0.08,0.04"
+        export EPBL="0.8,0.4,0.2,0.08,0.04"
         ;;
     "025")
         export OCNSPPT="0.8,0.4,0.2,0.08,0.04"

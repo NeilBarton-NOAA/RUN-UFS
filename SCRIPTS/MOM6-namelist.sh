@@ -10,7 +10,7 @@ MOM_INPUT=${MOM_INPUT:-${PATHRT}/parm/${MOM6_INPUT}}
 
 ####################################
 # options based on other active components
-[[ ${APP} != *"W"* ]] && MOM6_USE_WAVES=false
+[[ ${APP} != *"W"* ]] && MOM6_USE_WAVES=False
 
 case "${OCNRES}" in
     "100")
@@ -18,7 +18,7 @@ case "${OCNRES}" in
     OCNTIM=3600
     NX_GLB=360
     NY_GLB=320
-    DT_DYNAM_MOM6='3600'
+    DT_DYNAM_MOM6='1800'
     DT_THERM_MOM6='3600'
     FRUNOFF=""
     MOM6_CHLCLIM="seawifs_1998-2006_smoothed_2X.nc"
@@ -44,7 +44,6 @@ case "${OCNRES}" in
     exit 1
     ;;
 esac
-
 if [[ ${MOM6_INTERP_ICS:-F} == T ]]; then
    MOM6_WARMSTART_FILE="MOM.res.nc"
    MOM6_INIT_FROM_Z='False'
@@ -54,7 +53,6 @@ else
    MOM6_WARMSTART_FILE="none"
    MOM6_INIT_UV="zero"
 fi
-
 # DA increment file
 if [[ "${DA_INCREMENTS:-F}" == "T" ]]; then
     ODA_INCUPD="True"

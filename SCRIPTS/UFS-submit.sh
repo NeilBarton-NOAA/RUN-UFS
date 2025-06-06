@@ -25,7 +25,7 @@ source ${SCRIPT_DIR}/RUN-config.sh
 source ${PATHRT}/default_vars.sh
 source ${PATHRT}/tests/${RT_TEST}
 
-[[ ${MACHINE_ID} == gaeac6 ]] && PPN=${PPN:-144}
+[[ ${MACHINE_ID} == gaeac6 ]] && [[ ${ATMRES} == "C196" ]] && PPN=${PPN:-144}
 TPN=${PPN:-$TPN}
 
 ############
@@ -77,9 +77,15 @@ if [[ ${CYLC_RUN} == T ]]; then
     export TEST_NAME=${TEST_NAME:-CYLC_${RUN}-${APP}}
     RUNDIR=${STMP}/${TEST_NAME}/${DTG}/mem${MEM}
 else
-    export TEST_NAME=${TEST_NAME:-${RUN}-${APP}-${ATMRES}mx${OCNRES}}
+    NAME=${RUN}-${APP}-${ATMRES}mx${OCNRES}
+    TEST_NAME=${TEST_NAME:-""}
+    if (( ${#TEST_NAME} > 0 )); then
+        export TEST_NAME=${NAME}_${TEST_NAME}
+    else
+        export TEST_NAME=${NAME}
+    fi
     RUNDIR=${STMP}/UFS/run_${TEST_NAME}
-    [[ ${RUNDIR_UNIQUE:-T} == T ]] &&  RUNDIR=${RUNDIR}_$$
+    [[ ${RUNDIR_UNIQUE:-T} == T ]] && RUNDIR=${RUNDIR}_$$
     [[ -d ${RUNDIR} ]] && rm -r ${RUNDIR}/*
     [[ ${ENS_SETTINGS:-F} == T ]] && MEM=001
 fi

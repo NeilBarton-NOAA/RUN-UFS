@@ -8,11 +8,12 @@ set -u
 ####################################
 # Set Top options
 # Default SFS is using replay ICs with interpolated MOM6 ICs at C96mx100 
-export RUN=SFS && export DTG=1994050100 && export APP=S2S
-export ATM_RES=C192 && export OCN_RES=025 && export WAV_RES=glo_025 && export MOM6_INTERP_ICS=F && export TEST_NAME=ENS_RUN 
+#export RUN=SFS && export DTG=1994050100 && export APP=S2S
+#export ATM_RES=C192 && export OCN_RES=025 && export WAV_RES=glo_025 
 # Default GEFS is using replay ICs at an +3 OFFSET at C384mx025
-#export RUN=GEFS && export DTG=2018012300
-export TOP_ICDIR=${NPB_WORKDIR}/ICs/REPLAY
+export RUN=GEFS && export DTG=2018010800
+#export TOP_ICDIR=${NPB_WORKDIR}/ICs/REPLAY && export MOM6_INTERP_ICS=F && export TEST_NAME=REPLAY
+#export TOP_ICDIR=${NPB_WORKDIR}/ICs/CPC && export MOM6_INTERP_ICS=T && export TEST_NAME=CPC && export NSST='2,1,0,0,0'
 
 export JOB_QUEUE=normal # batch or debug on hera, normal or windfall on gaea
 export DEBUG_SCRIPTS=${1:-F}
@@ -28,8 +29,8 @@ export RUNDIR_UNIQUE=F
 
 ############
 # model updates
-export FORECAST_LENGTH=24 #$(( 31 * 24 * 1 )) # in hours
-export WALLCLOCK=120 #$(( 3 * 60 )) # in minutes
+export FORECAST_LENGTH=6 && export WALLCLOCK=10 # in minutes
+#export FORECAST_LENGTH=$(( 31 * 24 * 12 )) && export WALLCLOCK=$(( 18 * 60 )) # in minutes
 export ENS_SETTINGS=T
 export DA_INCREMENTS=F
 export ENS_RESTART=F
