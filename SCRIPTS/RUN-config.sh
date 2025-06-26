@@ -25,8 +25,9 @@ case ${RUN} in
             export OCN_NMPI=${OCN_NMPI:-220}
             export ICE_NMPI=${ICE_NMPI:-90}
         fi
-        export RESTART_FREQ=${FORECAST_LENGTH:-120} #720
-        export OUTPUT_FREQ=6
+        #export RESTART_FREQ=${FORECAST_LENGTH:-120} #720
+        export RESTART_FREQ=12 #${FORECAST_LENGTH:-120} #720
+        export OUTPUT_FREQ=24
         export MOM6_INTERP_ICS=${MOM6_INTERP_ICS:-T} 
         ;;
     "GEFS")

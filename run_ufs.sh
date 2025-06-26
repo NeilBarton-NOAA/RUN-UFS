@@ -8,34 +8,37 @@ set -u
 ####################################
 # Set Top options
 # Default SFS is using replay ICs with interpolated MOM6 ICs at C96mx100 
-#export RUN=SFS && export DTG=1994050100 && export APP=S2S
-#export ATM_RES=C192 && export OCN_RES=025 && export WAV_RES=glo_025 
 # Default GEFS is using replay ICs at an +3 OFFSET at C384mx025
-export RUN=GEFS && export DTG=2018010800
-#export TOP_ICDIR=${NPB_WORKDIR}/ICs/REPLAY && export MOM6_INTERP_ICS=F && export TEST_NAME=REPLAY
+export RUN=GEFS && export DTG=2018010400
+#export RUN=SFS && export DTG=2024123100 && export APP=S2S
+#export ATM_RES=C192 && export OCN_RES=025 && export WAV_RES=glo_025 
 #export TOP_ICDIR=${NPB_WORKDIR}/ICs/CPC && export MOM6_INTERP_ICS=T && export TEST_NAME=CPC && export NSST='2,1,0,0,0'
+#export TOP_ICDIR=${NPB_WORKDIR}/ICs/CPC && export MOM6_INTERP_ICS=T && export TEST_NAME=TEST_LAYOUT && export NSST='2,1,0,0,0'
+#export TOP_ICDIR=${NPB_WORKDIR}/ICs/REPLAY && export MOM6_INTERP_ICS=F && export TEST_NAME=REPLAY
+export TOP_ICDIR=${NPB_WORKDIR}/ICs/HR4 && export MOM6_INTERP_ICS=F && export TEST_NAME=WAV_IC
 
 export JOB_QUEUE=normal # batch or debug on hera, normal or windfall on gaea
 export DEBUG_SCRIPTS=${1:-F}
 export RUNDIR_UNIQUE=F
 
-#export ATM_INPES=8
-#export ATM_JNPES=12
+#export ATM_INPES=4
+#export ATM_JNPES=6
 #export ATM_THRD=2
 #export ATM_WPG=24
-#export OCN_NMPI=220
-#export ICE_NMPI=96
+#export OCN_NMPI=120
+#export ICE_NMPI=48
 #export WAV_NMPI=100
 
 ############
 # model updates
-export FORECAST_LENGTH=6 && export WALLCLOCK=10 # in minutes
-#export FORECAST_LENGTH=$(( 31 * 24 * 12 )) && export WALLCLOCK=$(( 18 * 60 )) # in minutes
-export ENS_SETTINGS=T
+export FORECAST_LENGTH=24 && export WALLCLOCK=30 # in minutes
+#export FORECAST_LENGTH=$(( 150 * 24 )) && export WALLCLOCK=600 # in minutes
+#export FORECAST_LENGTH=$(( 31 * 24 * 8 )) && export WALLCLOCK=$(( 18 * 60 )) # in minutes
+export ENS_SETTINGS=F
 export DA_INCREMENTS=F
 export ENS_RESTART=F
-export USE_ATM_PERTURB_FILES=T 
-export USE_OCN_PERTURB_FILES=T 
+export USE_ATM_PERTURB_FILES=F 
+export USE_OCN_PERTURB_FILES=F 
 
 ############
 # Submit Forecast
