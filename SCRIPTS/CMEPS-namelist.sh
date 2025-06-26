@@ -4,6 +4,8 @@ echo 'CMEPS-namelist.sh'
 lc_APP=$( echo ${APP} | tr '[:upper:]' '[:lower:]' )
 UFS_CONFIGURE=ufs.configure.${lc_APP}.IN
 PET_LOGS=${PETLOGS:-F}
+WW3_PIO_FORMAT='netcdf'
+CMEPS_PIO_FORMAT='netcdf'
 #DumpFields=true
 
 ########################
