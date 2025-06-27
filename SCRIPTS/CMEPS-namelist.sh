@@ -6,6 +6,7 @@ UFS_CONFIGURE=ufs.configure.${lc_APP}.IN
 PET_LOGS=${PETLOGS:-F}
 WW3_PIO_FORMAT='netcdf'
 CMEPS_PIO_FORMAT='netcdf'
+WRITE_ENDOFRUN_RESTART=.true.
 #DumpFields=true
 
 ########################
