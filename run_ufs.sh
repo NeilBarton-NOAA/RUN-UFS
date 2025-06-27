@@ -15,7 +15,7 @@ export RUN=GEFS && export DTG=2018010400
 #export TOP_ICDIR=${NPB_WORKDIR}/ICs/CPC && export MOM6_INTERP_ICS=T && export TEST_NAME=CPC && export NSST='2,1,0,0,0'
 #export TOP_ICDIR=${NPB_WORKDIR}/ICs/CPC && export MOM6_INTERP_ICS=T && export TEST_NAME=TEST_LAYOUT && export NSST='2,1,0,0,0'
 #export TOP_ICDIR=${NPB_WORKDIR}/ICs/REPLAY && export MOM6_INTERP_ICS=F && export TEST_NAME=REPLAY
-export TOP_ICDIR=${NPB_WORKDIR}/ICs/HR4 && export MOM6_INTERP_ICS=F && export TEST_NAME=WAV_IC
+export TOP_ICDIR=${NPB_WORKDIR}/ICs/HR4 && export MOM6_INTERP_ICS=F && export RESTART_FREQ=3 && export TEST_NAME=WAV_IC
 
 export JOB_QUEUE=normal # batch or debug on hera, normal or windfall on gaea
 export DEBUG_SCRIPTS=${1:-F}
@@ -23,7 +23,7 @@ export RUNDIR_UNIQUE=F
 
 #export ATM_INPES=4
 #export ATM_JNPES=6
-#export ATM_THRD=2
+export ATM_THRD=2
 #export ATM_WPG=24
 #export OCN_NMPI=120
 #export ICE_NMPI=48

@@ -37,8 +37,8 @@ esac
 ####################################
 # IO options
 RESTART_FREQ=${RESTART_FREQ:-$FHMAX}
-#WW3_DT_2_RST=$(( RESTART_FREQ * 3600 )) 
-WW3_DT_2_RST=$(( 12 * 3600 )) 
+WW3_DT_2_RST=$(( RESTART_FREQ * 3600 )) 
+#WW3_DT_2_RST=$(( 12 * 3600 )) 
 WW3_DTFLD=${DTFLD:-${WW3_DT_2_RST}}
 WW3_DTPNT=${DTPNT:-${WW3_DT_2_RST}}
 #@[RUN_BEG]   @[WW3_DT_2_RST]  @[RUN_END]
@@ -50,7 +50,7 @@ export INPUT_CURFLD='C F     Currents'
 export INPUT_ICEFLD='C F     Ice concentrations'
 MULTIGRID=${MULTIGRID:-'false'}
 echo "  ww3_shel.nml.IN"
-atparse < ${PATHRT}/parm/ww3_shel.inp.IN > ww3_shel.inp
-#atparse < ${PATHRT}/parm/ww3_shel.nml.IN > ww3_shel.nml
+#atparse < ${PATHRT}/parm/ww3_shel.inp.IN > ww3_shel.inp
+atparse < ${PATHRT}/parm/ww3_shel.nml.IN > ww3_shel.nml
 cp ${PATHRT}/parm/ww3_points.list .
 
