@@ -5,7 +5,7 @@ echo 'CMEPS-ic.sh'
 # ICs
 ICDIR=${ICDIR}
 if [[ ${WARM_START} == '.true.' ]]; then
-    med_ic=${med_ic:-$( find ${ICDIR} -name "*${RESTART_DTG}.ufs.cpld.cpl.r.nc")}
+    med_ic=${med_ic:-$( find ${ICDIR} -name "*${RESTART_DTG}.ufs.cpld.cpl.r.nc" | head -n 1 )}
     if [[ ! -f ${med_ic} ]]; then
         med_ic=${med_ic:-$( find ${ICDIR} -name "*ufs.cpld.cpl.r.${RESTART_DTG_ALT}.nc")}
         if [[ ! -f ${med_ic} ]]; then

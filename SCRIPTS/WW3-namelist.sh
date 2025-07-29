@@ -3,6 +3,14 @@ echo 'WW3-namelist.sh'
 
 ####################################
 # times
+WAVIC_NC=${WAVIC_NC:-F}
+if [[ ${WAVIC_NC} == T ]]; then
+    export WW3_restart_from_binary='false'
+else
+    export WW3_restart_from_binary='true'
+fi
+export WW3_historync='true'
+export WW3_restartnc='true'
 RUN_BEG="${SYEAR}${SMONTH}${SDAY} $(printf "%02d" $(( ${DTG:8:2} )))0000"
 OUT_BEG=${RUN_BEG}
 RST_BEG=${RUN_BEG}
@@ -25,7 +33,6 @@ if [[ ! -f ${MESH_WAV} ]]; then
     ln -sf ${GW_FIXDIR}/wave/20240105/${MESH_WAV} .
 fi
 
-export WW3_restart_from_binary=true
 ####################################
 case "${WAV_RES}" in
     "glo_025")
@@ -38,10 +45,8 @@ esac
 # IO options
 RESTART_FREQ=${RESTART_FREQ:-$FHMAX}
 WW3_DT_2_RST=$(( RESTART_FREQ * 3600 )) 
-#WW3_DT_2_RST=$(( 12 * 3600 )) 
 WW3_DTFLD=${DTFLD:-${WW3_DT_2_RST}}
 WW3_DTPNT=${DTPNT:-${WW3_DT_2_RST}}
-#@[RUN_BEG]   @[WW3_DT_2_RST]  @[RUN_END]
 WW3_OUTPARS="WND CUR ICE HS T01 T02 DIR FP DP PHS PTP PDIR CHA"
 
 ####################################
@@ -50,7 +55,7 @@ export INPUT_CURFLD='C F     Currents'
 export INPUT_ICEFLD='C F     Ice concentrations'
 MULTIGRID=${MULTIGRID:-'false'}
 echo "  ww3_shel.nml.IN"
-#atparse < ${PATHRT}/parm/ww3_shel.inp.IN > ww3_shel.inp
-atparse < ${PATHRT}/parm/ww3_shel.nml.IN > ww3_shel.nml
+atparse < ${PATHRT}/parm/ww3_shel.inp.IN > ww3_shel.inp
+#atparse < ${PATHRT}/parm/ww3_shel.nml.IN > ww3_shel.nml
 cp ${PATHRT}/parm/ww3_points.list .
 

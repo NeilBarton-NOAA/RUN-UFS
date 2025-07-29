@@ -63,11 +63,14 @@ fi #cold start/warm start
 # DA increment file
 if [[ "${DA_INCREMENTS:-F}" == "T" ]]; then
     # grep might not be needed
-    file=$( find -L ${ICDIR} -name "*fv3_increment.nc" | grep ${DTG:0:8} )
-    if (( ${#file} == 0 )); then
-        echo "FATAL: *fv3_increment.nc not found"
-        exit 1
-    fi
+    INC_HOUR=$(date -u -d"${SYEAR}-${SMONTH}-${SDAY} ${DTG:8:2}:00:00 6 hours" +%H)
+    INCDIR=${TOP_ICDIR}/${ATM_RES}mx${OCN_RES}/*/${INC_HOUR}
+    file=$( find -L ${INCDIR} -name "gdas.t${INC_HOUR}z.atminc.nc" | grep ${DTG:0:8} )
+    #file=$( find -L ${ICDIR} -name "*fv3_increment.nc" | grep ${DTG:0:8} )
+    #if (( ${#file} == 0 )); then
+    #    echo "FATAL: *fv3_increment.nc not found"
+    #    exit 1
+    #fi
     ln -s ${file} INPUT/fv3_increment.nc
 fi
 

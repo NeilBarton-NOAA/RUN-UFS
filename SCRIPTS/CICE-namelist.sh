@@ -27,7 +27,7 @@ esac
 # IC 
 CICE_ICE_IC="cice_model.res.nc"
 CICE_RESTART=${CICE_RESTART:-'.true.'}
-if [[ ${WARM_START} == .true. ]]; then
+if [[ ${WARM_START} == .true. ]] || (( ${OFFSET_START_HOUR} != 0 )); then
     export CICE_RUNTYPE='continue'
     export CICE_USE_RESTART_TIME=.true.
 else
@@ -35,6 +35,7 @@ else
     export CICE_USE_RESTART_TIME=.false.
 fi
 
+SECS=${START_SECS}
 ####################################
 # IO options
 CICE_OUTPUT=${CICE_OUTPUT:-T}

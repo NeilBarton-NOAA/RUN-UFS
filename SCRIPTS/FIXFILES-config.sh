@@ -7,6 +7,7 @@ echo $FV3_RUN
 source ${PATHRT}/atparse.bash
 
 target_f=${SCRIPT_DIR}/FIXFILES-link.sh
+[[ ! -f ${target_f} ]] && rm ${target_f}
 cat << EOF > ${target_f}
 #!/bin/bash -u
 # fixfiles for run. Link instead of copying because that takes forever
@@ -18,6 +19,10 @@ ln_end=$(( ln_start + 9 ))
 ln_extra=$(( ln_end + 1 ))
 sed -n "${ln_start},${ln_end}p;${ln_extra}q" ${rt_f} >> ${target_f}
 # parse FV3_RUN file
+echo $WW3_DOMAIN
+echo ${PATHRT}/fv3_conf/$FV3_RUN
+WW3_DOMAIN=${WAV_RES}
+WW3_MODDEF=mod_def.${WW3_DOMAIN}
 atparse < ${PATHRT}/fv3_conf/${FV3_RUN} >> ${target_f}
 # replace cp with ln -sf
 sed -i "s:cp :ln -sf :g" ${target_f}

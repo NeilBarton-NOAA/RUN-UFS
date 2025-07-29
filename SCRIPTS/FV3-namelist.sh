@@ -124,6 +124,7 @@ fi
 if [[ "${DA_INCREMENTS:-F}" == "T" ]]; then
     IAUFHRS=6
     IAU_DELTHRS=6
+    IAU_OFFSET=6
     READ_INCREMENT=".true."
     RES_LATLON_DYNAMICS="fv3_increment.nc"
     IAU_INC_FILES="fv3_increment.nc"

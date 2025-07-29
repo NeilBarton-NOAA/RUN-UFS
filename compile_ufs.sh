@@ -2,7 +2,7 @@
 set -u
 # Defaults to Compile the SFS configuration, but could be changed
 # examine the UFS/tests/rt.conf for COMPILE options for specific configurations
-export RUN=GEFS # GEFS, SFS, GFS supported
+export RUN=GFS # GEFS, SFS, GFS supported
 TOPDIR=${PWD}
 
 export SCRIPT_DIR=${TOPDIR}/SCRIPTS

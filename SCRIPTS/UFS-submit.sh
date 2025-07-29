@@ -25,7 +25,7 @@ source ${SCRIPT_DIR}/RUN-config.sh
 source ${PATHRT}/default_vars.sh
 source ${PATHRT}/tests/${RT_TEST}
 
-[[ ${MACHINE_ID} == gaeac6 ]] && [[ ${ATMRES} == "C196" ]] && PPN=${PPN:-144}
+[[ ${MACHINE_ID} == gaeac6 ]] && [[ ${ATMRES} == "C384" ]] && PPN=${PPN:-144}
 TPN=${PPN:-$TPN}
 
 ############
@@ -94,6 +94,7 @@ echo "RUNDIR is at ${RUNDIR}"
 
 # Top variables for CONFIG scripts
 export ICDIR=${ICDIR:-${TOP_ICDIR}/${ATM_RES}mx${OCN_RES}/*/*/mem${MEM}}
+#export ICDIR=${ICDIR:-${TOP_ICDIR}/${ATM_RES}mx${OCN_RES}/*/*/}
 [[ ${CYLC_RUN} == T ]] && echo 'RUNNING IN CYCL ' && return
 
 ############

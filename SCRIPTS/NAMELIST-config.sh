@@ -7,6 +7,11 @@ source ${PATHRT}/atparse.bash
 source ${PATHRT}/rt_utils.sh
 source ${SCRIPT_DIR}/RUN-config.sh
 OFFSET_START_HOUR=${OFFSET_START_HOUR:-0} # Replay ICs with +3 start
+STG=${DTG}
+if (( ${OFFSET_START_HOUR} != 0 )); then
+    STG=$(date -u -d"${SYEAR}-${SMONTH}-${SDAY} ${DTG:8:2}:00:00 ${OFFSET_START_HOUR} hours" +%Y%m%d%H)
+fi
+START_SECS=$( printf "%05d" $(( 10#${STG:8:2} * 3600 )) )
 # source namelists
 source ${SCRIPT_DIR}/FV3-namelist.sh
 if [[ ${APP} != ATM ]]; then

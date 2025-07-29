@@ -4,7 +4,7 @@ echo 'CICE-ic.sh'
 ####################################
 # look for restarts if provided
 ICDIR=${ICDIR:-${INPUTDATA_ROOT_BMIC}/${SYEAR}${SMONTH}${SDAY}${SHOUR}/cpc}
-ice_ic=${ice_ic:-$( find -L ${ICDIR} -name "*${RESTART_DTG}.cice_model.res.nc" )}
+ice_ic=${ice_ic:-$( find -L ${ICDIR} -name "*${RESTART_DTG}.cice_model.res.nc" | head -n 1 )}
 rm -f ice.restart_file
 
 ####################################
