@@ -9,7 +9,7 @@ set -u
 # Set Top options
 # Default SFS is using replay ICs with interpolated MOM6 ICs at C96mx100 
 # Default GEFS is using replay ICs at an +3 OFFSET at C384mx025
-#export RUN=SFS && export DTG=2024123100 && export APP=S2S
+export RUN=SFS && export DTG=1994050100 && export APP=S2S
 
 #export RUN=SFS && export DTG=2024081500
 #export TOP_ICDIR=${NPB_WORKDIR}/ICs/GFS_TEST && export MOM6_INTERP_ICS=F && export TEST_NAME=GFS_TEST
@@ -30,7 +30,7 @@ set -u
 #export ATM_RES=C384 && export OCN_RES=025  && export APP=S2S && OFFSET_START_HOUR=3 
 
 #export RUN=SFS && export DTG=2018010400
-#export TOP_ICDIR=${NPB_WORKDIR}/ICs/REPLAY && export MOM6_INTERP_ICS=F && export RESTART_FREQ=3 && export TEST_NAME=WAV_IC
+#export TOP_ICDIR=${NPB_WORKDIR}/ICs/REPLAY && export MOM6_INTERP_ICS=F && export RESTART_FREQ=3 && export TEST_NAME=WAV_IC_${DTG}
 #export ATM_RES=C192 && export OCN_RES=025 && export WAV_RES=glo_025 && export OFFSET_START_HOUR=3 && export APP=S2SW
 #export WAVIC_NC=F
 
@@ -38,10 +38,10 @@ set -u
 #export TOP_ICDIR=${NPB_WORKDIR}/ICs/HR4 && export OFFSET_START_HOUR=0 && export TEST_NAME=WAV_TEST
 #export ICDIR=${NPB_WORKDIR}/RUNS/UFS/run_GEFS-S2SW-C384mx025_WAV_IC
 
-export RUN=SFS && export DTG=2018010500 && export APP=S2SW
-export ATM_RES=C192 && export OCN_RES=025 && export WAV_RES=glo_025 
-export TOP_ICDIR=${NPB_WORKDIR}/ICs/REPLAY && export MOM6_INTERP_ICS=F && export TEST_NAME=WAV_TEST
-export WAVIC_NC=T
+#export RUN=SFS && export DTG=2018010500 && export APP=S2SW
+#export ATM_RES=C192 && export OCN_RES=025 && export WAV_RES=glo_025 
+#export TOP_ICDIR=${NPB_WORKDIR}/ICs/REPLAY && export MOM6_INTERP_ICS=F && export TEST_NAME=WAV_TEST
+#export WAVIC_NC=T
 
 #export TOP_ICDIR=${NPB_WORKDIR}/ICs/CPC && export MOM6_INTERP_ICS=T && export TEST_NAME=CPC && export NSST='2,1,0,0,0'
 #export TOP_ICDIR=${NPB_WORKDIR}/ICs/CPC && export MOM6_INTERP_ICS=T && export TEST_NAME=TEST_LAYOUT && export NSST='2,1,0,0,0'
@@ -58,12 +58,12 @@ export RUNDIR_UNIQUE=F
 #export ATM_WPG=24
 #export OCN_NMPI=120
 #export ICE_NMPI=48
-#export WAV_NMPI=240
+export WAV_NMPI=240
 
 ############
 # model updates
 #export FORECAST_LENGTH=24 && export WALLCLOCK=30 # in minutes
-export FORECAST_LENGTH=15 && export WALLCLOCK=10 # in minutes
+export FORECAST_LENGTH=15 && export WALLCLOCK=5 # in minutes
 #export FORECAST_LENGTH=$(( 150 * 24 )) && export WALLCLOCK=600 # in minutes
 #export FORECAST_LENGTH=$(( 31 * 24 * 8 )) && export WALLCLOCK=$(( 18 * 60 )) # in minutes
 export ENS_SETTINGS=F

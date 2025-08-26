@@ -18,7 +18,6 @@ else
         ln -sf ${ocn_ic} INPUT/${f}
     done
 fi
-
 # DA increment file
 if [[ "${DA_INCREMENTS:-F}" == "T" ]]; then
     file=$( find -L ${ICDIR} -name "*mom6_increment.nc" )

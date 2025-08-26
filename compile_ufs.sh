@@ -2,13 +2,19 @@
 set -u
 # Defaults to Compile the SFS configuration, but could be changed
 # examine the UFS/tests/rt.conf for COMPILE options for specific configurations
-export RUN=GFS # GEFS, SFS, GFS supported
+export RUN=SFS # GEFS, SFS, GFS supported
 TOPDIR=${PWD}
 
 export SCRIPT_DIR=${TOPDIR}/SCRIPTS
 source ${TOPDIR}/SCRIPTS/RUN-config.sh 
+
 ####################################
 # get submodules
+REPO=ufs-community && HASH=develop
+#git clone https://github.com/${REPO}/ufs-weather-model.git UFS
+#cd ${TOPDIR}/UFS
+#git checkout ${HASH}
+#git submodule update --init --recursive
 cd ${TOPDIR}/UFS
 [[ ! -d ${TOPDIR}/UFS/CICE-interface/CICE/cicecore ]] && git submodule update --init --recursive
 
@@ -56,10 +62,11 @@ fi
 
 ####################################
 # compile
-export CMAKE_FLAGS="-DAPP=${APP} -D32BIT=${BIT32} -DCCPP_SUITES=${CCPP_SUITES} -DHYDRO=${HYDRO} -DPDLIB=${PDLIB} -DMPI=ON"
+export CMAKE_FLAGS="-DAPP=${APP} -D32BIT=${BIT32} -DCCPP_SUITES=${CCPP_SUITES} \
+                    -DHYDRO=${HYDRO} -DPDLIB=${PDLIB} -DMPI=ON -DCMAKE_BUILD_TYPE=Release"
 echo "${RUN}: ${CMAKE_FLAGS}"
 export BUILD_DIR=${NPB_WORKDIR}/CODE/ufs_build
-#[[ -d build ]] && rm -r build/
+[[ -d build ]] && rm -r build/
 ln -s ${BUILD_DIR}/ build
 bash -x ./build.sh
 mkdir -p ${TOPDIR}/bin
