@@ -34,8 +34,10 @@ cp ${UFS_EXEC} fv3.exe
 [[ -f out ]] && rm out
 
 # Create job_card
-echo "  "fv3_${SCHEDULER}.IN_${MACHINE_ID} 
-atparse < ${PATHRT}/fv3_conf/fv3_${SCHEDULER}.IN_${MACHINE_ID} > job_card
+f_submit=$( ls ${PATHRT}/fv3_conf/fv3*${MACHINE_ID} )
+echo "  "basename ${f_submit}
+export NCPUS=$(( TPN * THRD ))
+atparse < ${f_submit} > job_card
 # add module purge options
 ln=$(grep -wn "set +x" job_card | cut -d: -f1) && ln=$(( ln + 1 ))
 sed -i "${ln} i export I_MPI_SHM_HEAP_VSIZE=16384" job_card && ln=$(( ln + 1 ))
