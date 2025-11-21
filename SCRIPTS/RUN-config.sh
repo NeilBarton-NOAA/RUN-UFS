@@ -10,13 +10,14 @@ case ${RUN} in
         export RT_TEST=cpld_control_sfs
         export APP=${APP:-S2S}
         export ATM_RES=${ATM_RES:-C96}
-        export OCN_RES=${OCN_RES:-100}
         export WAV_RES=${WAV_RES:-glo_025}
         if [[ ${ATM_RES} == "C192" ]]; then
+            export OCN_RES=${OCN_RES:-025}
             export ATM_INPES=${ATM_INPES:-8}
             export ATM_JNPES=${ATM_JNPES:-8}
             export ATM_WPG=${ATM_WPG:-60}
         else
+            export OCN_RES=${OCN_RES:-100}
             export ATM_INPES=${ATM_INPES:-6}
             export ATM_JNPES=${ATM_JNPES:-8}
             export ATM_WPG=${ATM_WPG:-6}
@@ -24,9 +25,11 @@ case ${RUN} in
         if [[ ${OCN_RES} == "025" ]]; then
             export OCN_NMPI=${OCN_NMPI:-220}
             export ICE_NMPI=${ICE_NMPI:-90}
+            export MOM6_INTERP_ICS=${MOM6_INTERP_ICS:-F}
+        else
+            export MOM6_INTERP_ICS=${MOM6_INTERP_ICS:-T} 
         fi
         export OUTPUT_FREQ=24
-        export MOM6_INTERP_ICS=${MOM6_INTERP_ICS:-T} 
         ;;
     "GEFS")
         export compile_search=s2swa_32bit

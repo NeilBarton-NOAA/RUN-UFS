@@ -31,7 +31,7 @@ grep INPUTDATA ${rt_f} | grep -v ENTITY >> ${target_f}
 chmod 755 ${target_f}
 sed -i "s/cp fv3_conf/#cp fv3_conf/g" ${target_f}
 source ${target_f}
-
+echo $MACHINE_ID
 case "${MACHINE_ID}" in
     "hera")
         STMP=/scratch2/NCEPDEV/stmp3/${USER}/RUNS
@@ -53,7 +53,12 @@ case "${MACHINE_ID}" in
         TOP_ICDIR=${TOP_ICDIR:-/gpfs/f6/sfs-emc/scratch/${USER}/ICs/RUN_UFS}
         GW_FIXDIR=/gpfs/f6/drsa-precip3/world-shared/role.glopara/fix/
     ;;
-    "*")
+    "wcoss2")
+        STMP=${STMP}/${USER}/RUNS
+        TOP_ICDIR=${TOP_ICDIR:-/lfs/h2/emc/couple/noscrub/neil.barton/ICs/RUN_UFS}
+        GW_FIXDIR=/lfs/h2/emc/global/noscrub/emc.global/FIX/fix
+    ;;
+    *)
     echo "WARNING: MACHINE not set up"
     exit 1
     ;;
