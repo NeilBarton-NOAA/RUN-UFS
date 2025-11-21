@@ -5,7 +5,7 @@ export RUN=${RUN:-SFS}
 
 case ${RUN} in
     "SFS")
-        export compile_search=s2swa_32bit_pdlib_sfs
+        export compile_search=s2s_32bit_sfs
         export PDLIB="OFF"
         export RT_TEST=cpld_control_sfs
         export APP=${APP:-S2S}
