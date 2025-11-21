@@ -9,10 +9,10 @@ set -u
 # Set Top options
 # Default SFS is using replay ICs with interpolated MOM6 ICs at C96mx100 
 # Default GEFS is using replay ICs at an +3 OFFSET at C384mx025
-export RUN=SFS && export DTG=1994050100 && export APP=S2S
-#export RUN=SFS && export DTG=1994050100 && export APP=S2S && export ATM_RES=C192
+#export RUN=SFS && export DTG=1994050100 && export APP=S2S
+export RUN=SFS && export DTG=1994050100 && export APP=S2S && export ATM_RES=C192
 export DEBUG_SCRIPTS=${1:-F}
-export RUNDIR_UNIQUE=T
+export RUNDIR_UNIQUE=F
 #export JOB_QUEUE=normal # batch or debug on hera, normal or windfall on gaea
 
 ############

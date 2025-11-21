@@ -6,7 +6,7 @@ echo "FIXFILES-config.sh"
 source ${PATHRT}/atparse.bash
 
 target_f=${SCRIPT_DIR}/FIXFILES-link.sh
-[[ ! -f ${target_f} ]] && rm ${target_f}
+[[ -f ${target_f} ]] && rm ${target_f}
 cat << EOF > ${target_f}
 #!/bin/bash -u
 # fixfiles for run. Link instead of copying because that takes forever
