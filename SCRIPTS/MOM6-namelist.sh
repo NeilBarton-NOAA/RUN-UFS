@@ -23,7 +23,7 @@ case "${OCNRES}" in
     FRUNOFF=""
     MOM6_CHLCLIM="seawifs_1998-2006_smoothed_2X.nc"
     MOM6_RIVER_RUNOFF='False'
-    TOPOEDITS="ufs.topo_edits_011818.nc"
+    MOM6_TOPOEDITS="ufs.topo_edits_011818.nc"
     MOM6_ALLOW_LANDMASK_CHANGES="True" 
     ;;
     "025")
