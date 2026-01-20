@@ -15,6 +15,7 @@ declare -rx PS4='+ $(basename ${BASH_SOURCE[0]:-${FUNCNAME[0]:-"Unknown"}})[${LI
 ################################################
 # machine specific items
 export PATHRT=${HOMEufs}/tests
+export EXCLUSIVE_NODES_OPT=""
 # machine specific directories
 source ${SCRIPT_DIR}/MACHINE-config.sh ${HOMEufs}
 

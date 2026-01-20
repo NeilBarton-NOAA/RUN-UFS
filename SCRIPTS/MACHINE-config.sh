@@ -33,6 +33,11 @@ sed -i "s/cp fv3_conf/#cp fv3_conf/g" ${target_f}
 source ${target_f}
 echo $MACHINE_ID
 case "${MACHINE_ID}" in
+    "ursa")
+        STMP=/scratch4/NCEPDEV/stmp/${USER}/RUNS
+        TOP_ICDIR=${TOP_ICDIR:-/scratch4/NCEPDEV/stmp/Neil.Barton/ICs/RUN_UFS}
+        GW_FIXDIR=/scratch3/NCEPDEV/global/role.glopara/fix
+    ;;
     "hera")
         STMP=/scratch2/NCEPDEV/stmp3/${USER}/RUNS
         TOP_ICDIR=${TOP_ICDIR:-/scratch2/NCEPDEV/stmp1/Neil.Barton/ICs/RUN_UFS}
