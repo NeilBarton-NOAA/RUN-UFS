@@ -28,6 +28,7 @@ sed -i "s:mkdir INPUT RESTART:mkdir -p INPUT RESTART:g" ${target_f}
 export RT_SUFFIX=DUMMY
 chmod 755 ${target_f}
 source ${target_f}
+ln -sf $(dirname ${FV3_IC})/1994050100/ozprdlos_2015_new_sbuvO3_tclm15_nuchem_shozhvlogp.f77 ./global_o3prdlos.f77
 if (( ${DTG:0:4} < 2009 )); then
     for Y in $(seq ${DTG:0:4} 2008); do
         src=${GW_FIXDIR}/am/20220805/co2dat_4a/global_co2historicaldata_${DTG:0:4}.txt 

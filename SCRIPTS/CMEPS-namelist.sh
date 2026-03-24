@@ -3,7 +3,6 @@ set -u
 echo 'CMEPS-namelist.sh'
 lc_APP=$( echo ${APP} | tr '[:upper:]' '[:lower:]' )
 UFS_CONFIGURE=ufs.configure.${lc_APP}.IN
-PET_LOGS=${PETLOGS:-F}
 WW3_PIO_FORMAT='netcdf'
 CMEPS_PIO_FORMAT='netcdf'
 WRITE_ENDOFRUN_RESTART=.true.
@@ -47,5 +46,3 @@ echo "  "${UFS_CONFIGURE}
 atparse < ${PATHRT}/parm/${UFS_CONFIGURE} > ufs.configure
 cp ${PATHRT}/parm/fd_ufs.yaml fd_ufs.yaml
 
-# post edits
-[[ ${PET_LOGS} == F ]] && sed -i "s:ESMF_LOGKIND_MULTI:ESMF_LOGKIND_MULTI_ON_ERROR:g" ufs.configure

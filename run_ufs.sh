@@ -9,25 +9,26 @@ set -u
 # Set Top options
 # Default SFS is using replay ICs with interpolated MOM6 ICs at C96mx100 
 # Default GEFS is using replay ICs at an +3 OFFSET at C384mx025
-#export RUN=SFS && export DTG=1994050100 
-export RUN=SFS && export DTG=1994050100 && export ATM_RES=C192
+export RUN=SFS && export DTG=1994050100 
+#export RUN=SFS && export DTG=1994050100 && export ATM_RES=C192
 export DEBUG_SCRIPTS=${1:-F}
 export RUNDIR_UNIQUE=F
-#export JOB_QUEUE=normal # batch or debug on hera, normal or windfall on gaea
+export JOB_QUEUE=debug #normal # batch or debug on hera, normal or windfall on gaea
+
 
 ############
 # MPI Options
-export ATM_INPES=3
-export ATM_JNPES=6
+#export ATM_INPES=3
+#export ATM_JNPES=6
 #export ATM_THRD=4
 #export ATM_WPG=24
-export OCN_NMPI=150
-export ICE_NMPI=36
+#export OCN_NMPI=150
+#export ICE_NMPI=36
 #export WAV_NMPI=240
 
 ############
 # model updates
-export FORECAST_LENGTH=120 && export WALLCLOCK=90 #minutes
+export FORECAST_LENGTH=6 && export WALLCLOCK=10 #minutes
 export ENS_SETTINGS=F
 export DA_INCREMENTS=F
 export ENS_RESTART=F
