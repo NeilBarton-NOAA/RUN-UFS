@@ -1,7 +1,7 @@
 #!/bin/bash
 set -u
 [[ ${DEBUG_SCRIPTS} == T ]] && set -x
-declare -rx PS4='+ $(basename ${BASH_SOURCE[0]:-${FUNCNAME[0]:-"Unknown"}})[${LINENO}]'
+#declare -rx PS4='+ $(basename ${BASH_SOURCE[0]:-${FUNCNAME[0]:-"Unknown"}})[${LINENO}]'
 source ${SCRIPT_DIR}/RUN-config.sh
         
 # Replay ICs with +3 start

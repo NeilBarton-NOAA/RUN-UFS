@@ -1,6 +1,5 @@
 #!/bin/sh
 echo 'CICE-ic.sh'
-
 ####################################
 # look for restarts if provided
 ICDIR=${ICDIR:-${INPUTDATA_ROOT_BMIC}/${SYEAR}${SMONTH}${SDAY}${SHOUR}/cpc}
@@ -11,7 +10,7 @@ rm -f ice.restart_file
 # if not using the default optoin
 if [[ ${ice_ic} != 'default' ]]; then
     if [[ ! -f ${ice_ic} ]]; then
-        ice_ic=$( find -L ${ICDIR} -name "*iced.${RESTART_DTG_ALT}.nc" )
+        ice_ic=$( find -L ${ICDIR} -name "*ice*.${RESTART_DTG_ALT}.nc" )
         if [[ ! -f ${ice_ic} ]]; then
             echo "  FATAL: ${ice_ic} file not found"
             exit 1

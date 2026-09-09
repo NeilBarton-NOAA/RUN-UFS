@@ -100,7 +100,7 @@ export ICDIR=${ICDIR:-${TOP_ICDIR}/${ATM_RES}mx${OCN_RES}/*/*/mem${MEM}}
 
 ############
 # Get Fix Files
-${SCRIPT_DIR}/FIXFILES-config.sh ${APP}
+source ${SCRIPT_DIR}/FIXFILES-config.sh ${APP}
 if (( ${?} > 0 )); then
     echo "FAILED @ ${SCRIPT_DIR}/FIXFILES-config.sh ${APP}"
     exit 1
@@ -108,7 +108,7 @@ fi
 
 ############
 # IC files
-${SCRIPT_DIR}/IC-config.sh ${APP}
+source ${SCRIPT_DIR}/IC-config.sh ${APP}
 if (( ${?} > 0 )); then
     echo "FAILED @ ${SCRIPT_DIR}/IC-config.sh ${APP}"
     exit 1
@@ -116,7 +116,7 @@ fi
 
 ############
 # Write Namelist Files
-${SCRIPT_DIR}/NAMELIST-config.sh ${APP}
+source ${SCRIPT_DIR}/NAMELIST-config.sh ${APP}
 if (( ${?} > 0 )); then
     echo "FAILED @ ${SCRIPT_DIR}/NAMELIST-config.sh ${APP}"
     exit 1

@@ -1,7 +1,7 @@
 #!/bin/bash
 set -u
 [[ ${DEBUG_SCRIPTS} == T ]] && set -x
-declare -rx PS4='+ $(basename ${BASH_SOURCE[0]:-${FUNCNAME[0]:-"Unknown"}})[${LINENO}]'
+#declare -rx PS4='+ $(basename ${BASH_SOURCE[0]:-${FUNCNAME[0]:-"Unknown"}})[${LINENO}]'
 echo "FIXFILES-config.sh"
 source ${PATHRT}/atparse.bash
 
@@ -14,7 +14,7 @@ EOF
 # grab stuff in run_test.sh
 rt_f=${PATHRT}/run_test.sh
 ln_start=$(grep -n '${FV3} == true ' ${rt_f} | head -n 1 | cut -d: -f1)
-ln_end=$(( ln_start + 9 ))
+ln_end=$(( ln_start + 8 ))
 ln_extra=$(( ln_end + 1 ))
 sed -n "${ln_start},${ln_end}p;${ln_extra}q" ${rt_f} >> ${target_f}
 # parse FV3_RUN file
