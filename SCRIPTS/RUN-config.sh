@@ -30,6 +30,32 @@ case ${RUN} in
             export MOM6_INTERP_ICS=${MOM6_INTERP_ICS:-T} 
         fi
         export OUTPUT_FREQ=24
+        export CICE_FBOT_XFER_TYPE='mushy'          # default constant
+        export CICE_TFREEZE_OPTION='linear_salt'    # default mushy
+        export CICE_DT_MLT=0.5
+        #export CICE_RSNW_MLT=750.
+        export CICE_R_ICE=2.8                       # default 0
+        export CICE_R_PND=2.8                       # default 0
+        export CICE_R_SNW=1.8
+        export CICE_EMISSIVITY=0.98
+        export CICE_TR_POND_TOPO='.true.'
+        export CICE_RESTART_POND_TOPO='.true.'
+        export CICE_TR_POND_LVL='.false.'
+        export CICE_TR_SNOW='.true.'
+        export CICE_HS0=0.001
+        export CICE_HS1=0.005
+        export CICE_DPSCALE=0.01
+        export CICE_RFRACMIN=0.1
+        export CICE_RFRACMAX=0.6
+        export CICE_PNDASPECT=1.2
+        export CICE_SNWREDIST='ITDrdg'
+        export CICE_SNWGRAIN='.true.' 
+        export CICE_CONDUCT='bubbly'
+        export MOM6_GUST_CONST=0.02
+        export MOM6_HFREEZE=2.0
+        export ALPHA_FD=35.0
+        export DO_GWD_OPT_PSL='.false.'
+        export ISEED_CA=1580109181
         ;;
     "GEFS")
         export compile_search=s2swa_32bit

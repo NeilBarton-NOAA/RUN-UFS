@@ -16,18 +16,17 @@ ENS_SETTINGS=${ENS_SETTINGS:-T}
 export HIDE_AIAU=' '
 export HIDE_LIAU=' '
 # optoins
-NSTF_NAME=${NSST:-'2,0,0,0,0'}
-OUTPUT_HISTORY='.true.'
+#OUTPUT_HISTORY='.true.'
 DOGP_CLDOPTICS_LUT=.false.
 DOGP_LWSCAT=.false.
 DOGP_SGS_CNV=.true.
 IDEFLATE=1
 MAX_OUTPUT_FIELDS=300
 DOMAINS_STACK_SIZE=16000000
-RF_CUTOFF=100.0
+#RF_CUTOFF=100.0
 FHZERO=6
 DO_GSL_DRAG_SS=.false.
-DO_GWD_OPT_PSL=.true.
+DO_GWD_OPT_PSL=${DO_GWD_OPT_PSL:-.true.}
 IOPT_DIAG=2
 QUANTIZE_NSD=5
 DNATS=0
@@ -138,8 +137,10 @@ fi
 
 # Ensemble Run Settings
 if [[ ${ENS_SETTINGS} == T ]]; then
-    imem=${MEM:-1}
-    base_seed=$(( DTG*10000 + imem*100))
+    #imem=${MEM:-5}
+    imem=5
+    #base_seed=$(( DTG * 10000 + imem * 100 ))
+    base_seed=$(( 1991090100 * 10000 + imem * 100 ))
     DO_SPPT=.true.
     DO_SKEB=.true.
     PERT_CLDS=.true.
@@ -154,8 +155,8 @@ if [[ ${ENS_SETTINGS} == T ]]; then
         SKEB_TAU="2.16E4,2.592E5,2.592E6,7.776E6,3.1536E7"
         ;;
     "C192")
-        SKEB="0.8,-999,-999,-999,-999"
-        SPPT="0.56,0.28,0.14,0.056,0.028"
+        SKEB="0.08,-999,-999,-999,-999"
+        SPPT="0.5,0.2,0.05"
         ;;
     "C96")
         SKEB="0.03,-999,-999,-999,-999"
@@ -166,10 +167,6 @@ if [[ ${ENS_SETTINGS} == T ]]; then
         exit 1
         ;;
     esac
-    if  [[ ${HYDROSTATIC} == .true. ]]; then
-        DO_SKEB=.false.
-        SKEB="-999."
-    fi
     case "${OCNRES}" in
     "100")
         export OCNSPPT="0.8,0.4,0.2,0.08,0.04"

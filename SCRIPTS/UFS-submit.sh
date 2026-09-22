@@ -26,6 +26,9 @@ source ${SCRIPT_DIR}/RUN-config.sh
 source ${PATHRT}/default_vars.sh
 source ${PATHRT}/tests/${RT_TEST}
 
+# defaults
+source ${SCRIPT_DIR}/RUN-config.sh
+
 [[ ${MACHINE_ID} == gaeac6 ]] && [[ ${ATMRES} == "C384" ]] && PPN=${PPN:-144}
 TPN=${PPN:-$TPN}
 
@@ -33,6 +36,8 @@ TPN=${PPN:-$TPN}
 # edits to defaults if needed
 # forecast length
 FORECAST_LENGTH=${FORECAST_LENGTH:-6}
+export OFFSET_START_HOUR=${OFFSET_START_HOUR:-0}
+FORECAST_LENGTH=$(( FORECAST_LENGTH + OFFSET_START_HOUR ))
 FHMAX=${FORECAST_LENGTH}
 # start date
 DTG=${DTG:-${SYEAR}${SMONTH}${SDAY}${SHOUR}00}

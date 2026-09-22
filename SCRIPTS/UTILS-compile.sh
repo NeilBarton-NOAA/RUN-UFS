@@ -1,7 +1,7 @@
 #!/bin/sh
 set -u
-source $PWD/MACHINE-config.sh
-TOPDIR=$NPB_WORKDIR/CODE
+source ${PWD}/MACHINE-config.sh
+TOPDIR=${NS_WORKDIR}/CODE
 machine=$(uname -n)
 REPO=NeilBarton-NOAA 
 REPO=NOAA-EMC

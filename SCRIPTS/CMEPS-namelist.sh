@@ -4,8 +4,8 @@ echo 'CMEPS-namelist.sh'
 lc_APP=$( echo ${APP} | tr '[:upper:]' '[:lower:]' )
 UFS_CONFIGURE=ufs.configure.${lc_APP}.IN
 WW3_PIO_FORMAT='netcdf'
-CMEPS_PIO_FORMAT='netcdf'
-WRITE_ENDOFRUN_RESTART=.true.
+#CMEPS_PIO_FORMAT='netcdf'
+#WRITE_ENDOFRUN_RESTART=.true.
 #DumpFields=true
 
 ########################

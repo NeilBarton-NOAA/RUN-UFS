@@ -1,7 +1,7 @@
 #!/bin/bash
 set -u
 echo 'JOB-config.sh'
-UFS_EXEC=${UFS_EXEC:-${HOMEufs}/../bin/ufs_${RUN}}
+UFS_EXEC=${UFS_EXEC:-${HOMEufs%/*}/bin/ufs_${RUN}}
 JBNME=${TEST_NAME:-UFS}
 WLCLK=${WALLCLOCK:-$WLCLK_dflt}
 EXTRA_NODE=${EXTRA_NODE:-F}
