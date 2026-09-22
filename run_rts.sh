@@ -6,8 +6,7 @@ set -x
 ################################################################################################
 #REPO=ufs-community && HASH=develop && CODE_DIR=${PWD}/RUN-UFS/UFS 
 REPO=ufs-community && HASH=develop && CODE_DIR=${NS_WORKDIR}/CODE/ufs_${HASH////\_}_${REPO}
-#REPO=NeilBarton-NOAA && HASH=SFSbeta2 && CODE_DIR=${NS_WORKDIR}/CODE/ufs_${HASH////\_}_${REPO}
-#REPO=YangxingZheng-NOAA && HASH=sfs_beta2_options && CODE_DIR=${NS_WORKDIR}/CODE/ufs_${HASH////\_}_${REPO}
+REPO=NeilBarton-NOAA && HASH=SFS_ice_in && CODE_DIR=${NS_WORKDIR}/CODE/ufs_${HASH////\_}_${REPO}
 
 CHECKOUT_ONLY=T
 if [[ ! -d ${CODE_DIR} ]]; then
