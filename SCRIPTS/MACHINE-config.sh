@@ -35,38 +35,41 @@ echo $MACHINE_ID
 case "${MACHINE_ID}" in
     "ursa")
         STMP=/scratch4/NCEPDEV/stmp/${USER}/RUNS
-        TOP_ICDIR=${TOP_ICDIR:-/scratch4/NCEPDEV/stmp/Neil.Barton/ICs/RUN_UFS}
         GW_FIXDIR=/scratch3/NCEPDEV/global/role.glopara/fix
-    ;;
-    "hera")
-        STMP=/scratch2/NCEPDEV/stmp3/${USER}/RUNS
-        TOP_ICDIR=${TOP_ICDIR:-/scratch2/NCEPDEV/stmp1/Neil.Barton/ICs/RUN_UFS}
-        GW_FIXDIR=/scratch1/NCEPDEV/global/glopara/fix
+        RUNUFS_ICDIR=/scratch4/NCEPDEV/stmp/Neil.Barton/ICs/RUN_UFS
+        SFS_ICDIR=/scratch4/NCEPDEV/global/Yangxing.Zheng/ICs
     ;;
     "orion")
         STMP=/work/noaa/marine/${USER}/RUNS
-        TOP_ICDIR=/work/noaa/marine/nbarton/ICs/RUN_UFS
         GW_FIXDIR=/work/noaa/global/glopara/fix/
+        TOP_ICDIR=/work/noaa/marine/nbarton/ICs/RUN_UFS
+        SFS_ICDIR=/work/noaa/marine/Yangxing.Zheng/ICs
     ;;
     "hercules")
         STMP=/work/noaa/marine/${USER}/RUNS
-        TOP_ICDIR=/work/noaa/marine/nbarton/ICs/RUN_UFS
         GW_FIXDIR=/work/noaa/global/glopara/fix/
+        TOP_ICDIR=/work/noaa/marine/nbarton/ICs/RUN_UFS
+        SFS_ICDIR=/work/noaa/marine/Yangxing.Zheng/ICs
     ;;
     "gaeac6")
         STMP=/gpfs/f6/sfs-emc/scratch/${USER}/RUNS
-        TOP_ICDIR=${TOP_ICDIR:-/gpfs/f6/sfs-emc/scratch/${USER}/ICs/RUN_UFS}
         GW_FIXDIR=/gpfs/f6/drsa-precip3/world-shared/role.glopara/fix/
+        TOP_ICDIR=/gpfs/f6/sfs-emc/scratch/${USER}/ICs/RUN_UFS
+        SFS_ICDIR=/gpfs/f6/sfs-emc/proj-shared/Yangxing.Zheng/SFS/ICs
     ;;
     "wcoss2")
         STMP=${STMP}/${USER}/RUNS
-        TOP_ICDIR=${TOP_ICDIR:-/lfs/h2/emc/couple/noscrub/neil.barton/ICs/RUN_UFS}
         GW_FIXDIR=/lfs/h2/emc/global/noscrub/emc.global/FIX/fix
+        TOP_ICDIR=/lfs/h2/emc/couple/noscrub/neil.barton/ICs/RUN_UFS
+        SFS_ICDIR=/lfs/h2/emc/couple/noscrub/neil.barton/ICs
     ;;
     *)
     echo "WARNING: MACHINE not set up"
     exit 1
     ;;
 esac
+
+SFS_ICDIR=${SFS_ICDIR}/CPC_landice
+
 export MACHINE_ID SCHEDULER STMP PARTITION QUEUE GW_FIXDIR
 

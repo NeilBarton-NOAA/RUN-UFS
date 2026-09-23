@@ -99,8 +99,9 @@ mkdir -p ${RUNDIR} && mkdir -p ${RUNDIR}/INPUT && cd ${RUNDIR}
 echo "RUNDIR is at ${RUNDIR}"
 
 # Top variables for CONFIG scripts
-export ICDIR=${ICDIR:-${TOP_ICDIR}/${ATM_RES}mx${OCN_RES}/*/*/mem${MEM}}
-#export ICDIR=${ICDIR:-${TOP_ICDIR}/${ATM_RES}mx${OCN_RES}/*/*/}
+[[ ${SFS_ICS} == "T" ]] && RUNUFS_ICDIR=${SFS_ICDIR}
+export ICDIR=${ICDIR:-${RUNUFS_ICDIR}/${ATM_RES}mx${OCN_RES}/*/*/mem${MEM}}
+#export ICDIR=${ICDIR:-${RUNUFS_ICDIR}/${ATM_RES}mx${OCN_RES}/*/*/}
 [[ ${CYLC_RUN} == T ]] && echo 'RUNNING IN CYCL ' && return
 
 ############

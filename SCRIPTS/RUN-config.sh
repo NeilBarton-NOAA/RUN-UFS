@@ -33,9 +33,9 @@ case ${RUN} in
         export CICE_FBOT_XFER_TYPE='mushy'          # default constant
         export CICE_TFREEZE_OPTION='linear_salt'    # default mushy
         export CICE_DT_MLT=0.5
-        #export CICE_RSNW_MLT=750.
-        export CICE_R_ICE=2.8                       # default 0
-        export CICE_R_PND=2.8                       # default 0
+        export CICE_RSNW_MLT=750.
+        export CICE_R_ICE=2.5                       # default 0
+        export CICE_R_PND=1.8                       # default 0
         export CICE_R_SNW=1.8
         export CICE_EMISSIVITY=0.98
         export CICE_TR_POND_TOPO='.true.'
@@ -51,6 +51,7 @@ case ${RUN} in
         export CICE_SNWREDIST='ITDrdg'
         export CICE_SNWGRAIN='.true.' 
         export CICE_CONDUCT='bubbly'
+        export CICE_TSCALE_PND_DRAIN=0.5
         export MOM6_GUST_CONST=0.02
         export MOM6_HFREEZE=2.0
         export ALPHA_FD=35.0
