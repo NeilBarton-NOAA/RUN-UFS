@@ -42,25 +42,25 @@ case "${MACHINE_ID}" in
     "orion")
         STMP=/work/noaa/marine/${USER}/RUNS
         GW_FIXDIR=/work/noaa/global/glopara/fix/
-        TOP_ICDIR=/work/noaa/marine/nbarton/ICs/RUN_UFS
+        RUNUFS_ICDIR=/work/noaa/marine/nbarton/ICs/RUN_UFS
         SFS_ICDIR=/work/noaa/marine/Yangxing.Zheng/ICs
     ;;
     "hercules")
         STMP=/work/noaa/marine/${USER}/RUNS
         GW_FIXDIR=/work/noaa/global/glopara/fix/
-        TOP_ICDIR=/work/noaa/marine/nbarton/ICs/RUN_UFS
+        RUNUFS_ICDIR=/work/noaa/marine/nbarton/ICs/RUN_UFS
         SFS_ICDIR=/work/noaa/marine/Yangxing.Zheng/ICs
     ;;
     "gaeac6")
         STMP=/gpfs/f6/sfs-emc/scratch/${USER}/RUNS
         GW_FIXDIR=/gpfs/f6/drsa-precip3/world-shared/role.glopara/fix/
-        TOP_ICDIR=/gpfs/f6/sfs-emc/scratch/${USER}/ICs/RUN_UFS
+        RUNUFS_ICDIR=/gpfs/f6/sfs-emc/scratch/${USER}/ICs/RUN_UFS
         SFS_ICDIR=/gpfs/f6/sfs-emc/proj-shared/Yangxing.Zheng/SFS/ICs
     ;;
     "wcoss2")
-        STMP=${STMP}/${USER}/RUNS
+        STMP=/lfs/h2/emc/stmp/${USER}/RUNS
         GW_FIXDIR=/lfs/h2/emc/global/noscrub/emc.global/FIX/fix
-        TOP_ICDIR=/lfs/h2/emc/couple/noscrub/neil.barton/ICs/RUN_UFS
+        RUNUFS_ICDIR=/lfs/h2/emc/couple/noscrub/neil.barton/ICs/RUN_UFS
         SFS_ICDIR=/lfs/h2/emc/couple/noscrub/neil.barton/ICs
     ;;
     *)
