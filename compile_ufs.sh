@@ -10,11 +10,12 @@ source ${TOPDIR}/SCRIPTS/RUN-config.sh
 
 ####################################
 # get submodules
-REPO=ufs-community && HASH=develop
-#git clone https://github.com/${REPO}/ufs-weather-model.git UFS
-#cd ${TOPDIR}/UFS
-#git checkout ${HASH}
-#git submodule update --init --recursive
+#REPO=ufs-community && HASH=develop
+REPO=NeilBarton-NOAA && HASH=SFSbeta2
+git clone https://github.com/${REPO}/ufs-weather-model.git UFS
+cd ${TOPDIR}/UFS
+git checkout ${HASH}
+git submodule update --init --recursive
 cd ${TOPDIR}/UFS
 [[ ! -d ${TOPDIR}/UFS/CICE-interface/CICE/cicecore ]] && git submodule update --init --recursive
 
