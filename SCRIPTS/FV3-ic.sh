@@ -53,10 +53,16 @@ else #ATM WARMSTART
     else
         CTG=${DTG}
     fi
+    M_DTG=$(( 10#${DTG:4:2} )) && M_DTG=$(printf "%2d" "${M_DTG}") 
+    D_DTG=$(( 10#${DTG:6:2} )) && D_DTG=$(printf "%2d" "${D_DTG}") 
+    H_DTG=$(( 10#${DTG:8:2} )) && H_DTG=$(printf "%2d" "${H_DTG}") 
+    M_CTG=$(( 10#${CTG:4:2} )) && M_CTG=$(printf "%2d" "${M_CTG}") 
+    D_CTG=$(( 10#${CTG:6:2} )) && D_CTG=$(printf "%2d" "${D_CTG}") 
+    H_CTG=$(( 10#${CTG:8:2} )) && H_CTG=$(printf "%2d" "${H_CTG}") 
     cat >> INPUT/coupler.res << EOF
- 3        (Calendar: no_calendar=0, thirty_day_months=1, julian=2, gregorian=3, noleap=4)
- ${DTG:0:4}  ${DTG:4:2}  ${DTG:6:2}  ${DTG:8:2}     0     0        Model start time:   year, month, day, hour, minute, second
- ${CTG:0:4}  ${CTG:4:2}  ${CTG:6:2}  ${CTG:8:2}     0     0        Current model time: year, month, day, hour, minute, second
+     3        (Calendar: no_calendar=0, thirty_day_months=1, julian=2, gregorian=3, noleap=4)
+  ${DTG:0:4}    ${M_DTG}    ${D_DTG}    ${H_DTG}     0     0        Model start time:   year, month, day, hour, minute, second
+  ${CTG:0:4}    ${M_CTG}    ${D_CTG}    ${H_CTG}     0     0        Current model time: year, month, day, hour, minute, second
 EOF
 fi #cold start/warm start
 

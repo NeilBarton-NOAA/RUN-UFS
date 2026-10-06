@@ -16,6 +16,8 @@ case ${RUN} in
             export ATM_INPES=${ATM_INPES:-8}
             export ATM_JNPES=${ATM_JNPES:-8}
             export ATM_WPG=${ATM_WPG:-60}
+            export IMO=720
+            export JMO=361
         else
             export OCN_RES=${OCN_RES:-100}
             export ATM_INPES=${ATM_INPES:-6}
@@ -33,7 +35,7 @@ case ${RUN} in
         export CICE_FBOT_XFER_TYPE='mushy'          # default constant
         export CICE_TFREEZE_OPTION='linear_salt'    # default mushy
         export CICE_DT_MLT=0.5
-        export CICE_RSNW_MLT=750.
+        export CICE_RSNW_MLT=750.0
         export CICE_R_ICE=2.5                       # default 0
         export CICE_R_PND=1.8                       # default 0
         export CICE_R_SNW=1.8
@@ -56,7 +58,6 @@ case ${RUN} in
         export MOM6_HFREEZE=2.0
         export ALPHA_FD=35.0
         export DO_GWD_OPT_PSL='.false.'
-        export ISEED_CA=1580109181
         ;;
     "GEFS")
         export compile_search=s2swa_32bit

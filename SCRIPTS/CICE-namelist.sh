@@ -3,6 +3,14 @@ echo 'CICE-namelist.sh'
 mkdir -p history
 
 OCNRES=${OCN_RES:-$OCNRES}
+CICE_RESTART_FILE="cice_model.res"
+CICE_RESTART_DIR="./CICE_RESTART/"
+CICE_DUMPFREQ='y'
+CICE_DUMPFREQ_N=10000
+CICE_HISTORY_DIR="./CICE_OUTPUT/"
+CICE_INCOND_DIR="./CICE_OUTPUT/"
+mkdir -p CICE_OUTPUT CICE_RESTART
+rm -r history/
 ####################################
 # Resolution based options
 case "${OCNRES}" in
@@ -39,9 +47,8 @@ SECS=${START_SECS}
 ####################################
 # IO options
 CICE_OUTPUT=${CICE_OUTPUT:-T}
-CICE_HIST_AVG=.false.
+CICE_HIST_AVG=".true., .true., .true., .true., .true."
 RESTART_FREQ=${RESTART_FREQ:-$FHMAX}
-DUMPFREQ_N=$(( RESTART_FREQ / 24 ))
 
 ####################################
 # grid files

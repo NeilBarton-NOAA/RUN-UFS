@@ -4,6 +4,9 @@ echo 'CMEPS-namelist.sh'
 lc_APP=$( echo ${APP} | tr '[:upper:]' '[:lower:]' )
 UFS_CONFIGURE=ufs.configure.${lc_APP}.IN
 WW3_PIO_FORMAT='netcdf'
+MOM6_RESTART_DIR="./MOM6_RESTART" 
+CMEPS_RESTART_DIR="CMEPS_RESTART/"
+mkdir -p MOM6_RESTART CMEPS_RESTART 
 #CMEPS_PIO_FORMAT='netcdf'
 #WRITE_ENDOFRUN_RESTART=.true.
 #DumpFields=true
@@ -28,6 +31,7 @@ wav_omp_num_threads=${WAV_THRD:-${wav_omp_num_threads}}
 
 TEST_ID=UFS && RTVERBOSE=F
 compute_petbounds_and_tasks_esmf_threading
+med_petlist_bounds="0 299"
 
 ########################
 # options based on resolutions
@@ -39,6 +43,7 @@ case "${OCNRES}" in
     *) eps_imesh="1.0e-1";;
 esac
 #ATMTILESIZE=${ATMRES:1}
+[[ "${WARM_START}" != ".false." ]] && use_coldstart=".false."
 
 ########################
 # write namelists files

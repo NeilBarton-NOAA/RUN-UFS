@@ -13,8 +13,14 @@ mkdir -p INPUT RESTART
 # namelist defaults
 ATMRES=${ATM_RES:-$ATMRES}
 ENS_SETTINGS=${ENS_SETTINGS:-T}
-export HIDE_AIAU=' '
-export HIDE_LIAU=' '
+FV3ATM_OUTPUT_DIR="./FV3ATM_OUTPUT" && mkdir -p FV3ATM_OUTPUT
+MOM6_RESTART_DIR="MOM6_RESTART/" && mkdir -p MOM6_RESTART 
+MOM6_OUTPUT_DIR="MOM6_OUTPUT/" && mkdir -p MOM6_OUTPUT
+LNDP_TAU="${LNDP_TAU%,}"
+LNDP_LSCALE="${LNDP_LSCALE%,}"
+mkdir -p MOM6_RESTART CMEPS_RESTART
+
+WRITE_NSFLIP=".false."
 # optoins
 #OUTPUT_HISTORY='.true.'
 DOGP_CLDOPTICS_LUT=.false.
@@ -72,10 +78,11 @@ case "${ATMRES}" in
         ATM_JNPES=${ATM_JNPES:-4}
         CDMBWD="10.0,3.5,1.0,1.0"  # settings for GSL drag suite
         OUTPUT_FILE="'netcdf' 'netcdf'"
+        OUTPUT_HISTORY='.false.'
         N_SPLIT=4
         FV_SG_ADJ=900
         KNOB_UGWP_TAUAMP=1.5e-3
-        TAU=6
+        TAU=6.0
         FV_SG_ADJ=1800
         ;;
     "C96")
@@ -128,19 +135,19 @@ if [[ "${DA_INCREMENTS:-F}" == "T" ]]; then
     RES_LATLON_DYNAMICS="fv3_increment.nc"
     IAU_INC_FILES="fv3_increment.nc"
 else
-    IAUFHRS=0
-    IAU_DELTHRS=0
+    HIDE_AIAU='!'
+    HIDE_LIAU='!'
     READ_INCREMENT=".false."
     RES_LATLON_DYNAMICS='""'
-    IAU_INC_FILES='""'
+    LAND_IAU_FHRS=0
+    LAND_IAU_DELHRS=0
+    LSOIL_INCR=2
 fi
-
+imem=${MEM:-5}
+base_seed=$(( ${DTG} * 10000 + imem * 100 ))
+ISEED_CA=$(((base_seed + 18) % 2147483647))
 # Ensemble Run Settings
 if [[ ${ENS_SETTINGS} == T ]]; then
-    #imem=${MEM:-5}
-    imem=5
-    #base_seed=$(( DTG * 10000 + imem * 100 ))
-    base_seed=$(( 1991090100 * 10000 + imem * 100 ))
     DO_SPPT=.true.
     DO_SKEB=.true.
     PERT_CLDS=.true.
@@ -202,6 +209,7 @@ fi
 RESTART_N=${RESTART_FREQ:-${FHMAX}}
 OUTPUT_N=${OUTPUT_FREQ:-${FHMAX}}
 RESTART_INTERVAL="${RESTART_N} -1"
+RESTART_FH=${RESTART_INTERVAL}
 OUTPUT_FH="${OUTPUT_N} -1"
 
 ####################################

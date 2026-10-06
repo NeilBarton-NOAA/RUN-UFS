@@ -52,8 +52,8 @@ export SECS=$( printf "%05d" $(( 10#${SHOUR} * 3600 )) )
 export ATMRES=${ATM_RES:-$ATMRES}
 export OCNRES=${OCN_RES:-$OCNRES}
 res=$( echo ${ATMRES} | cut -c2- )
-export IMO=$(( ${res} * 4 ))
-export JMO=$(( ${res} * 2 ))
+export IMO=${IMO:-$(( ${res} * 4 ))}
+export JMO=${JMO:-$(( ${res} * 2 ))}
 export NPX=$(( ${res} + 1 ))
 export NPY=$(( ${res} + 1 ))
 export NPZ=${ATM_LEVELS:-127}
@@ -86,14 +86,14 @@ else
     NAME=${RUN}-${APP}-${ATMRES}mx${OCNRES}
     TEST_NAME=${TEST_NAME:-""}
     if (( ${#TEST_NAME} > 0 )); then
-        export TEST_NAME=${NAME}_${TEST_NAME}
+        export TEST_NAME=${TEST_NAME}
     else
-        export TEST_NAME=${NAME}
+        export TEST_NAME=run_${NAME}
     fi
-    RUNDIR=${STMP}/UFS/run_${TEST_NAME}
+    RUNDIR=${STMP}/UFS/${TEST_NAME}
     [[ ${RUNDIR_UNIQUE:-T} == T ]] && RUNDIR=${RUNDIR}_$$
     [[ -d ${RUNDIR} ]] && rm -r ${RUNDIR}/*
-    [[ ${ENS_SETTINGS:-F} == T ]] && MEM=001
+    [[ ${ENS_SETTINGS:-F} == T ]] && MEM=${MEM:-000}
 fi
 mkdir -p ${RUNDIR} && mkdir -p ${RUNDIR}/INPUT && cd ${RUNDIR}
 echo "RUNDIR is at ${RUNDIR}"

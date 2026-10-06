@@ -7,6 +7,7 @@ mkdir -p INPUT MOM6_OUTPUT
 OCNRES=${OCN_RES:-$OCNRES}
 MOM6_INPUT=MOM_input_${OCNRES}.IN
 MOM_INPUT=${MOM_INPUT:-${PATHRT}/parm/${MOM6_INPUT}}
+MOM6_WRITE_GEOM=0
 
 ####################################
 # options based on other active components
@@ -37,7 +38,7 @@ case "${OCNRES}" in
     MOM6_CHLCLIM="seawifs-clim-1997-2010.${NX_GLB}x${NY_GLB}.v20180328.nc"
     MOM6_RIVER_RUNOFF='True'
     MOM6_ALLOW_LANDMASK_CHANGES="False" 
-    MOM6_DIAG_COORD_DEF_Z_FILE=interpolate_zgrid_40L.nc
+    MOM6_DIAG_COORD_DEF_Z_FILE=interpolate_zgrid_32L.nc
     ;;
     *)
     echo "  RES not defined: ${OCNRES}"
@@ -49,29 +50,17 @@ if [[ ${MOM6_INTERP_ICS:-F} == T ]]; then
    MOM6_INIT_FROM_Z='False'
    MOM6_INIT_UV='file'
 else
-   MOM6_INIT_FROM_Z='.True.'
+   MOM6_INIT_FROM_Z='True'
    MOM6_WARMSTART_FILE="none"
    MOM6_INIT_UV="zero"
 fi
 # DA increment file
 if [[ "${DA_INCREMENTS:-F}" == "T" ]]; then
     ODA_INCUPD="True"
-    ODA_TEMPINC_VAR='t_pert'
-    ODA_SALTINC_VAR='s_pert'
-    ODA_THK_VAR='h_anl'
     ODA_INCUPD_UV="True"
-    ODA_UINC_VAR='u_pert'
-    ODA_VINC_VAR='v_pert'
     ODA_INCUPD_NHOURS=0.0
 else
     ODA_INCUPD="False"
-    ODA_TEMPINC_VAR='Temp'
-    ODA_SALTINC_VAR='Salt'
-    ODA_THK_VAR='h'
-    ODA_INCUPD_UV="False"
-    ODA_UINC_VAR='u'
-    ODA_VINC_VAR='v'
-    ODA_INCUPD_NHOURS=3.0
 fi
 
 if [[ ${ENS_SETTINGS} == T ]]; then
@@ -104,4 +93,13 @@ fi
 # parse namelist file
 echo "  "${MOM_INPUT}
 atparse < ${MOM_INPUT} > INPUT/MOM_input
+[[ -f INPUT/MOM_override ]] && rm INPUT/MOM_override
+cat >> INPUT/MOM_override << EOF
+! Blank file in which we can put "overrides" for parameters
+!VERBOSITY = 2 
+!----------------------------------
 
+!#Write ISO date stamped output with 3-hourly (0.125) frequency to ocean.stats ascii file
+#override ISO_DATE_STAMPED_STDOUT = True
+#override ENERGYSAVEDAYS = 0.125
+EOF
