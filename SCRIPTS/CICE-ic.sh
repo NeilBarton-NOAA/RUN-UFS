@@ -10,10 +10,13 @@ rm -f ice.restart_file
 # if not using the default optoin
 if [[ ${ice_ic} != 'default' ]]; then
     if [[ ! -f ${ice_ic} ]]; then
-        ice_ic=$( find -L ${ICDIR} -name "*ice*.${RESTART_DTG_ALT}.nc" )
+        ice_ic=$( find -L ${ICDIR} -name "*${GFS_DTG}.cice_model.res.nc" | head -n 1 )    
         if [[ ! -f ${ice_ic} ]]; then
-            echo "  FATAL: ${ice_ic} file not found"
-            exit 1
+            ice_ic=$( find -L ${ICDIR} -name "*ice*.${RESTART_DTG_ALT}.nc" )
+            if [[ ! -f ${ice_ic} ]]; then
+                echo "  FATAL: ${ice_ic} file not found"
+                exit 1
+            fi
         fi
     fi
 fi
