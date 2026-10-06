@@ -1,6 +1,6 @@
-[submodule "UFS"]
-	path = UFS
-	url = git@github.com:ufs-community/ufs-weather-model.git
 [submodule "TIMINGS"]
 	path = TIMINGS
-	url = git@github.com:NeilBarton-NOAA/ufs-timings.git
+	url = https://github.com/NeilBarton-NOAA/ufs-timings
+[submodule "UFS"]
+	path = UFS
+	url = git@github.com:NeilBarton-NOAA/ufs-weather-model.git
