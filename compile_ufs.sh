@@ -66,7 +66,7 @@ fi
 export CMAKE_FLAGS="-DAPP=${APP} -D32BIT=${BIT32} -DCCPP_SUITES=${CCPP_SUITES} \
                     -DHYDRO=${HYDRO} -DPDLIB=${PDLIB} -DMPI=ON -DCMAKE_BUILD_TYPE=Release"
 echo "${RUN}: ${CMAKE_FLAGS}"
-export BUILD_DIR=${NPB_WORKDIR}/CODE/ufs_build
+export BUILD_DIR=${NS_WORKDIR}/CODE/ufs_build
 [[ -d build ]] && rm -r build/
 ln -s ${BUILD_DIR}/ build
 bash -x ./build.sh
