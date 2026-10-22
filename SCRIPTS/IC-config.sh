@@ -10,6 +10,8 @@ STG=${DTG}
 if (( ${OFFSET_START_HOUR} != 0 )); then
     STG=$(date -u -d"${SYEAR}-${SMONTH}-${SDAY} ${DTG:8:2}:00:00 ${OFFSET_START_HOUR} hours" +%Y%m%d%H)
 fi
+GFSIC_DTG=$(date -u -d"${SYEAR}-${SMONTH}-${SDAY} ${DTG:8:2}:00:00 3 hours ago" +%Y%m%d%H)
+GFS_RESTART_DTG=${GFSIC_DTG:0:8}.${GFSIC_DTG:8:2}0000
 START_SECS=$( printf "%05d" $(( 10#${STG:8:2} * 3600 )) )
 RESTART_DTG=${STG:0:8}.${STG:8:2}0000
 RESTART_DTG_ALT=${STG:0:4}-${STG:4:2}-${STG:6:2}-${START_SECS}

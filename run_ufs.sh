@@ -13,29 +13,29 @@ set -u
 export RUN=SFS && export DTG=1994050100 && export ATM_RES=C192
 export DEBUG_SCRIPTS=${1:-F}
 export RUNDIR_UNIQUE=F
-#export ICDIR=/scratch4/NCEPDEV/stmp/Neil.Barton/RUNDIRS/SFSbeta2.0/sfs.1991090100/sfsefcs005.1991090100/restart
-export ICDIR=/scratch4/NCEPDEV/stmp/Neil.Barton/RUNDIRS/SFSbeta2.0_TEST2/sfs.1995100100/sfsefcs004.1995100100/restart
-export OFFSET_START_HOUR=4800
-export RUN=SFS && export DTG=1995100100 && export ATM_RES=C192 #&& export SFS_ICS=T && export MOM6_INTERP_ICS=T
+#export RUN=SFS && export DTG=2026100100 && export ATM_RES=C192
+#export ICDIR="/lfs/h2/emc/stmp/neil.barton/ICs/GFS/C192mx025/*/*/mem000"
+
+#export RUN=SFS && export DTG=1991090100 && export ATM_RES=C192 && export SFS_ICS=T && export MOM6_INTERP_ICS=T
 ############
 # MPI Options
-#export ATM_INPES=3
-#export ATM_JNPES=6
-#export ATM_THRD=4
+export ATM_INPES=8
+export ATM_JNPES=8
+#export ATM_THRD=2
 #export ATM_WPG=24
-#export OCN_NMPI=400
-#export ICE_NMPI=96
+export OCN_NMPI=400
+export ICE_NMPI=96
 #export WAV_NMPI=240
 
 ############
 # model updates
-export FORECAST_LENGTH=4800 && export WALLCLOCK=240 #minutes 
+export FORECAST_LENGTH=300 && export WALLCLOCK=120 #minutes 
 #export FORECAST_LENGTH=3 && export WALLCLOCK=10 && export JOB_QUEUE=debug 
-export ENS_SETTINGS=T
+export ENS_SETTINGS=F
 export DA_INCREMENTS=F
 export ENS_RESTART=T
 export USE_ATM_PERTURB_FILES=F 
-export USE_OCN_PERTURB_FILES=F 
+export USE_OCN_PERTURB_FILES=F
 
 ############
 # Submit Forecast
