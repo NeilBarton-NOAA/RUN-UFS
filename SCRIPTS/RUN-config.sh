@@ -43,7 +43,6 @@ case ${RUN} in
         export CICE_TR_POND_TOPO='.true.'
         export CICE_RESTART_POND_TOPO='.true.'
         export CICE_TR_POND_LVL='.false.'
-        export CICE_TR_SNOW='.true.'
         export CICE_HS0=0.001
         export CICE_HS1=0.005
         export CICE_DPSCALE=0.01
@@ -51,6 +50,7 @@ case ${RUN} in
         export CICE_RFRACMAX=0.6
         export CICE_PNDASPECT=1.2
         export CICE_SNWREDIST='ITDrdg'
+        export CICE_TR_SNOW='.true.'
         export CICE_SNWGRAIN='.true.' 
         export CICE_CONDUCT='bubbly'
         export CICE_TSCALE_PND_DRAIN=0.5

@@ -7,33 +7,27 @@ set -u
 # Default SFS configuration
 ####################################
 # Set Top options
-# Default SFS is using replay ICs with interpolated MOM6 ICs at C96mx100 
-# Default GEFS is using replay ICs at an +3 OFFSET at C384mx025
-#export RUN=SFS && export DTG=1994050100 
-export RUN=SFS && export DTG=1994050100 && export ATM_RES=C192
 export DEBUG_SCRIPTS=${1:-F}
 export RUNDIR_UNIQUE=F
-#export RUN=SFS && export DTG=2026100100 && export ATM_RES=C192
-#export ICDIR="/lfs/h2/emc/stmp/neil.barton/ICs/GFS/C192mx025/*/*/mem000"
+export RUN=SFS && export DTG=1991090100 && export ATM_RES=C192 && export SFS_ICS=T && export MOM6_INTERP_ICS=T
 
-#export RUN=SFS && export DTG=1991090100 && export ATM_RES=C192 && export SFS_ICS=T && export MOM6_INTERP_ICS=T
-############
+####################################
 # MPI Options
-export ATM_INPES=8
-export ATM_JNPES=8
+#export ATM_INPES=8
+#export ATM_JNPES=8
 #export ATM_THRD=2
 #export ATM_WPG=24
-export OCN_NMPI=400
-export ICE_NMPI=96
+#export OCN_NMPI=400
+#export ICE_NMPI=96
 #export WAV_NMPI=240
 
 ############
 # model updates
 export FORECAST_LENGTH=300 && export WALLCLOCK=120 #minutes 
-#export FORECAST_LENGTH=3 && export WALLCLOCK=10 && export JOB_QUEUE=debug 
+export FORECAST_LENGTH=3 && export WALLCLOCK=10 && export JOB_QUEUE=debug 
 export ENS_SETTINGS=F
 export DA_INCREMENTS=F
-export ENS_RESTART=T
+export ENS_RESTART=F
 export USE_ATM_PERTURB_FILES=F 
 export USE_OCN_PERTURB_FILES=F
 

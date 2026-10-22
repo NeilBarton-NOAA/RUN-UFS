@@ -5,9 +5,9 @@ set -x
 # https://github.com/ufs-community/ufs-weather-model/wiki/Running-regression-test-using-rt.sh
 ################################################################################################
 #REPO=ufs-community && HASH=develop && CODE_DIR=${NS_WORKDIR}/CODE/ufs_${HASH////\_}_${REPO}
-REPO=NeilBarton-NOAA && HASH=SFSBeta2 && CODE_DIR=${NS_WORKDIR}/CODE/ufs_${HASH////\_}_${REPO}
+REPO=NeilBarton-NOAA && HASH=SFSbeta2.1 && CODE_DIR=${NS_WORKDIR}/CODE/ufs_${HASH////\_}_${REPO}
 
-CHECKOUT_ONLY=F
+CHECKOUT_ONLY=T
 TOPDIR=${PWD}
 if [[ ! -d ${CODE_DIR} ]]; then
     cd $( dirname ${CODE_DIR} )
